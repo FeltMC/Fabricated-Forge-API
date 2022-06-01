@@ -1,0 +1,2 @@
+archivesBaseName = "fabricated-forge-datagen"
+version = getSubprojectVersion(project)

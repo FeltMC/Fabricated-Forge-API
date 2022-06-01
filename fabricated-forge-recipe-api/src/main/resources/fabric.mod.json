@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricated-forge-recipe-api",
+  "version": "${version}",
+  "name": "Fabricated Forge Recipe Api",
+  "description": "Ports forge's recipe api to fabric, including using the same path.",
+  "authors": [
+    "Trinsdar"
+  ],
+  "contact": {
+    "sources": "https://github.com/GregTech-Intergalactical/TesseractAPI"
+  },
+  "license": "LGPL-3.0-only",
+  "icon": "assets/tesseractapi/icon.png",
+  "environment": "*",
+  "mixins": [
+    "fabricated-forge-recipe-api.mixins.json"
+  ],
+  "accessWidener": "fabricated-forge-recipe-api.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1856": [
+        "net/minecraftforge/common/crafting/IngredientExtension"
+      ]
+    }
+  }
+}
