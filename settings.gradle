@@ -9,10 +9,8 @@ pluginManagement {
     }
 }
 
-rootProject.name = "felt-api"
+rootProject.name = "fabricated-forge-api"
 
-include("felt-api-base")
-include("felt-ore-feature-api-v1")
-include("felt-splash-api")
-include("felt-tool-api")
-include("felt-shared-lifecycle-events")
+include("fabricated-forge-caps")
+include("fabricated-forge-datagen")
+include("fabricated-forge-recipe-api")

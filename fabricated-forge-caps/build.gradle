@@ -6,37 +6,6 @@ repositories {
 }
 
 dependencies{
+    include("net.fabricmc.fabric-api:fabric-transfer-api-v1:${project.fabric_transfer_api_version}")
     modCompileOnly("io.github.fabricators_of_create:Porting-Lib:0.2.0+1.18.2.${rootProject.port_lib_hash}") { transitive(false) }
 }
-
-architectury {
-    common()
-}
-
-/*
-publishing {
-    tasks.publish.dependsOn "build", "reobfJar"
-    publications {
-        mavenJava(org.gradle.api.publish.maven.MavenPublication) {
-            //artifactId = archivesBaseName
-            artifact shadowJar
-        }
-    }
-    repositories {
-        if (rootProject.isCI && rootProject.isRELEASE) {
-            maven {
-                name = "GitHubPackages"
-                url = "https://maven.pkg.github.com/GregTech-Intergalactical/TesseractAPI"
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
-                }
-            }
-        } else {
-            maven { url "file:///${project.projectDir}/mcmodsrepo"}
-        }
-    }
-    //repositories {
-    //    rootProject.configurePublishingRepositories(delegate)
-    //}
-}*/
