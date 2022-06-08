@@ -22,6 +22,6 @@ allprojects {
 
 project(':forge') {
     dependencies {
-        modImplementation rootProject
+        implementation project(":forge-dep")
     }
 }

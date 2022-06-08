@@ -14,11 +14,11 @@ rootProject.name = 'ForgeRoot'
 
 //include 'fmlloader'
 //include 'fmlcore'
-include 'mclanguage'
-include 'javafmllanguage'
-include 'lowcodelanguage'
+//include 'mclanguage'
+//include 'javafmllanguage'
+//include 'lowcodelanguage'
 
-
+include(":forge-dep")
 
 include ':forge'
 
