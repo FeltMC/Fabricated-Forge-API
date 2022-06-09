@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricated-forge-api",
+  "provides": [
+    "forge"
+  ],
+  "version": "${version}",
+  "name": "Fabricated Forge Api",
+  "description": "Ports forge's api to fabric.",
+  "authors": [
+    "Trinsdar"
+  ],
+  "contact": {
+    "sources": "https://github.com/FeltMC/Fabricated-Forge-API"
+  },
+  "license": "LGPL-2.1-only",
+  "mixins": [
+    "fabricated-forge-api.mixins.json"
+  ],
+  "accessWidener": "fabricated-forge-api.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "fabric": "*"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1792": [
+        "net/minecraftforge/common/extensions/IForgeItem"
+      ],
+      "net/minecraft/class_1799": [
+        "net/minecraftforge/common/extensions/IForgeItemStack"
+      ]
+    }
+  }
+}

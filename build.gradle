@@ -3,7 +3,7 @@ plugins {
     id "fabric-loom" version "0.12-SNAPSHOT" apply false
 }
 
-allprojects {
+subprojects {
     apply plugin: "fabric-loom"
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -17,6 +17,30 @@ allprojects {
         modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
         modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
         //testmodImplementation sourceSets.main.output
+    }
+}
+
+allprojects {
+    apply plugin: "maven-publish"
+    apply plugin: "java"
+
+
+
+    group = rootProject.maven_group
+
+    repositories {
+        maven {
+            name = 'parchment'
+            url = 'https://maven.parchmentmc.org'
+        }
+    }
+
+    java {
+        withSourcesJar()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = 'UTF-8'
     }
 }
 
