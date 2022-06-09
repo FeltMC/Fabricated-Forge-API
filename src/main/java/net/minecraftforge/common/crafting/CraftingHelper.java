@@ -5,6 +5,8 @@
 
 package net.minecraftforge.common.crafting;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -116,7 +119,7 @@ public class CraftingHelper
             });
 
             if (!vanilla.isEmpty())
-                ingredients.add(Ingredient.merge(vanilla));
+                ingredients.add(merge(vanilla));
 
             if (ingredients.size() == 0)
                 throw new JsonSyntaxException("Item array cannot be empty, at least one item must be defined");
@@ -143,6 +146,10 @@ public class CraftingHelper
         return serializer.parse(obj);
     }
 
+    public static Ingredient merge(Collection<Ingredient> parts) {
+        return Ingredient.fromValues(parts.stream().flatMap(i -> Arrays.stream(((IngredientAccessor)i).getValues())));
+    }
+
     public static ItemStack getItemStack(JsonObject json, boolean readNBT)
     {
         return getItemStack(json, readNBT, false);
@@ -151,10 +158,10 @@ public class CraftingHelper
     public static Item getItem(String itemName, boolean disallowsAirInRecipe)
     {
         ResourceLocation itemKey = new ResourceLocation(itemName);
-        if (!ForgeRegistries.ITEMS.containsKey(itemKey))
+        if (!Registry.ITEM.containsKey(itemKey))
             throw new JsonSyntaxException("Unknown item '" + itemName + "'");
 
-        Item item = ForgeRegistries.ITEMS.getValue(itemKey);
+        Item item = Registry.ITEM.get(itemKey);
         if (disallowsAirInRecipe && item == Items.AIR)
             throw new JsonSyntaxException("Invalid item: " + itemName);
         return Objects.requireNonNull(item);

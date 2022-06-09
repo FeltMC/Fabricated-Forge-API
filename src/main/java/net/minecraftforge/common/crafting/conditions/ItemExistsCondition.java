@@ -7,6 +7,7 @@ package net.minecraftforge.common.crafting.conditions;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.core.Registry;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -40,7 +41,7 @@ public class ItemExistsCondition implements ICondition
     @Override
     public boolean test()
     {
-        return ForgeRegistries.ITEMS.containsKey(item);
+        return Registry.ITEM.containsKey(item);
     }
 
     @Override

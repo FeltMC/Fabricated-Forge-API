@@ -26,10 +26,8 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nullable;
 
-public class ConditionalRecipe
-{
-    @ObjectHolder("forge:conditional")
-    public static final RecipeSerializer<Recipe<?>> SERIALZIER = null;
+public class ConditionalRecipe {
+    public static final RecipeSerializer<Recipe<?>> SERIALZIER = new Serializer<>();
 
     public static Builder builder()
     {
@@ -67,13 +65,6 @@ public class ConditionalRecipe
 
         @Override
         public T fromJson(ResourceLocation recipeId, JsonObject json)
-        {
-            return fromJson(recipeId, json, ICondition.IContext.EMPTY);
-        }
-
-        @SuppressWarnings("unchecked") // We return a nested one, so we can't know what type it is.
-        @Override
-        public T fromJson(ResourceLocation recipeId, JsonObject json, ICondition.IContext context)
         {
             JsonArray items = GsonHelper.getAsJsonArray(json, "recipes");
             int idx = 0;

@@ -10,7 +10,7 @@ import java.util.Collections;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient.Value;
 
@@ -44,7 +44,7 @@ public class MultiItemValue implements Value
     private JsonObject toJson(ItemStack stack)
     {
         JsonObject ret = new JsonObject();
-        ret.addProperty("item", stack.getItem().getRegistryName().toString());
+        ret.addProperty("item", Registry.ITEM.getKey(stack.getItem()).toString());
         if (stack.getCount() != 1)
             ret.addProperty("count", stack.getCount());
         if (stack.getTag() != null)

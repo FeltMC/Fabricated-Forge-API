@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.advancements.critereon.NbtPredicate;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
@@ -92,13 +93,13 @@ public class PartialNBTIngredient extends AbstractIngredient
         json.addProperty("type", CraftingHelper.getID(Serializer.INSTANCE).toString());
         if (items.size() == 1)
         {
-            json.addProperty("item", items.iterator().next().getRegistryName().toString());
+            json.addProperty("item", Registry.ITEM.getKey(items.iterator().next()).toString());
         }
         else
         {
             JsonArray items = new JsonArray();
             // ensure the order of items in the set is deterministic when saved to JSON
-            this.items.stream().map(Item::getRegistryName).sorted().forEach(name -> items.add(name.toString()));
+            this.items.stream().map(Registry.ITEM::getKey).sorted().forEach(name -> items.add(name.toString()));
             json.add("items", items);
         }
         json.addProperty("nbt", nbt.toString());
