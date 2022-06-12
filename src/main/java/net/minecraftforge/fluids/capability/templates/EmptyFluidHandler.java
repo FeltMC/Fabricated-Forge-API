@@ -26,13 +26,13 @@ public class EmptyFluidHandler implements IFluidHandler
     public FluidStack getFluidInTank(int tank) { return FluidStack.EMPTY; }
 
     @Override
-    public int getTankCapacity(int tank) { return 0; }
+    public long getTankCapacityLong(int tank) { return 0; }
 
     @Override
     public boolean isFluidValid(int tank, @Nonnull FluidStack stack) { return true; }
 
     @Override
-    public int fill(FluidStack resource, FluidAction action)
+    public long fillLong(FluidStack resource, FluidAction action)
     {
         return 0;
     }
@@ -46,7 +46,7 @@ public class EmptyFluidHandler implements IFluidHandler
 
     @Nonnull
     @Override
-    public FluidStack drain(int maxDrain, FluidAction action)
+    public FluidStack drain(long maxDrain, FluidAction action)
     {
         return FluidStack.EMPTY;
     }

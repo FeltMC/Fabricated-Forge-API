@@ -6,11 +6,10 @@
 package net.minecraftforge.client.event;
 
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.Event;
 
 /**
- * Fired on {@link Dist#CLIENT} when {@link RecipeManager} has all of its recipes synced from the server to the client (just after a client has connected),
+ * Fired on {@link net.fabricmc.api.EnvType#CLIENT} when {@link RecipeManager} has all of its recipes synced from the server to the client (just after a client has connected),
  */
 public class RecipesUpdatedEvent extends Event
 {

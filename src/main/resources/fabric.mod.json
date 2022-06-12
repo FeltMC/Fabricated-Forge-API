@@ -28,7 +28,8 @@
         "net/minecraftforge/common/extensions/IForgeItem"
       ],
       "net/minecraft/class_1799": [
-        "net/minecraftforge/common/extensions/IForgeItemStack"
+        "net/minecraftforge/common/extensions/IForgeItemStack",
+        "net/minecraftforge/common/capabilities/ICapabilityProvider"
       ]
     }
   }

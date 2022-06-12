@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 import javax.annotation.Nonnull;
 import java.util.function.Predicate;
@@ -24,20 +23,20 @@ public class FluidTank implements IFluidHandler, IFluidTank {
     protected Predicate<FluidStack> validator;
     @Nonnull
     protected FluidStack fluid = FluidStack.EMPTY;
-    protected int capacity;
+    protected long capacity;
 
-    public FluidTank(int capacity)
+    public FluidTank(long capacity)
     {
         this(capacity, e -> true);
     }
 
-    public FluidTank(int capacity, Predicate<FluidStack> validator)
+    public FluidTank(long capacity, Predicate<FluidStack> validator)
     {
         this.capacity = capacity;
         this.validator = validator;
     }
 
-    public FluidTank setCapacity(int capacity)
+    public FluidTank setCapacity(long capacity)
     {
         this.capacity = capacity;
         return this;
@@ -56,7 +55,7 @@ public class FluidTank implements IFluidHandler, IFluidTank {
         return validator.test(stack);
     }
 
-    public int getCapacity()
+    public long getCapacityLong()
     {
         return capacity;
     }
@@ -67,7 +66,7 @@ public class FluidTank implements IFluidHandler, IFluidTank {
         return fluid;
     }
 
-    public int getFluidAmount()
+    public long getFluidAmountLong()
     {
         return fluid.getAmount();
     }
@@ -100,9 +99,9 @@ public class FluidTank implements IFluidHandler, IFluidTank {
     }
 
     @Override
-    public int getTankCapacity(int tank) {
+    public long getTankCapacityLong(int tank) {
 
-        return getCapacity();
+        return getCapacityLong();
     }
 
     @Override
@@ -112,7 +111,7 @@ public class FluidTank implements IFluidHandler, IFluidTank {
     }
 
     @Override
-    public int fill(FluidStack resource, FluidAction action)
+    public long fillLong(FluidStack resource, FluidAction action)
     {
         if (resource.isEmpty() || !isFluidValid(resource))
         {
@@ -140,7 +139,7 @@ public class FluidTank implements IFluidHandler, IFluidTank {
         {
             return 0;
         }
-        int filled = capacity - fluid.getAmount();
+        long filled = capacity - fluid.getAmount();
 
         if (resource.getAmount() < filled)
         {
@@ -169,9 +168,9 @@ public class FluidTank implements IFluidHandler, IFluidTank {
 
     @Nonnull
     @Override
-    public FluidStack drain(int maxDrain, FluidAction action)
+    public FluidStack drain(long maxDrain, FluidAction action)
     {
-        int drained = maxDrain;
+        long drained = maxDrain;
         if (fluid.getAmount() < drained)
         {
             drained = fluid.getAmount();
@@ -200,7 +199,7 @@ public class FluidTank implements IFluidHandler, IFluidTank {
         return fluid.isEmpty();
     }
 
-    public int getSpace()
+    public long getSpace()
     {
         return Math.max(0, capacity - fluid.getAmount());
     }

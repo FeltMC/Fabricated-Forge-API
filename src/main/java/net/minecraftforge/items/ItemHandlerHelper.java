@@ -19,6 +19,29 @@ import javax.annotation.Nullable;
 
 public class ItemHandlerHelper
 {
+
+    /**
+     * @return stack extracted
+     */
+    public static ItemStack extract(IItemHandler inv, ItemStack stack, boolean sim) {
+        int toExtract = stack.getCount();
+        int totalSlots = inv.getSlots();
+        ItemStack finalStack = ItemStack.EMPTY;
+
+        for (int i = 0; i < totalSlots; i++) {
+            ItemStack stackInSlot = inv.getStackInSlot(i);
+            if (!canItemStacksStack(stackInSlot, stack)) continue;
+            ItemStack extracted = inv.extractItem(i, toExtract, sim);
+            toExtract -= extracted.getCount();
+            if (finalStack == ItemStack.EMPTY) {
+                finalStack = extracted;
+            } else {
+                finalStack.setCount(finalStack.getCount() + extracted.getCount());
+            }
+        }
+
+        return finalStack;
+    }
     @Nonnull
     public static ItemStack insertItem(IItemHandler dest, @Nonnull ItemStack stack, boolean simulate)
     {

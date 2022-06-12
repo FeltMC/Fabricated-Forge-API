@@ -9,11 +9,11 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 import com.google.gson.*;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.util.Mth;
 
 import net.minecraft.client.renderer.block.model.ItemTransform;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Quaternion;
@@ -24,7 +24,7 @@ import com.mojang.math.Vector4f;
 public final class TransformationHelper
 {
     @Deprecated
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     // TODO: this is used in 3 places, not a trivial refactor. Needs investigating. -C
     public static Transformation toTransformation(ItemTransform transform)
     {

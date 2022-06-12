@@ -8,6 +8,8 @@ package net.minecraftforge.client.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -18,9 +20,8 @@ import net.minecraftforge.fml.loading.FMLConfig;
 import net.minecraftforge.versions.forge.ForgeVersion;
 import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.client.loading.ClientModLoader;
-import net.minecraftforge.api.distmarker.Dist;
 
-@OnlyIn(Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public class NotificationModUpdateScreen extends Screen
 {
 

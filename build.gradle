@@ -1,6 +1,12 @@
 plugins {
     id "maven-publish"
-    id "fabric-loom" version "0.12-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
+}
+
+dependencies {
+    //todo fork these for proper fabric compat
+    //modImplementation('net.minecraftforge:forgespi:4.0.10')
+    modCompileOnly("io.github.fabricators_of_create:Porting-Lib:0.2.0+1.18.2.${rootProject.port_lib_hash}") { transitive(false) }
 }
 
 allprojects {
@@ -14,6 +20,10 @@ allprojects {
         maven {
             name = 'parchment'
             url = 'https://maven.parchmentmc.org'
+        }
+        maven {
+            name = 'forge'
+            url = 'https://maven.minecraftforge.net/'
         }
     }
 
@@ -35,14 +45,6 @@ allprojects {
     tasks.withType(JavaCompile).configureEach {
         it.options.encoding = 'UTF-8'
     }
-}
-
-allprojects {
-
-
-
-
-
 }
 
 project(':forge') {

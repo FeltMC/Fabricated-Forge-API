@@ -5,7 +5,8 @@
 
 package net.minecraftforge.common;
 
-import net.minecraftforge.api.distmarker.Dist;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.eventbus.api.BusBuilder;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -41,7 +42,7 @@ public class MinecraftForge
 
        UsernameCache.load();
        TierSortingRegistry.init();
-       if (FMLEnvironment.dist == Dist.CLIENT) ClientCommandHandler.init();
+       if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) ClientCommandHandler.init();
    }
 
 /*

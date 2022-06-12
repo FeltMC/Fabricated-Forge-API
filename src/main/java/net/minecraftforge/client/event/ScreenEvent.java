@@ -11,11 +11,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.gui.screens.Screen;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -29,7 +29,7 @@ import org.lwjgl.glfw.GLFW;
  *
  * @author bspkrs
  */
-@OnlyIn(Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public class ScreenEvent extends Event
 {
     private final Screen screen;

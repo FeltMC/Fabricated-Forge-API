@@ -5,27 +5,33 @@
 
 package net.minecraftforge.fluids;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.google.common.base.Preconditions;
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlockContainer;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -33,16 +39,14 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.wrappers.BlockWrapper;
 import net.minecraftforge.fluids.capability.wrappers.BucketPickupHandlerWrapper;
 import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 
 public class FluidUtil
 {
@@ -144,7 +148,7 @@ public class FluidUtil
                         }
                         else
                         {
-                            containerFluidHandler.fill(simulatedTransfer, IFluidHandler.FluidAction.SIMULATE);
+                            containerFluidHandler.fillLong(simulatedTransfer, IFluidHandler.FluidAction.SIMULATE);
                         }
 
                         ItemStack resultContainer = containerFluidHandler.getContainer();
@@ -341,7 +345,7 @@ public class FluidUtil
      * @return the fluidStack that was transferred from the source to the destination. null on failure.
      */
     @Nonnull
-    public static FluidStack tryFluidTransfer(IFluidHandler fluidDestination, IFluidHandler fluidSource, int maxAmount, boolean doTransfer)
+    public static FluidStack tryFluidTransfer(IFluidHandler fluidDestination, IFluidHandler fluidSource, long maxAmount, boolean doTransfer)
     {
         FluidStack drainable = fluidSource.drain(maxAmount, IFluidHandler.FluidAction.SIMULATE);
         if (!drainable.isEmpty())
@@ -353,7 +357,7 @@ public class FluidUtil
 
     /**
      * Fill a destination fluid handler from a source fluid handler using a specific fluid.
-     * To specify a max amount to transfer instead of specific fluid, use {@link #tryFluidTransfer(IFluidHandler, IFluidHandler, int, boolean)}
+     * To specify a max amount to transfer instead of specific fluid, use {@link #tryFluidTransfer(IFluidHandler, IFluidHandler, long, boolean)}
      * To transfer as much as possible, use {@link Integer#MAX_VALUE} for resource.amount.
      *
      * @param fluidDestination The fluid handler to be filled.
@@ -378,12 +382,12 @@ public class FluidUtil
      * Assumes that "drainable" can be drained from "fluidSource".
      *
      * Modders: Instead of this method, use {@link #tryFluidTransfer(IFluidHandler, IFluidHandler, FluidStack, boolean)}
-     * or {@link #tryFluidTransfer(IFluidHandler, IFluidHandler, int, boolean)}.
+     * or {@link #tryFluidTransfer(IFluidHandler, IFluidHandler, long, boolean)}.
      */
     @Nonnull
     private static FluidStack tryFluidTransfer_Internal(IFluidHandler fluidDestination, IFluidHandler fluidSource, FluidStack drainable, boolean doTransfer)
     {
-        int fillableAmount = fluidDestination.fill(drainable, IFluidHandler.FluidAction.SIMULATE);
+        long fillableAmount = fluidDestination.fillLong(drainable, IFluidHandler.FluidAction.SIMULATE);
         if (fillableAmount > 0)
         {
             drainable.setAmount(fillableAmount);
@@ -392,7 +396,7 @@ public class FluidUtil
                 FluidStack drained = fluidSource.drain(drainable, IFluidHandler.FluidAction.EXECUTE);
                 if (!drained.isEmpty())
                 {
-                    drained.setAmount(fluidDestination.fill(drained, IFluidHandler.FluidAction.EXECUTE));
+                    drained.setAmount(fluidDestination.fillLong(drained, IFluidHandler.FluidAction.EXECUTE));
                     return drained;
                 }
             }
@@ -416,9 +420,165 @@ public class FluidUtil
      *
      * Vanilla buckets will be converted to universal buckets if they are enabled.
      */
-    public static LazyOptional<IFluidHandlerItem> getFluidHandler(@Nonnull ItemStack itemStack)
+    public static LazyOptional<IFluidHandlerItem> getFluidHandler(@Nonnull ItemStack stack)
     {
-        return itemStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+        if (stack.isEmpty()) return LazyOptional.empty();
+        LazyOptional<IFluidHandlerItem> cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+        if (cap.isPresent()) return cap;
+        ContainerItemContext ctx = ContainerItemContext.withInitial(stack);
+        Storage<FluidVariant> fluidStorage = FluidStorage.ITEM.find(stack, ctx);
+        return fluidStorage == null ? LazyOptional.empty() : LazyOptional.of(() -> new FluidStorageHandlerItem(ctx, fluidStorage));
+    }
+
+    public static class FluidStorageHandler implements IFluidHandler {
+        protected final Storage<FluidVariant> storage;
+        protected long version;
+        protected int tanks;
+        protected FluidStack[] stacks;
+        protected Long[] capacities;
+
+        public FluidStorageHandler(Storage<FluidVariant> storage) {
+            this.storage = storage;
+            this.version = storage.getVersion();
+            updateContents();
+        }
+
+        public boolean shouldUpdate() {
+            return storage.getVersion() != version;
+        }
+
+        private void updateContents() {
+            List<FluidStack> stacks = new ArrayList<>();
+            List<Long> capacities = new ArrayList<>();
+            try (Transaction t = Transaction.openOuter()) {
+                for (StorageView<FluidVariant> view : storage.iterable(t)) {
+                    stacks.add(new FluidStack(view.getResource(), view.getAmount()));
+                    capacities.add(view.getCapacity());
+                }
+                t.abort();
+            }
+            this.stacks = stacks.toArray(FluidStack[]::new);
+            this.capacities = capacities.toArray(Long[]::new);
+            this.tanks = stacks.size();
+            this.version = storage.getVersion();
+        }
+
+        private boolean validIndex(int tank) {
+            return tank >= 0 && tank < tanks;
+        }
+
+        /* IFluidHandler */
+        @Override
+        public int getTanks() {
+            if (shouldUpdate())
+                updateContents();
+            return tanks;
+        }
+
+        @Override
+        public FluidStack getFluidInTank(int tank) {
+            if (validIndex(tank)) {
+                if (shouldUpdate())
+                    updateContents();
+                return stacks[tank].copy();
+            }
+            return FluidStack.EMPTY;
+        }
+
+        @Override
+        public long getTankCapacityLong(int tank) {
+            if (validIndex(tank)) {
+                if (shouldUpdate())
+                    updateContents();
+                return (int) (long) capacities[tank];
+            }
+            return 0;
+        }
+
+        @Override
+        public long fillLong(FluidStack stack, FluidAction action) {
+            if (stack.isEmpty())
+                return 0;
+            if (!storage.supportsInsertion())
+                return 0;
+
+            try (Transaction t = Transaction.openOuter()) {
+                long filled = storage.insert(stack.getType(), stack.getAmount(), t);
+                if (action.execute()) {
+                    t.commit();
+                    if (shouldUpdate())
+                        updateContents();
+                }
+                return filled;
+            }
+        }
+
+        @Override
+        public FluidStack drain(FluidStack stack, FluidAction action) {
+            if (stack.isEmpty())
+                return FluidStack.EMPTY;
+            if (!storage.supportsExtraction())
+                return FluidStack.EMPTY;
+
+            try (Transaction t = Transaction.openOuter()) {
+                long extracted = storage.extract(stack.getType(), stack.getAmount(), t);
+                if (action.execute()) {
+                    t.commit();
+                    if (shouldUpdate())
+                        updateContents();
+                }
+                return stack.copy().setAmount(extracted);
+            }
+        }
+
+        @Override
+        public FluidStack drain(long toExtract, FluidAction action) {
+            if (toExtract == 0)
+                return FluidStack.EMPTY;
+            if (!storage.supportsExtraction())
+                return FluidStack.EMPTY;
+
+            FluidStack extracted = FluidStack.EMPTY;
+            try (Transaction t = Transaction.openOuter()) {
+                for (StorageView<FluidVariant> view : storage.iterable(t)) {
+                    FluidVariant var = view.getResource();
+                    if (var.isBlank() || !extracted.canFill(var)) continue;
+                    long drained = view.extract(var, toExtract, t);
+                    toExtract -= drained;
+                    if (drained != 0) {
+                        if (extracted.isEmpty()) {
+                            extracted = new FluidStack(var, drained);
+                        } else if (extracted.canFill(var)) {
+                            extracted.grow(drained);
+                        }
+                    }
+                    if (toExtract <= 0) break;
+                }
+                if (action.execute()) {
+                    t.commit();
+                    if (shouldUpdate())
+                        updateContents();
+                }
+            }
+            return extracted;
+        }
+    }
+
+    public static class FluidStorageHandlerItem extends FluidStorageHandler implements IFluidHandlerItem {
+        protected ContainerItemContext ctx;
+
+        public FluidStorageHandlerItem(ContainerItemContext ctx, Storage<FluidVariant> storage) {
+            super(storage);
+            this.ctx = ctx;
+        }
+
+        @Override
+        public ItemStack getContainer() {
+            ItemStack stack = ctx.getItemVariant().toStack();
+            if (stack.isEmpty()) return stack;
+            stack.setCount((int) ctx.getAmount());
+            return stack;
+        }
     }
 
     /**
@@ -450,9 +610,9 @@ public class FluidUtil
         if (state.hasBlockEntity())
         {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity != null)
+            if (blockEntity instanceof ICapabilityProvider provider)
             {
-                return blockEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+                return provider.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
             }
         }
         return LazyOptional.empty();

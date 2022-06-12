@@ -5,7 +5,8 @@
   "refmap": "fabricated-forge-api.refmap.json",
   "mixins": [
     "item.AxeItemMixin",
-    "item.ItemMixin"
+    "item.ItemMixin",
+    "item.ItemStackMixin"
   ],
   "minVersion": "0.8"
 }

@@ -12,7 +12,7 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 
 public class CapabilityItemHandler
 {
-    public static final Capability<IItemHandler> ITEM_HANDLER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IItemHandler> ITEM_HANDLER_CAPABILITY = new Capability<>("item_handler_capability"); //CapabilityManager.get(new CapabilityToken<>(){});
 
     public static void register(RegisterCapabilitiesEvent event)
     {

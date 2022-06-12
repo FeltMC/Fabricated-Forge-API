@@ -34,13 +34,13 @@ public class FluidHandlerItemStackSimple implements IFluidHandlerItem, ICapabili
 
     @Nonnull
     protected ItemStack container;
-    protected int capacity;
+    protected long capacity;
 
     /**
      * @param container  The container itemStack, data is stored on it directly as NBT.
      * @param capacity   The maximum capacity of this fluid tank.
      */
-    public FluidHandlerItemStackSimple(@Nonnull ItemStack container, int capacity)
+    public FluidHandlerItemStackSimple(@Nonnull ItemStack container, long capacity)
     {
         this.container = container;
         this.capacity = capacity;
@@ -90,7 +90,7 @@ public class FluidHandlerItemStackSimple implements IFluidHandlerItem, ICapabili
     }
 
     @Override
-    public int getTankCapacity(int tank) {
+    public long getTankCapacityLong(int tank) {
 
         return capacity;
     }
@@ -102,7 +102,7 @@ public class FluidHandlerItemStackSimple implements IFluidHandlerItem, ICapabili
     }
 
     @Override
-    public int fill(@Nonnull FluidStack resource, FluidAction action)
+    public long fillLong(@Nonnull FluidStack resource, FluidAction action)
     {
         if (container.getCount() != 1 || resource.isEmpty() || !canFillFluidType(resource))
         {
@@ -112,7 +112,7 @@ public class FluidHandlerItemStackSimple implements IFluidHandlerItem, ICapabili
         FluidStack contained = getFluid();
         if (contained.isEmpty())
         {
-            int fillAmount = Math.min(capacity, resource.getAmount());
+            long fillAmount = Math.min(capacity, resource.getAmount());
             if (fillAmount == capacity) {
                 if (action.execute()) {
                     FluidStack filled = resource.copy();
@@ -140,7 +140,7 @@ public class FluidHandlerItemStackSimple implements IFluidHandlerItem, ICapabili
 
     @Nonnull
     @Override
-    public FluidStack drain(int maxDrain, FluidAction action)
+    public FluidStack drain(long maxDrain, FluidAction action)
     {
         if (container.getCount() != 1 || maxDrain <= 0)
         {
@@ -153,7 +153,7 @@ public class FluidHandlerItemStackSimple implements IFluidHandlerItem, ICapabili
             return FluidStack.EMPTY;
         }
 
-        final int drainAmount = Math.min(contained.getAmount(), maxDrain);
+        final long drainAmount = Math.min(contained.getAmount(), maxDrain);
         if (drainAmount == capacity) {
             FluidStack drained = contained.copy();
 
@@ -199,7 +199,7 @@ public class FluidHandlerItemStackSimple implements IFluidHandlerItem, ICapabili
      */
     public static class Consumable extends FluidHandlerItemStackSimple
     {
-        public Consumable(ItemStack container, int capacity)
+        public Consumable(ItemStack container, long capacity)
         {
             super(container, capacity);
         }
@@ -219,7 +219,7 @@ public class FluidHandlerItemStackSimple implements IFluidHandlerItem, ICapabili
     {
         protected final ItemStack emptyContainer;
 
-        public SwapEmpty(ItemStack container, ItemStack emptyContainer, int capacity)
+        public SwapEmpty(ItemStack container, ItemStack emptyContainer, long capacity)
         {
             super(container, capacity);
             this.emptyContainer = emptyContainer;

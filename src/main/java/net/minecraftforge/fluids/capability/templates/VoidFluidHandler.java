@@ -10,8 +10,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
 
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-
 /**
  * VoidFluidHandler is a template fluid handler that can be filled indefinitely without ever getting full.
  * It does not store fluid that gets filled into it, but "destroys" it upon receiving it.
@@ -30,13 +28,13 @@ public class VoidFluidHandler implements IFluidHandler
     public FluidStack getFluidInTank(int tank) { return FluidStack.EMPTY; }
 
     @Override
-    public int getTankCapacity(int tank) { return Integer.MAX_VALUE; }
+    public long getTankCapacityLong(int tank) { return Integer.MAX_VALUE; }
 
     @Override
     public boolean isFluidValid(int tank, @Nonnull FluidStack stack) { return true; }
 
     @Override
-    public int fill(FluidStack resource, FluidAction action)
+    public long fillLong(FluidStack resource, FluidAction action)
     {
         return resource.getAmount();
     }
@@ -50,7 +48,7 @@ public class VoidFluidHandler implements IFluidHandler
 
     @Nonnull
     @Override
-    public FluidStack drain(int maxDrain, FluidAction action)
+    public FluidStack drain(long maxDrain, FluidAction action)
     {
         return FluidStack.EMPTY;
     }

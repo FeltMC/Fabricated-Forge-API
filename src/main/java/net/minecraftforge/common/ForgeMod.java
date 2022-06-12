@@ -5,6 +5,8 @@
 
 package net.minecraftforge.common;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
 import net.minecraft.commands.synchronization.ArgumentTypes;
 import net.minecraft.commands.synchronization.ArgumentSerializer;
@@ -15,7 +17,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Items;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.Registry;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -177,7 +178,7 @@ public class ForgeMod
 
         ForgeRegistries.ITEMS.tags().addOptionalTagDefaults(Tags.Items.ENCHANTING_FUELS, Set.of(Items.LAPIS_LAZULI.delegate));
 
-        if (FMLEnvironment.dist == Dist.CLIENT)
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
         {
             ModelLoaderRegistry.init();
         }
@@ -207,7 +208,7 @@ public class ForgeMod
 
     public void loadComplete(FMLLoadCompleteEvent event)
     {
-        if (FMLEnvironment.dist == Dist.CLIENT)
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
             ForgeHooksClient.registerForgeWorldPresetScreens();
     }
 

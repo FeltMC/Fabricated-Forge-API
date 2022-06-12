@@ -49,13 +49,18 @@ public class ItemMixin implements IForgeItem {
     //TODO bring proper datagen to fabric
     private void initClient() {
         // Minecraft instance isn't available in datagen, so don't call initializeClient if in datagen
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && !net.minecraftforge.fml.loading.FMLLoader.getLaunchHandler().isData()) {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && !isData()) {
             initializeClient(properties -> {
                 if (properties == this)
                     throw new IllegalStateException("Don't extend IItemRenderProperties in your item, use an anonymous class instead.");
                 this.renderProperties = properties;
             });
         }
+    }
+
+    private boolean isData(){
+        //return net.minecraftforge.fml.loading.FMLLoader.getLaunchHandler().isData();
+        return false;
     }
 
     public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.IItemRenderProperties> consumer) {

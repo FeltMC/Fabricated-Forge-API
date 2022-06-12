@@ -12,8 +12,8 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 
 public class CapabilityFluidHandler
 {
-    public static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});
-    public static Capability<IFluidHandlerItem> FLUID_HANDLER_ITEM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});
+    public static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY = new Capability<>("fluid_handler_capability"); //CapabilityManager.get(new CapabilityToken<>(){});
+    public static Capability<IFluidHandlerItem> FLUID_HANDLER_ITEM_CAPABILITY = new Capability<>("fluid_handleR_item_capability"); //CapabilityManager.get(new CapabilityToken<>(){});
 
     public static void register(RegisterCapabilitiesEvent event)
     {
