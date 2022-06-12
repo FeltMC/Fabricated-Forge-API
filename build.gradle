@@ -3,10 +3,19 @@ plugins {
     id "fabric-loom" version "0.12-SNAPSHOT" apply false
 }
 
-subprojects {
+allprojects {
     apply plugin: "fabric-loom"
+    apply plugin: "maven-publish"
+    apply plugin: "java"
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    group = rootProject.maven_group
 
+    repositories {
+        maven {
+            name = 'parchment'
+            url = 'https://maven.parchmentmc.org'
+        }
+    }
 
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
@@ -18,22 +27,6 @@ subprojects {
         modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
         //testmodImplementation sourceSets.main.output
     }
-}
-
-allprojects {
-    apply plugin: "maven-publish"
-    apply plugin: "java"
-
-
-
-    group = rootProject.maven_group
-
-    repositories {
-        maven {
-            name = 'parchment'
-            url = 'https://maven.parchmentmc.org'
-        }
-    }
 
     java {
         withSourcesJar()
@@ -42,6 +35,14 @@ allprojects {
     tasks.withType(JavaCompile).configureEach {
         it.options.encoding = 'UTF-8'
     }
+}
+
+allprojects {
+
+
+
+
+
 }
 
 project(':forge') {
