@@ -3,14 +3,10 @@ plugins {
     id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
 }
 
-dependencies {
-    //todo fork these for proper fabric compat
-    //modImplementation('net.minecraftforge:forgespi:4.0.10')
-    modCompileOnly("io.github.fabricators_of_create:Porting-Lib:0.2.0+1.18.2.${rootProject.port_lib_hash}") { transitive(false) }
-}
+
 
 allprojects {
-    apply plugin: "fabric-loom"
+    apply plugin: "dev.architectury.loom"
     apply plugin: "maven-publish"
     apply plugin: "java"
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -25,6 +21,7 @@ allprojects {
             name = 'forge'
             url = 'https://maven.minecraftforge.net/'
         }
+        maven { url = "https://mvn.devos.one/snapshots/" }
     }
 
     dependencies {
@@ -46,6 +43,13 @@ allprojects {
         it.options.encoding = 'UTF-8'
     }
 }
+
+dependencies {
+    //implementation(project(":EventBus"))
+    //implementation(project(":ForgeSPI"))
+    modCompileOnly("io.github.fabricators_of_create:Porting-Lib:0.2.0+1.18.2.${rootProject.port_lib_hash}") { transitive(false) }
+}
+
 
 project(':forge') {
     dependencies {
