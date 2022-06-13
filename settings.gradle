@@ -22,6 +22,8 @@ rootProject.name = 'ForgeRoot'
 //include(":ForgeSPI")
 include(":fabricated-forge-caps")
 include(":fabricated-forge-datagen")
+include("fabricated-forge-recipe-api")
+include(":fabricated-forge-registry")
 include(":forge-dep")
 
 include ':forge'

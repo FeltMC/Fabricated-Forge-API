@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricated-forge-datagen",
+  "version": "${version}",
+  "name": "Fabricated Forge Datagen",
+  "description": "Ports forge's datagen api to fabric, including using the same path.",
+  "authors": [
+    "Trinsdar"
+  ],
+  "contact": {
+    "sources": "https://github.com/GregTech-Intergalactical/TesseractAPI"
+  },
+  "license": "LGPL-3.0-only",
+  "icon": "assets/tesseractapi/icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  }
+}

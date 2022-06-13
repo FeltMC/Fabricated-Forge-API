@@ -33,10 +33,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.VanillaPackResources;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.ModelBuilder;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
-import net.minecraftforge.forgespi.language.IModFileInfo;
-import net.minecraftforge.resource.ResourcePackLoader;
 
 import javax.annotation.Nullable;
 
@@ -111,14 +108,15 @@ public class ExistingFileHelper {
             candidateClientResources.add(pack);
             candidateServerResources.add(pack);
         }
-        for (String existingMod : existingMods) {
+        //TODO use fabric modinfo
+        /*for (String existingMod : existingMods){
             IModFileInfo modFileInfo = ModList.get().getModFileById(existingMod);
             if (modFileInfo != null) {
                 PackResources pack = ResourcePackLoader.createPackForMod(modFileInfo);
                 candidateClientResources.add(pack);
                 candidateServerResources.add(pack);
             }
-        }
+        }*/
 
         this.clientResources = new MultiPackResourceManager(PackType.CLIENT_RESOURCES, candidateClientResources);
         this.serverData = new MultiPackResourceManager(PackType.SERVER_DATA, candidateServerResources);
