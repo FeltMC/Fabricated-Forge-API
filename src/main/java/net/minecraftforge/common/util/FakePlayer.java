@@ -8,6 +8,8 @@ package net.minecraftforge.common.util;
 import com.mojang.authlib.GameProfile;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import net.fabricmc.fabric.impl.event.lifecycle.LifecycleEventsImpl;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -66,7 +68,6 @@ import net.minecraft.stats.Stat;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -93,7 +94,7 @@ public class FakePlayer extends ServerPlayer
     @Override public void die(DamageSource source){ return; }
     @Override public void tick(){ return; }
     @Override public void updateOptions(ServerboundClientInformationPacket pkt){ return; }
-    @Override @Nullable public MinecraftServer getServer() { return ServerLifecycleHooks.getCurrentServer(); }
+    @Override @Nullable public MinecraftServer getServer() { return (MinecraftServer) FabricLoader.getInstance().getGameInstance(); }
 
     @ParametersAreNonnullByDefault
     private static class FakePlayerNetHandler extends ServerGamePacketListenerImpl {

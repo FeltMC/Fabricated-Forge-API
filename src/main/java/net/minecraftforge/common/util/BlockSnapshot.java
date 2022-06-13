@@ -8,6 +8,8 @@ package net.minecraftforge.common.util;
 import java.lang.ref.WeakReference;
 import java.util.Objects;
 
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -17,7 +19,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nullable;
 
@@ -85,7 +86,8 @@ public class BlockSnapshot
         LevelAccessor world = this.level != null ? this.level.get() : null;
         if (world == null)
         {
-            world = ServerLifecycleHooks.getCurrentServer().getLevel(this.dim);
+            //TODO: make sure this only ever returns the server
+            world = ((MinecraftServer) FabricLoader.getInstance().getGameInstance()).getLevel(this.dim);
             this.level = new WeakReference<LevelAccessor>(world);
         }
         return world;
