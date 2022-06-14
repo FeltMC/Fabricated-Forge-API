@@ -5,7 +5,7 @@
 
 package net.minecraftforge.common.util;
 
-import net.minecraftforge.common.ForgeI18n;
+import net.minecraft.network.chat.TranslatableComponent;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.Restriction;
 import org.apache.maven.artifact.versioning.VersionRange;
@@ -25,7 +25,7 @@ public class MavenVersionStringHelper {
     public static String restrictionToString(final Restriction restriction) {
         if ( restriction.getLowerBound() == null && restriction.getUpperBound() == null )
         {
-            return ForgeI18n.parseMessage("fml.messages.version.restriction.any");
+            return parseMessage("fml.messages.version.restriction.any");
         }
         else if ( restriction.getLowerBound() != null && restriction.getUpperBound() != null )
         {
@@ -37,19 +37,19 @@ public class MavenVersionStringHelper {
             {
                 if (restriction.isLowerBoundInclusive() && restriction.isUpperBoundInclusive())
                 {
-                    return ForgeI18n.parseMessage("fml.messages.version.restriction.bounded.inclusive", restriction.getLowerBound(), restriction.getUpperBound());
+                    return parseMessage("fml.messages.version.restriction.bounded.inclusive", restriction.getLowerBound(), restriction.getUpperBound());
                 }
                 else if (restriction.isLowerBoundInclusive())
                 {
-                    return ForgeI18n.parseMessage("fml.messages.version.restriction.bounded.upperexclusive", restriction.getLowerBound(), restriction.getUpperBound());
+                    return parseMessage("fml.messages.version.restriction.bounded.upperexclusive", restriction.getLowerBound(), restriction.getUpperBound());
                 }
                 else if (restriction.isUpperBoundInclusive())
                 {
-                    return ForgeI18n.parseMessage("fml.messages.version.restriction.bounded.lowerexclusive", restriction.getLowerBound(), restriction.getUpperBound());
+                    return parseMessage("fml.messages.version.restriction.bounded.lowerexclusive", restriction.getLowerBound(), restriction.getUpperBound());
                 }
                 else
                 {
-                    return ForgeI18n.parseMessage("fml.messages.version.restriction.bounded.exclusive", restriction.getLowerBound(), restriction.getUpperBound());
+                    return parseMessage("fml.messages.version.restriction.bounded.exclusive", restriction.getLowerBound(), restriction.getUpperBound());
                 }
             }
         }
@@ -57,24 +57,29 @@ public class MavenVersionStringHelper {
         {
             if ( restriction.isLowerBoundInclusive() )
             {
-                return ForgeI18n.parseMessage("fml.messages.version.restriction.lower.inclusive", restriction.getLowerBound());
+                return parseMessage("fml.messages.version.restriction.lower.inclusive", restriction.getLowerBound());
             }
             else
             {
-                return ForgeI18n.parseMessage("fml.messages.version.restriction.lower.exclusive", restriction.getLowerBound());
+                return parseMessage("fml.messages.version.restriction.lower.exclusive", restriction.getLowerBound());
             }
         }
         else
         {
             if ( restriction.isUpperBoundInclusive() )
             {
-                return ForgeI18n.parseMessage("fml.messages.version.restriction.upper.inclusive", restriction.getUpperBound());
+                return parseMessage("fml.messages.version.restriction.upper.inclusive", restriction.getUpperBound());
             }
             else
             {
-                return ForgeI18n.parseMessage("fml.messages.version.restriction.upper.exclusive", restriction.getUpperBound());
+                return parseMessage("fml.messages.version.restriction.upper.exclusive", restriction.getUpperBound());
             }
         }
+    }
+
+    //TODO better way of translating this
+    static String parseMessage(String key, Object... args){
+        return new TranslatableComponent(key, args).getContents();
     }
 
     public static void parseVersionRange(final StringBuffer stringBuffer, final Object range) {
