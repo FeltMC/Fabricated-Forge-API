@@ -1,12 +1,12 @@
 plugins {
     id "maven-publish"
-    id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
+    id "fabric-loom" version "0.12-SNAPSHOT" apply false
 }
 
 
 
 allprojects {
-    apply plugin: "dev.architectury.loom"
+    apply plugin: "fabric-loom"
     apply plugin: "maven-publish"
     apply plugin: "java"
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)

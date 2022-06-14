@@ -1,6 +1,6 @@
 [submodule "EventBus"]
 	path = EventBus
-	url = https://github.com/MinecraftForge/EventBus.git
+	url = https://github.com/FeltMC/ForgeFelt-EventBus.git
 [submodule "ForgeSPI"]
 	path = ForgeSPI
-	url = https://github.com/MinecraftForge/ForgeSPI.git
+	url = https://github.com/FeltMC/ForgeSPI.git

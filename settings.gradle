@@ -18,7 +18,7 @@ rootProject.name = 'ForgeRoot'
 //include 'mclanguage'
 //include 'javafmllanguage'
 //include 'lowcodelanguage'
-//include(":EventBus")
+include(":EventBus")
 //include(":ForgeSPI")
 include(":fabricated-forge-caps-utils")
 include(":fabricated-forge-datagen")
