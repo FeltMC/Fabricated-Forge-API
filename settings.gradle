@@ -20,7 +20,6 @@ rootProject.name = 'ForgeRoot'
 //include 'lowcodelanguage'
 include(":EventBus")
 include(":ForgeSPI")
-include(":fabricated-forge-caps-utils")
 include(":fabricated-forge-datagen")
 include(":fabricated-forge-recipe-api")
 include(":fabricated-forge-registry")

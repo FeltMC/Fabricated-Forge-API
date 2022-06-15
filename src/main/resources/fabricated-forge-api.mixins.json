@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "fabricated-forge-api.refmap.json",
   "mixins": [
+    "blockentity.BlockEntityMixin",
     "item.AxeItemMixin",
     "item.ItemMixin",
     "item.ItemStackMixin"

@@ -1,3 +1,0 @@
-dependencies {
-    modCompileOnly("org.apache.maven:maven-artifact:3.6.3")
-}
