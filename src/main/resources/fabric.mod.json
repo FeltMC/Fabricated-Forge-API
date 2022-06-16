@@ -30,6 +30,9 @@
       "net/minecraft/class_1799": [
         "net/minecraftforge/common/extensions/IForgeItemStack",
         "net/minecraftforge/common/capabilities/ICapabilityProvider"
+      ],
+      "net/minecraft/class_1087": [
+        "net/minecraftforge/client/extensions/IForgeBakedModel"
       ]
     }
   }

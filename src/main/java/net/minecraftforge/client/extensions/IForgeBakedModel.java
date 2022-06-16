@@ -54,7 +54,9 @@ public interface IForgeBakedModel
      */
     default BakedModel handlePerspective(ItemTransforms.TransformType cameraTransformType, PoseStack poseStack)
     {
-        return net.minecraftforge.client.ForgeHooksClient.handlePerspective(self(), cameraTransformType, poseStack);
+        //todo fabric method if it exists
+        return null;
+        //return net.minecraftforge.client.ForgeHooksClient.handlePerspective(self(), cameraTransformType, poseStack);
     }
 
     default @Nonnull IModelData getModelData(@Nonnull BlockAndTintGetter level, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull IModelData modelData)

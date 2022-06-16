@@ -24,8 +24,11 @@ include(":fabricated-forge-datagen")
 include(":fabricated-forge-recipe-api")
 include(":fabricated-forge-registry")
 include(":fabricated-forge-transfer")
+include(":fabricated-forge-modeldata")
 include(":forge-dep")
 
 include ':forge'
 
 project(":forge").projectDir = file("projects/forge")
+
+

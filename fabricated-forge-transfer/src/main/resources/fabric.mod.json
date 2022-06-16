@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricated-forge-caps",
+  "version": "${version}",
+  "name": "Fabricated Forge Capabilities",
+  "description": "Ports forge's caps, fluid, and item api to fabric, including using the same path.",
+  "authors": [
+    "coderbot16",
+    "qubka",
+    "repolainen",
+    "mitchej123",
+    "Muramasa"
+  ],
+  "contact": {
+    "sources": "https://github.com/GregTech-Intergalactical/TesseractAPI"
+  },
+  "license": "LGPL-3.0-only",
+  "icon": "assets/tesseractapi/icon.png",
+  "environment": "*",
+  "mixins": [
+    "fabricated-forge-caps.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  }
+}
