@@ -18,16 +18,16 @@ rootProject.name = 'ForgeRoot'
 //include 'mclanguage'
 //include 'javafmllanguage'
 //include 'lowcodelanguage'
-include(":EventBus")
-include(":ForgeSPI")
-include(":fabricated-forge-datagen")
-include(":fabricated-forge-recipe-api")
-include(":fabricated-forge-registry")
-include(":fabricated-forge-transfer")
-include(":fabricated-forge-modeldata")
-include(":forge-dep")
+include("EventBus")
+include("ForgeSPI")
+include("fabricated-forge-datagen")
+include("fabricated-forge-recipe-api")
+include("fabricated-forge-registry")
+include("fabricated-forge-transfer")
+include("fabricated-forge-modeldata")
+include("forge-dep")
 
-include ':forge'
+include 'forge'
 
 project(":forge").projectDir = file("projects/forge")
 

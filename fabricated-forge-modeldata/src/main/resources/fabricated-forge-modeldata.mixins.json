@@ -7,7 +7,6 @@
   ],
   "minVersion": "0.8",
   "client": [
-    "MixinBakedModel",
-    "MixinModelBlockRenderer"
+    "MixinBakedModel"
   ]
 }
