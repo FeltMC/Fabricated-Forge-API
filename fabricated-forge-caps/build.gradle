@@ -7,5 +7,5 @@ repositories {
 
 dependencies{
     include("net.fabricmc.fabric-api:fabric-transfer-api-v1:${project.fabric_transfer_api_version}")
-    modCompileOnly("io.github.fabricators_of_create:Porting-Lib:0.2.0+1.18.2.${rootProject.port_lib_hash}") { transitive(false) }
+    modCompileOnly(include("io.github.fabricators_of_create:Porting-Lib:1.1.310-beta+1.18.2-dev.${rootProject.port_lib_hash}")) { transitive(false) }
 }
