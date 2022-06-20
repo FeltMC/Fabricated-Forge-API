@@ -69,7 +69,7 @@ public abstract class IngredientMixin implements IngredientExtension {
 
     @Inject(method = "fromJson", at = @At(value = "INVOKE", target = "Lcom/google/gson/JsonElement;isJsonObject()Z", shift = At.Shift.BEFORE), cancellable = true)
     private static void injectFromJson(JsonElement json, CallbackInfoReturnable<Ingredient> cir){
-        Ingredient ret = net.minecraftforge.common.crafting.CraftingHelper.getIngredient(json);
+        Ingredient ret = CraftingHelper.getIngredient(json);
         if (ret != null)  cir.setReturnValue(ret);
     }
 
@@ -99,7 +99,7 @@ public abstract class IngredientMixin implements IngredientExtension {
     @Inject(method = "toNetwork", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/crafting/Ingredient;dissolve()V", shift = At.Shift.AFTER), cancellable = true)
     private void injectToNetwork(FriendlyByteBuf buffer, CallbackInfo ci){
         if (!this.isVanilla()){
-            net.minecraftforge.common.crafting.CraftingHelper.write(buffer, (Ingredient) (Object)this);
+            CraftingHelper.write(buffer, (Ingredient) (Object)this);
             ci.cancel();
         }
     }

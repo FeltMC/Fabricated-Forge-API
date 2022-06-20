@@ -5,9 +5,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
-import muramasa.antimatter.util.AntimatterPlatformUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -112,11 +112,11 @@ public abstract class BlockStateProvider implements DataProvider {
     }
 
     private String name(Block block) {
-        return AntimatterPlatformUtils.getIdFromBlock(block).getPath();
+        return Registry.BLOCK.getKey(block).getPath();
     }
 
     public ResourceLocation blockTexture(Block block) {
-        ResourceLocation name = AntimatterPlatformUtils.getIdFromBlock(block);
+        ResourceLocation name = Registry.BLOCK.getKey(block);
         return new ResourceLocation(name.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + name.getPath());
     }
 
@@ -141,7 +141,7 @@ public abstract class BlockStateProvider implements DataProvider {
     }
 
     public void simpleBlockItem(Block block, ModelFile model) {
-        itemModels().getBuilder(AntimatterPlatformUtils.getIdFromBlock(block).getPath()).parent(model);
+        itemModels().getBuilder(Registry.BLOCK.getKey(block).getPath()).parent(model);
     }
 
     public void simpleBlock(Block block, ConfiguredModel... models) {
@@ -257,7 +257,7 @@ public abstract class BlockStateProvider implements DataProvider {
     }
 
     public void stairsBlock(StairBlock block, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
-        stairsBlockInternal(block, AntimatterPlatformUtils.getIdFromBlock(block).toString(), side, bottom, top);
+        stairsBlockInternal(block, Registry.BLOCK.getKey(block).toString(), side, bottom, top);
     }
 
     public void stairsBlock(StairBlock block, String name, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
@@ -370,7 +370,7 @@ public abstract class BlockStateProvider implements DataProvider {
     }
 
     public void fenceBlock(FenceBlock block, ResourceLocation texture) {
-        String baseName = AntimatterPlatformUtils.getIdFromBlock(block).toString();
+        String baseName = Registry.BLOCK.getKey(block).toString();
         fourWayBlock(block, models().fencePost(baseName + "_post", texture), models().fenceSide(baseName + "_side", texture));
     }
 
@@ -379,7 +379,7 @@ public abstract class BlockStateProvider implements DataProvider {
     }
 
     public void fenceGateBlock(FenceGateBlock block, ResourceLocation texture) {
-        fenceGateBlockInternal(block, AntimatterPlatformUtils.getIdFromBlock(block).toString(), texture);
+        fenceGateBlockInternal(block, Registry.BLOCK.getKey(block).toString(), texture);
     }
 
     public void fenceGateBlock(FenceGateBlock block, String name, ResourceLocation texture) {
@@ -412,7 +412,7 @@ public abstract class BlockStateProvider implements DataProvider {
     }
 
     public void wallBlock(WallBlock block, ResourceLocation texture) {
-        wallBlockInternal(block, AntimatterPlatformUtils.getIdFromBlock(block).toString(), texture);
+        wallBlockInternal(block, Registry.BLOCK.getKey(block).toString(), texture);
     }
 
     public void wallBlock(WallBlock block, String name, ResourceLocation texture) {
@@ -452,7 +452,7 @@ public abstract class BlockStateProvider implements DataProvider {
     }
 
     public void paneBlock(IronBarsBlock block, ResourceLocation pane, ResourceLocation edge) {
-        paneBlockInternal(block, AntimatterPlatformUtils.getIdFromBlock(block).toString(), pane, edge);
+        paneBlockInternal(block, Registry.BLOCK.getKey(block).toString(), pane, edge);
     }
 
     public void paneBlock(IronBarsBlock block, String name, ResourceLocation pane, ResourceLocation edge) {
@@ -484,7 +484,7 @@ public abstract class BlockStateProvider implements DataProvider {
     }
 
     public void doorBlock(DoorBlock block, ResourceLocation bottom, ResourceLocation top) {
-        doorBlockInternal(block, AntimatterPlatformUtils.getIdFromBlock(block).toString(), bottom, top);
+        doorBlockInternal(block, Registry.BLOCK.getKey(block).toString(), bottom, top);
     }
 
     public void doorBlock(DoorBlock block, String name, ResourceLocation bottom, ResourceLocation top) {
@@ -519,7 +519,7 @@ public abstract class BlockStateProvider implements DataProvider {
     }
 
     public void trapdoorBlock(TrapDoorBlock block, ResourceLocation texture, boolean orientable) {
-        trapdoorBlockInternal(block, AntimatterPlatformUtils.getIdFromBlock(block).toString(), texture, orientable);
+        trapdoorBlockInternal(block, Registry.BLOCK.getKey(block).toString(), texture, orientable);
     }
 
     public void trapdoorBlock(TrapDoorBlock block, String name, ResourceLocation texture, boolean orientable) {
@@ -554,7 +554,7 @@ public abstract class BlockStateProvider implements DataProvider {
     }
 
     private void saveBlockState(HashCache cache, JsonObject stateJson, Block owner) {
-        ResourceLocation blockName = Preconditions.checkNotNull(AntimatterPlatformUtils.getIdFromBlock(owner));
+        ResourceLocation blockName = Preconditions.checkNotNull(Registry.BLOCK.getKey(owner));
         Path mainOutput = generator.getOutputFolder();
         String pathSuffix = "assets/" + blockName.getNamespace() + "/blockstates/" + blockName.getPath() + ".json";
         Path outputPath = mainOutput.resolve(pathSuffix);

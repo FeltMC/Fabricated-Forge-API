@@ -1,2 +1,6 @@
 archivesBaseName = "fabricated-forge-datagen"
 version = getSubprojectVersion(project)
+
+loom {
+    accessWidenerPath = file("src/main/resources/fabricated-forge-datagen.accesswidener")
+}

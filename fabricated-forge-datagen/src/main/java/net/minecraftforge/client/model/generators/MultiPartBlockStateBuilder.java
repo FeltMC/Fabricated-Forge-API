@@ -195,11 +195,11 @@ public final class MultiPartBlockStateBuilder implements IGeneratedBlockstate {
              *
              * @throws IllegalStateException If this is a nested condition group
              */
-            public MultiPartBlockStateBuilder.PartBuilder end()
+            public PartBuilder end()
             {
                 if (this.parent != null)
                     throw new IllegalStateException("This is a nested condition group, use endNestedGroup() instead");
-                return MultiPartBlockStateBuilder.PartBuilder.this;
+                return PartBuilder.this;
             }
 
             /**
