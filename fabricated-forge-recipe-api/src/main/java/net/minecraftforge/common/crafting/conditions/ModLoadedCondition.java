@@ -7,9 +7,9 @@ package net.minecraftforge.common.crafting.conditions;
 
 import com.google.gson.JsonObject;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.ModList;
 
 public class ModLoadedCondition implements ICondition
 {
@@ -30,7 +30,7 @@ public class ModLoadedCondition implements ICondition
     @Override
     public boolean test()
     {
-        return ModList.get().isLoaded(modid);
+        return FabricLoader.getInstance().isModLoaded(modid);
     }
 
     @Override
