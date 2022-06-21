@@ -31,6 +31,36 @@ subprojects {
 		modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 		//testmodImplementation sourceSets.main.output
 	}
+
+	publishing {
+		publications {
+			mavenJava(MavenPublication) {
+				artifact(remapJar) {
+					builtBy(remapJar)
+				}
+
+				artifact(remapSourcesJar) {
+					builtBy remapSourcesJar
+				}
+			}
+		}
+
+		setupRepositories(repositories)
+	}
+}
+
+void setupRepositories(RepositoryHandler repositories) {
+	//repositories.mavenLocal() // uncomment for testing
+	def ENV = System.getenv()
+	repositories.maven {
+		url "https://repo.repsy.io/mvn/distant/feltmc"
+		if (ENV.MAVEN_PUBLISH_USERNAME) {
+			credentials {
+				username ENV.MAVEN_PUBLISH_USERNAME
+				password ENV.MAVEN_PUBLISH_TOKEN
+			}
+		}
+	}
 }
 
 allprojects {
