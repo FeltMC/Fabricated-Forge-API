@@ -17,6 +17,7 @@ def getSubprojectVersion(project) {
 }
 
 subprojects {
+	apply plugin: "maven-publish"
 	apply plugin: "fabric-loom"
 	java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -66,7 +67,6 @@ void setupRepositories(RepositoryHandler repositories) {
 }
 
 allprojects {
-	apply plugin: "maven-publish"
 	apply plugin: "java"
 
 
