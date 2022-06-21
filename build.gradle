@@ -3,6 +3,8 @@ plugins {
 	id "fabric-loom" version "0.12-SNAPSHOT" apply false
 }
 
+version = "0.0.1"
+
 def getSubprojectVersion(project) {
 	// Get the version from the gradle.properties file
 	def version = project.properties["${project.name}-version"]
