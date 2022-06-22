@@ -35,6 +35,10 @@ subprojects {
 		//testmodImplementation sourceSets.main.output
 	}
 
+	java {
+		withSourcesJar()
+	}
+
 	publishing {
 		publications {
 			mavenJava(MavenPublication) {
@@ -78,10 +82,6 @@ allprojects {
 			name = 'parchment'
 			url = 'https://maven.parchmentmc.org'
 		}
-	}
-
-	java {
-		withSourcesJar()
 	}
 
 	tasks.withType(JavaCompile).configureEach {

@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "fabricated-forge-caps.refmap.json",
   "mixins": [
+    "BlockEntityMixin",
     "ItemMixin",
     "ItemStackMixin"
   ],
