@@ -5,6 +5,7 @@
 
 package net.minecraftforge.items;
 
+import net.fabricatedforgeapi.item.IItemHandlerStorage;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -12,8 +13,13 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
 
-public interface IItemHandler
+public interface IItemHandler extends IItemHandlerStorage
 {
+    @Override
+    default IItemHandler getHandler(){
+        return this;
+    }
+
     /**
      * Returns the number of slots available
      *

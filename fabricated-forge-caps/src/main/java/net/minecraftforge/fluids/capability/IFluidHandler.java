@@ -1,7 +1,14 @@
 package net.minecraftforge.fluids.capability;
+import net.fabricatedforgeapi.fluid.IFluidHandlerStorage;
 import net.minecraftforge.fluids.FluidStack;
 
-public interface IFluidHandler {
+public interface IFluidHandler extends IFluidHandlerStorage {
+
+    @Override
+    default IFluidHandler getHandler(){
+        return this;
+    }
+
     enum FluidAction {
         EXECUTE, SIMULATE;
 
