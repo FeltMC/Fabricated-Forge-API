@@ -38,7 +38,7 @@ public interface IFluidHandlerStorage extends Storage<FluidVariant> {
                 getHandler().drain(new FluidStack(resource, maxAmount), EXECUTE);
             }
         });
-        return extracted.getAmount();
+        return extracted.getRealAmount();
     }
 
     @Override
@@ -89,7 +89,7 @@ public interface IFluidHandlerStorage extends Storage<FluidVariant> {
                     owner.drain(new FluidStack(resource, maxAmount), EXECUTE);
                 }
             });
-            return drained.getAmount();
+            return drained.getRealAmount();
         }
 
         @Override
@@ -104,7 +104,7 @@ public interface IFluidHandlerStorage extends Storage<FluidVariant> {
 
         @Override
         public long getAmount() {
-            return owner.getFluidInTank(tankIndex).getAmount();
+            return owner.getFluidInTank(tankIndex).getRealAmount();
         }
 
         @Override

@@ -30,7 +30,7 @@ public class VoidFluidHandler implements IFluidHandler
     public FluidStack getFluidInTank(int tank) { return FluidStack.EMPTY; }
 
     @Override
-    public long getTankCapacityInDroplets(int tank) { return Integer.MAX_VALUE; }
+    public long getTankCapacityInDroplets(int tank) { return getTankCapacity(tank) * 81L; }
 
     @Override
     public boolean isFluidValid(int tank, @Nonnull FluidStack stack) { return true; }
@@ -38,7 +38,17 @@ public class VoidFluidHandler implements IFluidHandler
     @Override
     public long fillDroplets(FluidStack resource, FluidAction action)
     {
-        return resource.getAmount();
+        return resource.getRealAmount();
+    }
+
+    @Override
+    public int getTankCapacity(int tank) {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public int fill(FluidStack stack, FluidAction action) {
+        return stack.getAmount();
     }
 
     @Nonnull
@@ -52,6 +62,11 @@ public class VoidFluidHandler implements IFluidHandler
     @Override
     public FluidStack drain(long maxDrain, FluidAction action)
     {
+        return FluidStack.EMPTY;
+    }
+
+    @Override
+    public FluidStack drain(int amount, FluidAction action) {
         return FluidStack.EMPTY;
     }
 }

@@ -85,7 +85,7 @@ public class FluidStorageHandler implements IFluidHandler {
             return 0;
 
         try (Transaction t = Transaction.openOuter()) {
-            long filled = storage.insert(stack.getType(), stack.getAmount(), t);
+            long filled = storage.insert(stack.getType(), stack.getRealAmount(), t);
             if (action.execute()) {
                 t.commit();
                 if (shouldUpdate())
@@ -96,6 +96,16 @@ public class FluidStorageHandler implements IFluidHandler {
     }
 
     @Override
+    public int getTankCapacity(int tank) {
+        return (int) (getTankCapacityInDroplets(tank) / 81);
+    }
+
+    @Override
+    public int fill(FluidStack stack, FluidAction action) {
+        return (int) (fillDroplets(stack, action) / 81);
+    }
+
+    @Override
     public FluidStack drain(FluidStack stack, FluidAction action) {
         if (stack.isEmpty())
             return FluidStack.EMPTY;
@@ -103,7 +113,7 @@ public class FluidStorageHandler implements IFluidHandler {
             return FluidStack.EMPTY;
 
         try (Transaction t = Transaction.openOuter()) {
-            long extracted = storage.extract(stack.getType(), stack.getAmount(), t);
+            long extracted = storage.extract(stack.getType(), stack.getRealAmount(), t);
             if (action.execute()) {
                 t.commit();
                 if (shouldUpdate())
@@ -143,5 +153,10 @@ public class FluidStorageHandler implements IFluidHandler {
             }
         }
         return extracted;
+    }
+
+    @Override
+    public FluidStack drain(int amount, FluidAction action) {
+        return drain(amount * 81L, action);
     }
 }
