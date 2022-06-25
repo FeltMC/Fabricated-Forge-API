@@ -93,7 +93,7 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
     }
 
     @Override
-    public long getTankCapacityLong(int tank) {
+    public long getTankCapacityInDroplets(int tank) {
 
         return capacity;
     }
@@ -105,7 +105,7 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
     }
 
     @Override
-    public long fillLong(FluidStack resource, FluidAction doFill)
+    public long fillDroplets(FluidStack resource, FluidAction doFill)
     {
         if (container.getCount() != 1 || resource.isEmpty() || !canFillFluidType(resource))
         {

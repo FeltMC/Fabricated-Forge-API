@@ -29,7 +29,7 @@ public class FluidStack {
     public static final Codec<FluidStack> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
                     Registry.FLUID.byNameCodec().fieldOf("FluidName").forGetter(FluidStack::getFluid),
-                    Codec.LONG.fieldOf("Amount").forGetter(FluidStack::getAmount),
+                    Codec.LONG.fieldOf("Amount").forGetter(FluidStack::getRealAmount),
                     CompoundTag.CODEC.optionalFieldOf("VariantTag", null).forGetter(fluidStack -> fluidStack.getType().copyNbt()),
                     CompoundTag.CODEC.optionalFieldOf("Tag").forGetter(stack -> Optional.ofNullable(stack.getTag()))
             ).apply(instance, (fluid, amount, variantTag, tag) -> {
@@ -40,6 +40,7 @@ public class FluidStack {
     );
 
     public static final FluidStack EMPTY = new FluidStack(FluidVariant.blank(), 0) {
+
         @Override
         public FluidStack setAmount(long amount) {
             return this;
@@ -87,6 +88,14 @@ public class FluidStack {
         this.tag = nbt;
     }
 
+    public FluidStack(Fluid type, int amount) {
+        this(type, amount * 81L);
+    }
+
+    public FluidStack(Fluid type, int amount, @Nullable CompoundTag nbt) {
+        this(type, amount * 81L, nbt);
+    }
+
     public FluidStack(FluidStack copy, long amount) {
         this(copy.getType(), amount);
         if (copy.hasTag()) tag = copy.getTag().copy();
@@ -98,8 +107,16 @@ public class FluidStack {
         return this;
     }
 
+    public FluidStack setAmount(int amount) {
+        return setAmount(amount * 81L);
+    }
+
+    public void grow(int amount){
+        grow(amount * 81L);
+    }
+
     public void grow(long amount) {
-        setAmount(getAmount() + amount);
+        setAmount(getRealAmount() + amount);
     }
 
     public FluidVariant getType() {
@@ -110,8 +127,12 @@ public class FluidStack {
         return getType().getFluid();
     }
 
-    public long getAmount() {
+    public long getRealAmount(){
         return amount;
+    }
+
+    public int getAmount() {
+        return (int) (amount / 81);
     }
 
     public boolean isEmpty() {
@@ -119,11 +140,11 @@ public class FluidStack {
     }
 
     public void shrink(int amount) {
-        setAmount(getAmount() - amount);
+        shrink(amount * 81L);
     }
 
     public void shrink(long amount) {
-        setAmount(getAmount() - amount);
+        setAmount(getRealAmount() - amount);
     }
 
     public boolean isFluidEqual(FluidStack other) {

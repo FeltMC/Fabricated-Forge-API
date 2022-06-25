@@ -100,7 +100,7 @@ public class FluidTank implements IFluidHandler, IFluidTank {
     }
 
     @Override
-    public long getTankCapacityLong(int tank) {
+    public long getTankCapacityInDroplets(int tank) {
 
         return getCapacityLong();
     }
@@ -112,7 +112,7 @@ public class FluidTank implements IFluidHandler, IFluidTank {
     }
 
     @Override
-    public long fillLong(FluidStack resource, FluidAction action)
+    public long fillDroplets(FluidStack resource, FluidAction action)
     {
         if (resource.isEmpty() || !isFluidValid(resource))
         {

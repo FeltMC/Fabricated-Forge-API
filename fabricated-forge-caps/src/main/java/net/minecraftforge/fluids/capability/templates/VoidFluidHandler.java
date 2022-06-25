@@ -30,13 +30,13 @@ public class VoidFluidHandler implements IFluidHandler
     public FluidStack getFluidInTank(int tank) { return FluidStack.EMPTY; }
 
     @Override
-    public long getTankCapacityLong(int tank) { return Integer.MAX_VALUE; }
+    public long getTankCapacityInDroplets(int tank) { return Integer.MAX_VALUE; }
 
     @Override
     public boolean isFluidValid(int tank, @Nonnull FluidStack stack) { return true; }
 
     @Override
-    public long fillLong(FluidStack resource, FluidAction action)
+    public long fillDroplets(FluidStack resource, FluidAction action)
     {
         return resource.getAmount();
     }

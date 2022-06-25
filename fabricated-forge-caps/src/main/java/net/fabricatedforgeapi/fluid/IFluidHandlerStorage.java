@@ -21,10 +21,10 @@ public interface IFluidHandlerStorage extends Storage<FluidVariant> {
 
     @Override
     default long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-        long remainder = getHandler().fillLong(new FluidStack(resource, maxAmount), SIMULATE);
+        long remainder = getHandler().fillDroplets(new FluidStack(resource, maxAmount), SIMULATE);
         transaction.addCloseCallback((t, result) -> {
             if (result.wasCommitted()) {
-                getHandler().fillLong(new FluidStack(resource, maxAmount), EXECUTE);
+                getHandler().fillDroplets(new FluidStack(resource, maxAmount), EXECUTE);
             }
         });
         return remainder;
@@ -109,7 +109,7 @@ public interface IFluidHandlerStorage extends Storage<FluidVariant> {
 
         @Override
         public long getCapacity() {
-            return owner.getTankCapacityLong(tankIndex);
+            return owner.getTankCapacityInDroplets(tankIndex);
         }
     }
 }

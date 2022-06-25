@@ -26,13 +26,13 @@ public class EmptyFluidHandler implements IFluidHandler
     public FluidStack getFluidInTank(int tank) { return FluidStack.EMPTY; }
 
     @Override
-    public long getTankCapacityLong(int tank) { return 0; }
+    public long getTankCapacityInDroplets(int tank) { return 0; }
 
     @Override
     public boolean isFluidValid(int tank, @Nonnull FluidStack stack) { return true; }
 
     @Override
-    public long fillLong(FluidStack resource, FluidAction action)
+    public long fillDroplets(FluidStack resource, FluidAction action)
     {
         return 0;
     }

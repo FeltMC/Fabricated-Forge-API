@@ -68,7 +68,7 @@ public class FluidStorageHandler implements IFluidHandler {
     }
 
     @Override
-    public long getTankCapacityLong(int tank) {
+    public long getTankCapacityInDroplets(int tank) {
         if (validIndex(tank)) {
             if (shouldUpdate())
                 updateContents();
@@ -78,7 +78,7 @@ public class FluidStorageHandler implements IFluidHandler {
     }
 
     @Override
-    public long fillLong(FluidStack stack, FluidAction action) {
+    public long fillDroplets(FluidStack stack, FluidAction action) {
         if (stack.isEmpty())
             return 0;
         if (!storage.supportsInsertion())
