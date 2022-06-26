@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.objectweb.asm.Type;
 
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -24,6 +25,10 @@ public enum CapabilityManager
     public static <T> Capability<T> get(CapabilityToken<T> type)
     {
         return INSTANCE.get(type.getType(), false);
+    }
+
+    public static <T> Capability<T> get(Class<T> tClass){
+        return INSTANCE.get(Type.getInternalName(tClass), false);
     }
 
     @SuppressWarnings("unchecked")

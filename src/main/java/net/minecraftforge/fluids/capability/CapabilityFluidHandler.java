@@ -13,8 +13,8 @@ import org.objectweb.asm.Type;
 
 public class CapabilityFluidHandler
 {
-    public static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});
-    public static Capability<IFluidHandlerItem> FLUID_HANDLER_ITEM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});
+    public static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY = CapabilityManager.get(IFluidHandler.class);
+    public static Capability<IFluidHandlerItem> FLUID_HANDLER_ITEM_CAPABILITY = CapabilityManager.get(IFluidHandlerItem.class);
 
     public static void register(RegisterCapabilitiesEvent event)
     {

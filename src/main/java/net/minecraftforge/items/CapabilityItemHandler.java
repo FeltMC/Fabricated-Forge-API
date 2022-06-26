@@ -13,7 +13,7 @@ import org.objectweb.asm.Type;
 
 public class CapabilityItemHandler
 {
-    public static final Capability<IItemHandler> ITEM_HANDLER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IItemHandler> ITEM_HANDLER_CAPABILITY = CapabilityManager.get(IItemHandler.class);
 
     public static void register(RegisterCapabilitiesEvent event)
     {
