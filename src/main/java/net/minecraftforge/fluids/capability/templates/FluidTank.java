@@ -55,9 +55,14 @@ public class FluidTank implements IFluidHandler, IFluidTank {
         return validator.test(stack);
     }
 
-    public long getCapacityLong()
+    public long getCapacityInDroplets()
     {
         return capacity;
+    }
+
+    @Override
+    public int getCapacity() {
+        return (int) (getCapacityInDroplets()/81);
     }
 
     @Nonnull
@@ -66,9 +71,14 @@ public class FluidTank implements IFluidHandler, IFluidTank {
         return fluid;
     }
 
-    public long getFluidAmountLong()
+    public long getFluidAmountInDroplets()
     {
-        return fluid.getAmount();
+        return fluid.getRealAmount();
+    }
+
+    @Override
+    public int getFluidAmount() {
+        return (int) (getFluidAmountInDroplets() / 81);
     }
 
     public FluidTank readFromNBT(CompoundTag nbt) {
@@ -99,9 +109,8 @@ public class FluidTank implements IFluidHandler, IFluidTank {
     }
 
     @Override
-    public long getTankCapacityLong(int tank) {
-
-        return getCapacityLong();
+    public long getTankCapacityInDroplets(int tank) {
+        return getCapacityInDroplets();
     }
 
     @Override
@@ -111,7 +120,7 @@ public class FluidTank implements IFluidHandler, IFluidTank {
     }
 
     @Override
-    public long fillLong(FluidStack resource, FluidAction action)
+    public long fillDroplets(FluidStack resource, FluidAction action)
     {
         if (resource.isEmpty() || !isFluidValid(resource))
         {
@@ -155,6 +164,16 @@ public class FluidTank implements IFluidHandler, IFluidTank {
         return filled;
     }
 
+    @Override
+    public int getTankCapacity(int tank) {
+        return (int) (getTankCapacityInDroplets(tank) / 81);
+    }
+
+    @Override
+    public int fill(FluidStack stack, FluidAction action) {
+        return (int) (fillDroplets(stack, action) / 81);
+    }
+
     @Nonnull
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action)
@@ -182,6 +201,11 @@ public class FluidTank implements IFluidHandler, IFluidTank {
             onContentsChanged();
         }
         return stack;
+    }
+
+    @Override
+    public FluidStack drain(int amount, FluidAction action) {
+        return drain(amount * 81L, action);
     }
 
     protected void onContentsChanged()

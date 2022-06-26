@@ -93,7 +93,7 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
     }
 
     @Override
-    public long getTankCapacityLong(int tank) {
+    public long getTankCapacityInDroplets(int tank) {
 
         return capacity;
     }
@@ -105,7 +105,7 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
     }
 
     @Override
-    public long fillLong(FluidStack resource, FluidAction doFill)
+    public long fillDroplets(FluidStack resource, FluidAction doFill)
     {
         if (container.getCount() != 1 || resource.isEmpty() || !canFillFluidType(resource))
         {
@@ -115,7 +115,7 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
         FluidStack contained = getFluid();
         if (contained.isEmpty())
         {
-            long fillAmount = Math.min(capacity, resource.getAmount());
+            long fillAmount = Math.min(capacity, resource.getRealAmount());
 
             if (doFill.execute())
             {
@@ -130,7 +130,7 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
         {
             if (contained.isFluidEqual(resource))
             {
-                long fillAmount = Math.min(capacity - contained.getAmount(), resource.getAmount());
+                long fillAmount = Math.min(capacity - contained.getRealAmount(), resource.getRealAmount());
 
                 if (doFill.execute() && fillAmount > 0) {
                     contained.grow(fillAmount);
@@ -144,6 +144,16 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
         }
     }
 
+    @Override
+    public int getTankCapacity(int tank) {
+        return (int) (getTankCapacityInDroplets(tank) / 81);
+    }
+
+    @Override
+    public int fill(FluidStack stack, FluidAction action) {
+        return (int) (fillDroplets(stack, action) / 81);
+    }
+
     @Nonnull
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action)
@@ -152,7 +162,7 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
         {
             return FluidStack.EMPTY;
         }
-        return drain(resource.getAmount(), action);
+        return drain(resource.getRealAmount(), action);
     }
 
     @Nonnull
@@ -170,7 +180,7 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
             return FluidStack.EMPTY;
         }
 
-        final long drainAmount = Math.min(contained.getAmount(), maxDrain);
+        final long drainAmount = Math.min(contained.getRealAmount(), maxDrain);
 
         FluidStack drained = contained.copy();
         drained.setAmount(drainAmount);
@@ -189,6 +199,11 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
         }
 
         return drained;
+    }
+
+    @Override
+    public FluidStack drain(int amount, FluidAction action) {
+        return drain(amount * 81L, action);
     }
 
     public boolean canFillFluidType(FluidStack fluid)

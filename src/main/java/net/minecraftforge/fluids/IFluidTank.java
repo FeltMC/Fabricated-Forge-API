@@ -25,20 +25,20 @@ public interface IFluidTank extends IFluidHandler {
     /**
      * @return Current amount of fluid in the tank.
      */
-    long getFluidAmountLong();
-
-    default int getFluidAmount(){
-        return (int) getFluidAmountLong();
+    default long getFluidAmountInDroplets(){
+        return getFluidAmount() * 81L;
     }
+
+    int getFluidAmount();
 
     /**
      * @return Capacity of this fluid tank.
      */
-    long getCapacityLong();
-
-    default int getCapacity(){
-        return (int) getCapacityLong();
+    default long getCapacityInDroplets(){
+        return getCapacity() * 81L;
     }
+
+    int getCapacity();
 
     /**
      * @param stack Fluidstack holding the Fluid to be queried.

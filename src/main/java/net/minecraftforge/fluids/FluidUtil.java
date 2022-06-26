@@ -10,44 +10,28 @@ import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
-import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BucketPickup;
-import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fluids.capability.wrappers.BlockWrapper;
-import net.minecraftforge.fluids.capability.wrappers.BucketPickupHandlerWrapper;
-import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class FluidUtil
@@ -69,13 +53,13 @@ public class FluidUtil
      * @param side   The side of the block to interact with. May be null.
      * @return true if the interaction succeeded and updated the item held by the player, false otherwise.
      */
-    public static boolean interactWithFluidHandler(@Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull Level level, @Nonnull BlockPos pos, @Nullable Direction side)
+    /*public static boolean interactWithFluidHandler(@Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull Level level, @Nonnull BlockPos pos, @Nullable Direction side)
     {
         Preconditions.checkNotNull(level);
         Preconditions.checkNotNull(pos);
 
         return getFluidHandler(level, pos, side).map(handler -> interactWithFluidHandler(player, hand, handler)).orElse(false);
-    }
+    }*/
 
     /**
      * Used to handle the common case of a player holding a fluid item and right-clicking on a fluid handler.
@@ -88,7 +72,7 @@ public class FluidUtil
      * @param handler The fluid handler.
      * @return true if the interaction succeeded and updated the item held by the player, false otherwise.
      */
-    public static boolean interactWithFluidHandler(@Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull IFluidHandler handler)
+    /*public static boolean interactWithFluidHandler(@Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull IFluidHandler handler)
     {
         Preconditions.checkNotNull(player);
         Preconditions.checkNotNull(hand);
@@ -116,7 +100,7 @@ public class FluidUtil
                 .orElse(false);
         }
         return false;
-    }
+    }*/
 
     /**
      * Fill a container from the given fluidSource.
@@ -144,13 +128,13 @@ public class FluidUtil
                             tryFluidTransfer(containerFluidHandler, fluidSource, maxAmount, true);
                             if (player != null)
                             {
-                                SoundEvent soundevent = simulatedTransfer.getFluid().getAttributes().getFillSound(simulatedTransfer);
-                                player.level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
+                                //SoundEvent soundevent = simulatedTransfer.getFluid().getAttributes().getFillSound(simulatedTransfer);
+                                //player.level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
                             }
                         }
                         else
                         {
-                            containerFluidHandler.fillLong(simulatedTransfer, IFluidHandler.FluidAction.SIMULATE);
+                            containerFluidHandler.fillDroplets(simulatedTransfer, IFluidHandler.FluidAction.SIMULATE);
                         }
 
                         ItemStack resultContainer = containerFluidHandler.getContainer();
@@ -188,8 +172,8 @@ public class FluidUtil
 
                     if (doDrain && player != null)
                     {
-                        SoundEvent soundevent = transfer.getFluid().getAttributes().getEmptySound(transfer);
-                        player.level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        //SoundEvent soundevent = transfer.getFluid().getAttributes().getEmptySound(transfer);
+                        //player.level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
                     }
 
                     ItemStack resultContainer = containerFluidHandler.getContainer();
@@ -389,7 +373,7 @@ public class FluidUtil
     @Nonnull
     private static FluidStack tryFluidTransfer_Internal(IFluidHandler fluidDestination, IFluidHandler fluidSource, FluidStack drainable, boolean doTransfer)
     {
-        long fillableAmount = fluidDestination.fillLong(drainable, IFluidHandler.FluidAction.SIMULATE);
+        long fillableAmount = fluidDestination.fillDroplets(drainable, IFluidHandler.FluidAction.SIMULATE);
         if (fillableAmount > 0)
         {
             drainable.setAmount(fillableAmount);
@@ -398,7 +382,7 @@ public class FluidUtil
                 FluidStack drained = fluidSource.drain(drainable, IFluidHandler.FluidAction.EXECUTE);
                 if (!drained.isEmpty())
                 {
-                    drained.setAmount(fluidDestination.fillLong(drained, IFluidHandler.FluidAction.EXECUTE));
+                    drained.setAmount(fluidDestination.fillDroplets(drained, IFluidHandler.FluidAction.EXECUTE));
                     return drained;
                 }
             }
@@ -480,8 +464,8 @@ public class FluidUtil
      * @param side           The side of the fluid that is being drained.
      * @return a {@link FluidActionResult} holding the result and the resulting container.
      */
-    @Nonnull
-    public static FluidActionResult tryPickUpFluid(@Nonnull ItemStack emptyContainer, @Nullable Player playerIn, Level level, BlockPos pos, Direction side)
+    //@Nonnull
+    /*public static FluidActionResult tryPickUpFluid(@Nonnull ItemStack emptyContainer, @Nullable Player playerIn, Level level, BlockPos pos, Direction side)
     {
         if (emptyContainer.isEmpty() || level == null || pos == null)
         {
@@ -509,7 +493,7 @@ public class FluidUtil
             targetFluidHandler = fluidHandler.get();
         }
         return tryFillContainer(emptyContainer, targetFluidHandler, Integer.MAX_VALUE, playerIn, true);
-    }
+    }*/
 
     /**
      * ItemStack version of {@link #tryPlaceFluid(Player, Level, InteractionHand, BlockPos, IFluidHandler, FluidStack)}.
@@ -523,7 +507,7 @@ public class FluidUtil
      * @param resource  The fluidStack to place
      * @return the container's ItemStack with the remaining amount of fluid if the placement was successful, null otherwise
      */
-    @Nonnull
+    /*@Nonnull
     public static FluidActionResult tryPlaceFluid(@Nullable Player player, Level level, InteractionHand hand, BlockPos pos, @Nonnull ItemStack container, FluidStack resource)
     {
         ItemStack containerCopy = ItemHandlerHelper.copyStackWithSize(container, 1); // do not modify the input
@@ -532,7 +516,7 @@ public class FluidUtil
             .map(IFluidHandlerItem::getContainer)
             .map(FluidActionResult::new)
             .orElse(FluidActionResult.FAILURE);
-    }
+    }*/
 
     /**
      * Tries to place a fluid resource into the level as a block and drains the fluidSource.
@@ -550,7 +534,7 @@ public class FluidUtil
      * @param resource    The fluidStack to place.
      * @return true if the placement was successful, false otherwise
      */
-    public static boolean tryPlaceFluid(@Nullable Player player, Level level, InteractionHand hand, BlockPos pos, IFluidHandler fluidSource, FluidStack resource)
+    /*public static boolean tryPlaceFluid(@Nullable Player player, Level level, InteractionHand hand, BlockPos pos, IFluidHandler fluidSource, FluidStack resource)
     {
         if (level == null || pos == null)
         {
@@ -611,7 +595,7 @@ public class FluidUtil
             }
         }
         return false;
-    }
+    }*/
 
     /**
      * Internal method for getting a fluid block handler for placing a fluid.
@@ -619,11 +603,11 @@ public class FluidUtil
      * Modders: Instead of this method, use {@link #tryPlaceFluid(Player, Level, InteractionHand, BlockPos, ItemStack, FluidStack)}
      * or {@link #tryPlaceFluid(Player, Level, InteractionHand, BlockPos, IFluidHandler, FluidStack)}
      */
-    private static IFluidHandler getFluidBlockHandler(Fluid fluid, Level level, BlockPos pos)
+    /*private static IFluidHandler getFluidBlockHandler(Fluid fluid, Level level, BlockPos pos)
     {
         BlockState state = fluid.getAttributes().getBlock(level, pos, fluid.defaultFluidState());
         return new BlockWrapper(state, level, pos);
-    }
+    }*/
 
     /**
      * Destroys a block when a fluid is placed in the same position.
@@ -655,7 +639,7 @@ public class FluidUtil
      * @return a filled vanilla bucket or filled universal bucket.
      *         Returns empty itemStack if none of the enabled buckets can hold the fluid.
      */
-    @Nonnull
+    /*@Nonnull
     public static ItemStack getFilledBucket(@Nonnull FluidStack fluidStack)
     {
         Fluid fluid = fluidStack.getFluid();
@@ -673,5 +657,5 @@ public class FluidUtil
         }
 
         return fluid.getAttributes().getBucket(fluidStack);
-    }
+    }*/
 }

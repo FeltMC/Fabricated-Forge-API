@@ -1,7 +1,14 @@
 package net.minecraftforge.fluids.capability;
+import net.fabricatedforgeapi.fluid.IFluidHandlerStorage;
 import net.minecraftforge.fluids.FluidStack;
 
-public interface IFluidHandler {
+public interface IFluidHandler extends IFluidHandlerStorage {
+
+    @Override
+    default IFluidHandler getHandler(){
+        return this;
+    }
+
     enum FluidAction {
         EXECUTE, SIMULATE;
 
@@ -15,19 +22,19 @@ public interface IFluidHandler {
     }
     int getTanks();
     FluidStack getFluidInTank(int tank);
-    long getTankCapacityLong(int tank);
-    long fillLong(FluidStack stack, FluidAction action); // returns amount filled
-    default int getTankCapacity(int tank){
-        return (int) getTankCapacityLong(tank);
+    default long getTankCapacityInDroplets(int tank){
+        return getTankCapacity(tank) * 81L;
     }
-    default int fill(FluidStack stack, FluidAction action){
-        return (int) this.fillLong(stack, action);
+    default long fillDroplets(FluidStack stack, FluidAction action){
+        return fill(stack, action) * 81L;
     }
+    int getTankCapacity(int tank);
+    int fill(FluidStack stack, FluidAction action);
     FluidStack drain(FluidStack stack, FluidAction action); // returns amount drained
-    FluidStack drain(long amount, FluidAction action); // returns amount drained
-    default FluidStack drain(int amount, FluidAction action){
-        return drain((long) amount, action);
+    default FluidStack drain(long droplets, FluidAction action){
+        return drain((int)(droplets / 81L), action);
     }
+    FluidStack drain(int amount, FluidAction action);
 
     default boolean isFluidValid(int tank, FluidStack stack) { return true; }
 }
