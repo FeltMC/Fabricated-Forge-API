@@ -1,5 +1,5 @@
 package net.minecraftforge.fluids.capability;
-import net.fabricatedforgeapi.fluid.IFluidHandlerStorage;
+import net.fabricatedforgeapi.transfer.fluid.fluid.IFluidHandlerStorage;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface IFluidHandler extends IFluidHandlerStorage {

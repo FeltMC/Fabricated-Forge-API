@@ -1,4 +1,6 @@
 dependencies {
     modCompileOnly("org.apache.maven:maven-artifact:3.6.3")
     modCompileOnly("io.github.fabricators_of_create:Porting-Lib:0.2.0+1.18.2.${rootProject.port_lib_hash}") { transitive(false) }
+    implementation(project(":fabricated-forge-caps"))
+    include(project(":fabricated-forge-caps"))
 }

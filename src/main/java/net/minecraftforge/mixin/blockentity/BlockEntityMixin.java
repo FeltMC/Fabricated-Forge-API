@@ -1,6 +1,6 @@
 package net.minecraftforge.mixin.blockentity;
 
-import net.fabricatedforgeapi.caps.CapUtils;
+import net.fabricatedforgeapi.transfer.TransferUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
@@ -26,11 +26,11 @@ public class BlockEntityMixin implements ICapabilityProvider {
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            if (fluidHandler == null) fluidHandler = CapUtils.getWrappedFluidHandler((BlockEntity) (Object)this, side);
+            if (fluidHandler == null) fluidHandler = TransferUtils.getWrappedFluidHandler((BlockEntity) (Object)this, side);
             return fluidHandler.cast();
         }
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if (itemHandler == null) itemHandler = CapUtils.getWrappedItemHandler((BlockEntity) (Object)this, side);
+            if (itemHandler == null) itemHandler = TransferUtils.getWrappedItemHandler((BlockEntity) (Object)this, side);
             return itemHandler.cast();
         }
         return ICapabilityProvider.super.getCapability(cap, side);

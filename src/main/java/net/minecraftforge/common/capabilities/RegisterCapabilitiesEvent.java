@@ -6,18 +6,32 @@
 package net.minecraftforge.common.capabilities;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import org.objectweb.asm.Type;
-
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fml.event.IModBusEvent;
 
 /**
  * This event fires when it is time to register your capabilities.
  * @see Capability
  */
-public final class RegisterCapabilitiesEvent extends Event implements IModBusEvent
+public final class RegisterCapabilitiesEvent extends net.minecraftforge.eventbus.api.Event implements IModBusEvent
 {
+    public static final Event<Register> REGISTER_CAPS = EventFactory.createArrayBacked(Register.class, listeners -> event -> {
+        for (Register listener : listeners) {
+            listener.accept(event);
+            if (event.isCanceled()){
+                return;
+            }
+        }
+    });
+
+    @FunctionalInterface
+    public interface Register extends Consumer<RegisterCapabilitiesEvent>{
+    }
+
     /**
      * Registers a capability to be consumed by others.
      * APIs who define the capability should call this.

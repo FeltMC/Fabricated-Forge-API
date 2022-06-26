@@ -5,7 +5,7 @@
 
 package net.minecraftforge.fluids;
 
-import net.fabricatedforgeapi.fluid.FluidStorageHandlerItem;
+import net.fabricatedforgeapi.transfer.fluid.fluid.FluidStorageHandlerItem;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;

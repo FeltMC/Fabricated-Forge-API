@@ -13,13 +13,14 @@ pluginManagement {
 
 rootProject.name = 'ForgeRoot'
 
-//include 'fmlloader'
-//include 'fmlcore'
+include 'fmlloader'
+include 'fmlcore'
 //include 'mclanguage'
 //include 'javafmllanguage'
 //include 'lowcodelanguage'
 include("EventBus")
 include("ForgeSPI")
+include("fabricated-forge-caps")
 include("fabricated-forge-datagen")
 include("fabricated-forge-recipe-api")
 include("fabricated-forge-registry")

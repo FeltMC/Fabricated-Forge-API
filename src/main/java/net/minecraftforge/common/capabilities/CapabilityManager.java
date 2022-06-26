@@ -5,19 +5,19 @@
 
 package net.minecraftforge.common.capabilities;
 
-import net.minecraftforge.fml.ModLoader;
-import net.minecraftforge.forgespi.language.ModFileScanData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 
 import java.util.IdentityHashMap;
 import java.util.List;
 
-import static net.minecraftforge.fml.Logging.CAPABILITIES;
-
 public enum CapabilityManager
 {
     INSTANCE;
+    public static final Marker CAPABILITIES = MarkerManager.getMarker("CAPABILITIES");
+
     static final Logger LOGGER = LogManager.getLogger();
 
 
@@ -60,9 +60,10 @@ public enum CapabilityManager
 
     // INTERNAL
     private final IdentityHashMap<String, Capability<?>> providers = new IdentityHashMap<>();
-    public void injectCapabilities(List<ModFileScanData> data)
+    public void injectCapabilities()
     {
         var event = new RegisterCapabilitiesEvent();
-        ModLoader.get().postEvent(event);
+        RegisterCapabilitiesEvent.REGISTER_CAPS.invoker().accept(event);
+        //ModLoader.get().postEvent(event);
     }
 }

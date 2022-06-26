@@ -1,7 +1,8 @@
-package net.minecraftforge.common.capabilities;
+package net.fabricatedforgeapi.caps;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
 

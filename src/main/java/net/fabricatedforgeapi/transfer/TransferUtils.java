@@ -1,10 +1,10 @@
-package net.fabricatedforgeapi.caps;
+package net.fabricatedforgeapi.transfer;
 
-import net.fabricatedforgeapi.fluid.FluidHandlerStorage;
-import net.fabricatedforgeapi.fluid.FluidStorageHandler;
-import net.fabricatedforgeapi.fluid.FluidStorageHandlerItem;
-import net.fabricatedforgeapi.item.ItemHandlerStorage;
-import net.fabricatedforgeapi.item.ItemStorageHandler;
+import net.fabricatedforgeapi.transfer.fluid.fluid.FluidHandlerStorage;
+import net.fabricatedforgeapi.transfer.fluid.fluid.FluidStorageHandler;
+import net.fabricatedforgeapi.transfer.fluid.fluid.FluidStorageHandlerItem;
+import net.fabricatedforgeapi.transfer.item.item.ItemHandlerStorage;
+import net.fabricatedforgeapi.transfer.item.item.ItemStorageHandler;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -18,12 +18,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
@@ -31,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CapUtils {
+public class TransferUtils {
 
     public static LazyOptional<IItemHandler> getWrappedItemHandler(BlockEntity be, @Nullable Direction side) {
         // client handling

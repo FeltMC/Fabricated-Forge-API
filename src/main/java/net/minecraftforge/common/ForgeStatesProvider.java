@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 public class ForgeStatesProvider implements IModStateProvider {
     final ModLoadingState CREATE_REGISTRIES = ModLoadingState.withTransition("CREATE_REGISTRIES", "CONSTRUCT", ModLoadingPhase.GATHER, new SerialTransition<>(() -> Stream.of(IModStateTransition.EventGenerator.fromFunction(RegistryManager.newRegistryEventGenerator())), RegistryManager::preNewRegistryEvent, RegistryManager::postNewRegistryEvent, (e, prev) -> prev.thenApplyAsync(Function.identity(), e)));
     final ModLoadingState OBJECT_HOLDERS = ModLoadingState.withInline("OBJECT_HOLDERS", "CREATE_REGISTRIES", ModLoadingPhase.GATHER, ml-> ObjectHolderRegistry.findObjectHolders());
-    final ModLoadingState INJECT_CAPABILITIES = ModLoadingState.withInline("INJECT_CAPABILITIES", "OBJECT_HOLDERS", ModLoadingPhase.GATHER, ml-> CapabilityManager.INSTANCE.injectCapabilities(ml.getAllScanData()));
+    final ModLoadingState INJECT_CAPABILITIES = ModLoadingState.withInline("INJECT_CAPABILITIES", "OBJECT_HOLDERS", ModLoadingPhase.GATHER, ml-> CapabilityManager.INSTANCE.injectCapabilities());
     final ModLoadingState UNFREEZE = ModLoadingState.withInline("UNFREEZE_DATA", "INJECT_CAPABILITIES", ModLoadingPhase.GATHER, ml->GameData.unfreezeData());
     final ModLoadingState LOAD_REGISTRIES = ModLoadingState.withTransition("LOAD_REGISTRIES", "UNFREEZE_DATA", ModLoadingPhase.GATHER, new SerialTransition<RegistryEvent.Register<?>>(GameData::generateRegistryEvents, GameData::preRegistryEventDispatch, GameData::postRegistryEventDispatch, GameData::checkForRevertToVanilla));
     final ModLoadingState FREEZE = ModLoadingState.withInline("FREEZE_DATA", "COMPLETE", ModLoadingPhase.COMPLETE, ml->GameData.freezeData());

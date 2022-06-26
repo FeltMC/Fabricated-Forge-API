@@ -9,10 +9,11 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import org.objectweb.asm.Type;
 
 public class CapabilityItemHandler
 {
-    public static final Capability<IItemHandler> ITEM_HANDLER_CAPABILITY = new Capability<>("item_handler_capability"); //CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IItemHandler> ITEM_HANDLER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});
 
     public static void register(RegisterCapabilitiesEvent event)
     {
