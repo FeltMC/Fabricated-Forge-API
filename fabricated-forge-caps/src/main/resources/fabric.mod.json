@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricated-forge-caps",
+  "version": "${version}",
+  "name": "Fabricated Forge Capabilities",
+  "description": "Ports forge's caps to fabric, including using the same path.",
+  "authors": [
+    "Trinsdar"
+  ],
+  "contact": {
+    "sources": "https://github.com/FeltMC/Fabricated-Forge-API"
+  },
+  "license": "LGPL-2.1-only",
+  "icon": "assets/tesseractapi/icon.png",
+  "environment": "*",
+  "mixins": [
+    "fabricated-forge-caps.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1792": [
+        "net/fabricatedforgeapi/caps/ICapabilityItem"
+      ],
+      "net/minecraft/class_2586": [
+        "net/minecraftforge/common/capability/ICapabilityProviderImpl$IBlockEntityCapProviderImp",
+        "net/fabricatedforgeapi/caps/ICapabilityBlockEntity"
+      ],
+      "net/minecraft/class_1799": [
+        "net/minecraftforge/common/capability/ICapabilityProviderImpl$IItemStackCapProviderImp",
+        "net/fabricatedforgeapi/caps/ICapabilityItemStack"
+      ],
+      "net/minecraft/class_1297": [
+        "net/minecraftforge/common/capability/ICapabilityProviderImpl$IEntityCapProviderImpl",
+        "net/fabricatedforgeapi/caps/ICapabilityEntity"
+      ]
+    }
+  }
+}

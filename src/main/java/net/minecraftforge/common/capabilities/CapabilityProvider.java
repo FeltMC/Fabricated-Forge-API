@@ -15,7 +15,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -70,8 +70,21 @@ public abstract class CapabilityProvider<B extends ICapabilityProviderImpl<B>> i
 
     private void doGatherCapabilities(@Nullable ICapabilityProvider parent)
     {
-        this.capabilities = ForgeEventFactory.gatherCapabilities(baseClass, getProvider(), parent);
+        this.capabilities = gatherCapabilities(baseClass, getProvider(), parent);
         this.initialized = true;
+    }
+
+    @Nullable
+    public static <T extends ICapabilityProvider> CapabilityDispatcher gatherCapabilities(Class<? extends T> type, T provider, @Nullable ICapabilityProvider parent)
+    {
+        return gatherCapabilities(new AttachCapabilitiesEvent<T>((Class<T>) type, provider), parent);
+    }
+
+    @Nullable
+    private static CapabilityDispatcher gatherCapabilities(AttachCapabilitiesEvent<?> event, @Nullable ICapabilityProvider parent)
+    {
+        AttachCapabilitiesEvent.REGISTER_CAPS.invoker().accept(event);
+        return event.getCapabilities().size() > 0 || parent != null ? new CapabilityDispatcher(event.getCapabilities(), event.getListeners(), parent) : null;
     }
 
     @NotNull
@@ -206,6 +219,15 @@ public abstract class CapabilityProvider<B extends ICapabilityProviderImpl<B>> i
         public void initInternal()
         {
             gatherCapabilities();
+        }
+
+        public void initInternal(@Nullable Supplier<ICapabilityProvider> parent)
+        {
+            gatherCapabilities(parent);
+        }
+
+        public CapabilityDispatcher getCapabilitiesInternal(){
+            return getCapabilities();
         }
 
         @Nullable

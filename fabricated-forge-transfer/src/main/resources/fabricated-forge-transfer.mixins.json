@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "net.fabricatedforgeapi.transfer.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "fabricated-forge-transfer.refmap.json",
+  "mixins": [
+  ],
+  "minVersion": "0.8"
+}

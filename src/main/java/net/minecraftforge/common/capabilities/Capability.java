@@ -62,7 +62,7 @@ public class Capability<T>
     private final String name;
     List<Consumer<Capability<T>>> listeners = new ArrayList<>();
 
-    public Capability(String name)
+    Capability(String name)
     {
         this.name = name;
     }
