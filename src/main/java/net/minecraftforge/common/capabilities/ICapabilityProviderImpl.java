@@ -21,13 +21,13 @@ public interface ICapabilityProviderImpl<B extends ICapabilityProviderImpl<B>> e
     }
 
     default boolean areCapsCompatible(ItemStack other){
-        return areCapsCompatible(other.getCapabilityProvider());
+        return areCapsCompatible(other.getCapabilityProvider().getCapabilities());
     }
     default boolean areCapsCompatible(Entity other){
-        return areCapsCompatible(other.getCapabilityProvider());
+        return areCapsCompatible(other.getCapabilityProvider().getCapabilities());
     }
     default boolean areCapsCompatible(BlockEntity other){
-        return areCapsCompatible(other.getCapabilityProvider());
+        return areCapsCompatible(other.getCapabilityProvider().getCapabilities());
     }
     default void invalidateCaps(){
     }

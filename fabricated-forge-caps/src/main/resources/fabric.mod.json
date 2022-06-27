@@ -26,15 +26,15 @@
         "net/fabricatedforgeapi/caps/ICapabilityItem"
       ],
       "net/minecraft/class_2586": [
-        "net/minecraftforge/common/capability/ICapabilityProviderImpl$IBlockEntityCapProviderImp",
+        "net/minecraftforge/common/capabilities/ICapabilityProviderImpl/IBlockEntityCapProviderImpl",
         "net/fabricatedforgeapi/caps/ICapabilityBlockEntity"
       ],
       "net/minecraft/class_1799": [
-        "net/minecraftforge/common/capability/ICapabilityProviderImpl$IItemStackCapProviderImp",
+        "net/minecraftforge/common/capabilities/ICapabilityProviderImpl/IItemStackCapProviderImpl",
         "net/fabricatedforgeapi/caps/ICapabilityItemStack"
       ],
       "net/minecraft/class_1297": [
-        "net/minecraftforge/common/capability/ICapabilityProviderImpl$IEntityCapProviderImpl",
+        "net/minecraftforge/common/capabilities/ICapabilityProviderImpl/IEntityCapProviderImpl",
         "net/fabricatedforgeapi/caps/ICapabilityEntity"
       ]
     }
