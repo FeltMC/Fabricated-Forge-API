@@ -1,6 +1,7 @@
 package net.fabricatedforgeapi.caps.mixin;
 
 import net.fabricatedforgeapi.caps.ICapabilityBlockEntity;
+import net.fabricatedforgeapi.transfer.TransferUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -12,6 +13,10 @@ import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilityProviderImpl;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,6 +29,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class BlockEntityMixin implements ICapabilityProviderImpl.IBlockEntityCapProviderImpl, ICapabilityBlockEntity {
     @Unique
     private final CapabilityProvider.AsField<BlockEntity> capProvider = new CapabilityProvider.AsField<>(BlockEntity.class, (BlockEntity)(Object)this);
+    @Unique
+    LazyOptional<IFluidHandler> fluidHandler = null;
+    @Unique
+    LazyOptional<IItemHandler> itemHandler = null;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void injectInit(BlockEntityType blockEntityType, BlockPos blockPos, BlockState blockState, CallbackInfo ci){
@@ -58,6 +67,14 @@ public class BlockEntityMixin implements ICapabilityProviderImpl.IBlockEntityCap
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            if (fluidHandler == null) fluidHandler = TransferUtils.getWrappedFluidHandler((BlockEntity) (Object)this, side);
+            return fluidHandler.cast();
+        }
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if (itemHandler == null) itemHandler = TransferUtils.getWrappedItemHandler((BlockEntity) (Object)this, side);
+            return itemHandler.cast();
+        }
         return capProvider.getCapability(cap, side);
     }
 
