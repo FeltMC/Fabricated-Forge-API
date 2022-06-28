@@ -3,18 +3,14 @@
   "id": "fabricated-forge-caps",
   "version": "${version}",
   "name": "Fabricated Forge Capabilities",
-  "description": "Ports forge's caps, fluid, and item api to fabric, including using the same path.",
+  "description": "Ports forge's caps to fabric, including using the same path.",
   "authors": [
-    "coderbot16",
-    "qubka",
-    "repolainen",
-    "mitchej123",
-    "Muramasa"
+    "Trinsdar"
   ],
   "contact": {
-    "sources": "https://github.com/GregTech-Intergalactical/TesseractAPI"
+    "sources": "https://github.com/FeltMC/Fabricated-Forge-API"
   },
-  "license": "LGPL-3.0-only",
+  "license": "LGPL-2.1-only",
   "icon": "assets/tesseractapi/icon.png",
   "environment": "*",
   "mixins": [
@@ -23,5 +19,24 @@
   "depends": {
     "fabricloader": ">=0.4.0",
     "fabric": "*"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1792": [
+        "net/fabricatedforgeapi/caps/ICapabilityItem"
+      ],
+      "net/minecraft/class_2586": [
+        "net/minecraftforge/common/capabilities/ICapabilityProviderImpl/IBlockEntityCapProviderImpl",
+        "net/fabricatedforgeapi/caps/ICapabilityBlockEntity"
+      ],
+      "net/minecraft/class_1799": [
+        "net/minecraftforge/common/capabilities/ICapabilityProviderImpl/IItemStackCapProviderImpl",
+        "net/fabricatedforgeapi/caps/ICapabilityItemStack"
+      ],
+      "net/minecraft/class_1297": [
+        "net/minecraftforge/common/capabilities/ICapabilityProviderImpl/IEntityCapProviderImpl",
+        "net/fabricatedforgeapi/caps/ICapabilityEntity"
+      ]
+    }
   }
 }

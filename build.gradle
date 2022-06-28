@@ -82,6 +82,7 @@ allprojects {
 			name = 'parchment'
 			url = 'https://maven.parchmentmc.org'
 		}
+		maven { url 'https://jitpack.io' }
 	}
 
 	tasks.withType(JavaCompile).configureEach {

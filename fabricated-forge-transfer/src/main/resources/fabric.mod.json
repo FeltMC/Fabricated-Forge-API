@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricated-forge-transfer",
+  "version": "${version}",
+  "name": "Fabricated Forge Transfer Api",
+  "description": "Ports forge's energy, fluid, and item api to fabric, including using the same path.",
+  "authors": [
+    "Trinsdar"
+  ],
+  "contact": {
+    "sources": "https://github.com/FeltMC/Fabricated-Forge-API"
+  },
+  "license": "LGPL-2.1-only",
+  "icon": "assets/tesseractapi/icon.png",
+  "environment": "*",
+  "mixins": [
+    "fabricated-forge-transfer.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1792": [
+        "net/fabricatedforgeapi/caps/ICapabilityItem"
+      ],
+      "net/minecraft/class_2586": [
+        "net/minecraftforge/common/capabilities/ICapabilityProviderImpl/IBlockEntityCapProviderImpl"
+      ],
+      "net/minecraft/class_1799": [
+        "net/minecraftforge/common/capabilities/ICapabilityProviderImpl/IItemStackCapProviderImpl"
+      ],
+      "net/minecraft/class_1297": [
+        "net/minecraftforge/common/capabilities/ICapabilityProviderImpl/IEntityCapProviderImpl"
+      ]
+    }
+  }
+}

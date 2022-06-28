@@ -1,0 +1,12 @@
+archivesBaseName = "fabricated-forge-caps"
+version = getSubprojectVersion(project)
+
+repositories {
+    maven { url = "https://mvn.devos.one/snapshots/" }
+}
+
+dependencies{
+    include(project(":fabricated-forge-caps"))
+    implementation(project(":fabricated-forge-caps"))
+    modCompileOnly(include("io.github.fabricators_of_create:Porting-Lib:1.1.310-beta+1.18.2-dev.${rootProject.port_lib_hash}"))
+}
