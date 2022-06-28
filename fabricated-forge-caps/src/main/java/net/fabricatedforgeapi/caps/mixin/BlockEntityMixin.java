@@ -55,11 +55,6 @@ public class BlockEntityMixin implements ICapabilityProviderImpl.IBlockEntityCap
         }
     }
 
-    @Inject(method = "setRemoved", at = @At("TAIL"))
-    private void injectInvalidateCaps(CallbackInfo ci){
-        this.invalidateCaps();
-    }
-
     public void onChunkUnload(){
         this.invalidateCaps();
     }

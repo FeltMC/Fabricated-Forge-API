@@ -101,13 +101,6 @@ public abstract class ItemStackMixin implements ICapabilityProviderImpl.IItemSta
     }
 
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = new CompoundTag();
-        save(tag);
-        return tag;
-    }
-
-    @Override
     public void deserializeNBT(CompoundTag nbt) {
         final ItemStack itemStack = ItemStack.of(nbt);
         this.setTag(itemStack.getTag());
