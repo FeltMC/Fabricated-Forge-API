@@ -5,7 +5,6 @@
 
 package net.minecraftforge.fml.common.asm;
 
-import cpw.mods.modlauncher.serviceapi.ILaunchPluginService;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.signature.SignatureReader;
@@ -33,13 +32,13 @@ import java.util.EnumSet;
  *  }</code>
  * </pre>
  */
-public class CapabilityTokenSubclass implements ILaunchPluginService {
+public class CapabilityTokenSubclass {//implements ILaunchPluginService {
 
     private final String FUNC_NAME = "getType";
     private final String FUNC_DESC = "()Ljava/lang/String;";
     private final String CAP_INJECT = "net/minecraftforge/common/capabilities/CapabilityToken"; //Don't directly reference this to prevent class loading.
 
-    @Override
+    /*@Override
     public String name() {
         return "capability_token_subclass";
     }
@@ -110,7 +109,7 @@ public class CapabilityTokenSubclass implements ILaunchPluginService {
         {
             return ComputeFlags.NO_REWRITE;
         }
-    }
+    }*/
 
     private static class Holder {
         String value;
