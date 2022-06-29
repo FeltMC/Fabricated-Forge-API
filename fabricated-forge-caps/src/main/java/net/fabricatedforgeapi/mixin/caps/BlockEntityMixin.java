@@ -1,4 +1,4 @@
-package net.fabricatedforgeapi.caps.mixin;
+package net.fabricatedforgeapi.mixin.caps;
 
 import net.fabricatedforgeapi.caps.ICapabilityBlockEntity;
 import net.fabricatedforgeapi.transfer.TransferUtils;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
-import net.minecraftforge.common.capabilities.ICapabilityProviderImpl;
+import net.minecraftforge.common.capabilities.IBlockEntityCapProviderImpl;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BlockEntity.class)
-public class BlockEntityMixin implements ICapabilityProviderImpl.IBlockEntityCapProviderImpl, ICapabilityBlockEntity {
+public class BlockEntityMixin implements IBlockEntityCapProviderImpl, ICapabilityBlockEntity {
     @Unique
     private final CapabilityProvider.AsField<BlockEntity> capProvider = new CapabilityProvider.AsField<>(BlockEntity.class, (BlockEntity)(Object)this);
     @Unique

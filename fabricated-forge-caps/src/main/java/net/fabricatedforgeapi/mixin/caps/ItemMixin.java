@@ -1,4 +1,4 @@
-package net.fabricatedforgeapi.caps.mixin;
+package net.fabricatedforgeapi.mixin.caps;
 
 import net.fabricatedforgeapi.caps.ICapabilityItem;
 import net.minecraft.world.item.Item;

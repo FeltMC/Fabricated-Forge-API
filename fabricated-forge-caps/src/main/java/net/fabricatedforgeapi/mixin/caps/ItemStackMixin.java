@@ -1,4 +1,4 @@
-package net.fabricatedforgeapi.caps.mixin;
+package net.fabricatedforgeapi.mixin.caps;
 
 import net.fabricatedforgeapi.caps.ICapabilityItemStack;
 import net.minecraft.core.Direction;
@@ -9,7 +9,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
-import net.minecraftforge.common.capabilities.ICapabilityProviderImpl;
+import net.minecraftforge.common.capabilities.IItemStackCapProviderImpl;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(ItemStack.class)
-public abstract class ItemStackMixin implements ICapabilityProviderImpl.IItemStackCapProviderImpl, ICapabilityItemStack {
+public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapabilityItemStack {
     @Shadow @Final @Deprecated private Item item;
 
     @Shadow public abstract void setTag(@Nullable CompoundTag compoundTag);

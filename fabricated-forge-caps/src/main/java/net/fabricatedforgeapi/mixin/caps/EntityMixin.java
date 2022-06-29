@@ -1,4 +1,4 @@
-package net.fabricatedforgeapi.caps.mixin;
+package net.fabricatedforgeapi.mixin.caps;
 
 import net.fabricatedforgeapi.caps.ICapabilityEntity;
 import net.minecraft.core.Direction;
@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
-import net.minecraftforge.common.capabilities.ICapabilityProviderImpl;
+import net.minecraftforge.common.capabilities.IEntityCapProviderImpl;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin implements ICapabilityProviderImpl.IEntityCapProviderImpl, ICapabilityEntity {
+public abstract class EntityMixin implements IEntityCapProviderImpl, ICapabilityEntity {
     @Shadow protected abstract void unsetRemoved();
 
     @Unique

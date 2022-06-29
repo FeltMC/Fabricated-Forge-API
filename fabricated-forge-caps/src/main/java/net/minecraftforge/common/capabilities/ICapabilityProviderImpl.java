@@ -34,9 +34,4 @@ public interface ICapabilityProviderImpl<B extends ICapabilityProviderImpl<B>> e
     default void reviveCaps(){
     }
 
-    interface IEntityCapProviderImpl extends ICapabilityProviderImpl<Entity>{}
-
-    interface IBlockEntityCapProviderImpl extends ICapabilityProviderImpl<BlockEntity>{}
-
-    interface IItemStackCapProviderImpl extends ICapabilityProviderImpl<ItemStack>{}
 }

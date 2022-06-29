@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "net.fabricatedforgeapi.caps.mixin",
+  "package": "net.fabricatedforgeapi.mixin.caps",
   "compatibilityLevel": "JAVA_17",
   "refmap": "fabricated-forge-caps.refmap.json",
   "mixins": [
