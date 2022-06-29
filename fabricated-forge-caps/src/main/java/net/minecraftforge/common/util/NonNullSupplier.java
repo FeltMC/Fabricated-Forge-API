@@ -14,7 +14,6 @@ import java.util.function.Supplier;
  * @see Supplier
  */
 @FunctionalInterface
-public interface NonNullSupplier<T>
+public interface NonNullSupplier<T> extends io.github.fabricators_of_create.porting_lib.util.NonNullSupplier<T>
 {
-    @Nonnull T get();
 }

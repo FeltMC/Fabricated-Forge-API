@@ -14,8 +14,6 @@ import java.util.function.Function;
  * @see Function
  */
 @FunctionalInterface
-public interface NonNullFunction<T, R>
+public interface NonNullFunction<T, R> extends io.github.fabricators_of_create.porting_lib.util.NonNullFunction<T, R>
 {
-    @Nonnull
-    R apply(@Nonnull T t);
 }

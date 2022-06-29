@@ -39,7 +39,7 @@ import java.util.Set;
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class LazyOptional<T>
+public class LazyOptional<T> //extends io.github.fabricators_of_create.porting_lib.util.LazyOptional<T>
 {
     private final NonNullSupplier<T> supplier;
     private final Object lock = new Object();
@@ -56,7 +56,7 @@ public class LazyOptional<T>
     /**
      * Construct a new {@link LazyOptional} that wraps the given
      * {@link NonNullSupplier}.
-     * 
+     *
      * @param instanceSupplier The {@link NonNullSupplier} to wrap. Cannot return
      *                         null, but can be null itself. If null, this method
      *                         returns {@link #empty()}.
