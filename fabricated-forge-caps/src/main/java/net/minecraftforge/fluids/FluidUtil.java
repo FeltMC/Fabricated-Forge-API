@@ -16,10 +16,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -445,10 +448,7 @@ public class FluidUtil
         if (state.hasBlockEntity())
         {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity instanceof ICapabilityProvider provider)
-            {
-                return provider.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
-            }
+            return blockEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
         }
         return LazyOptional.empty();
     }
@@ -639,7 +639,7 @@ public class FluidUtil
      * @return a filled vanilla bucket or filled universal bucket.
      *         Returns empty itemStack if none of the enabled buckets can hold the fluid.
      */
-    /*@Nonnull
+    @Nonnull
     public static ItemStack getFilledBucket(@Nonnull FluidStack fluidStack)
     {
         Fluid fluid = fluidStack.getFluid();
@@ -656,6 +656,6 @@ public class FluidUtil
             }
         }
 
-        return fluid.getAttributes().getBucket(fluidStack);
-    }*/
+        return fluid.getAttributes().getBucket(fluidStack.toPortingLibStack());
+    }
 }

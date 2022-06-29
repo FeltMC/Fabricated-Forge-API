@@ -13,6 +13,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -80,7 +81,7 @@ public final class CapabilityDispatcher implements INBTSerializable<CompoundTag>
 
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side)
+    public <T> @NotNull LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side)
     {
         for (ICapabilityProvider c : caps)
         {

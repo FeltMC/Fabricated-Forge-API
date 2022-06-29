@@ -5,6 +5,7 @@
 
 package net.minecraftforge.fluids.capability.wrappers;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
@@ -12,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MilkBucketItem;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -21,6 +21,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -54,25 +55,26 @@ public class FluidBucketWrapper implements IFluidHandlerItem, ICapabilityProvide
         {
             return true;
         }
-        return !fluid.getFluid().getAttributes().getBucket(fluid).isEmpty();
+        return !fluid.getFluid().getAttributes().getBucket(fluid.toPortingLibStack()).isEmpty();
     }
 
     @Nonnull
     public FluidStack getFluid()
     {
         Item item = container.getItem();
-        if (item instanceof BucketItem)
+        return FluidStack.EMPTY;
+        /*if (item instanceof BucketItem)
         {
             return new FluidStack(((BucketItem)item).getFluid(), FluidAttributes.BUCKET_VOLUME);
         }
         else if (item instanceof MilkBucketItem && ForgeMod.MILK.isPresent())
         {
-            return new FluidStack(ForgeMod.MILK.get(), FluidAttributes.BUCKET_VOLUME);
+            return new FluidStack(FabricLoader.MILK.get(), FluidAttributes.BUCKET_VOLUME);
         }
         else
         {
             return FluidStack.EMPTY;
-        }
+        }*/
     }
 
     protected void setFluid(@Nonnull FluidStack fluidStack)
@@ -170,7 +172,7 @@ public class FluidBucketWrapper implements IFluidHandlerItem, ICapabilityProvide
     
     @Override
     @Nonnull
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
+    public <T> @NotNull LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing)
     {
         return CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY.orEmpty(capability, holder);
     }
