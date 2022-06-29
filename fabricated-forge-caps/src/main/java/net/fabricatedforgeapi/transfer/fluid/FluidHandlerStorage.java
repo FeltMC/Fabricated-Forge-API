@@ -1,4 +1,4 @@
-package net.fabricatedforgeapi.transfer.fluid.fluid;
+package net.fabricatedforgeapi.transfer.fluid;
 
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.EmptyFluidHandler;

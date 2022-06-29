@@ -5,13 +5,14 @@
 
 package net.minecraftforge.fluids.capability.wrappers;
 
+import io.github.fabricators_of_create.porting_lib.util.FluidAttributes;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.logging.log4j.LogManager;
@@ -57,9 +58,19 @@ public class BucketPickupHandlerWrapper implements IFluidHandler
     }
 
     @Override
+    public long getTankCapacityInDroplets(int tank) {
+        return FluidConstants.BUCKET;
+    }
+
+    @Override
+    public long fillDroplets(FluidStack stack, FluidAction action) {
+        return 0;
+    }
+
+    @Override
     public int getTankCapacity(int tank)
     {
-        return FluidAttributes.BUCKET_VOLUME;
+        return (int) (getTankCapacityInDroplets(tank) / 81);
     }
 
     @Override
@@ -78,7 +89,7 @@ public class BucketPickupHandlerWrapper implements IFluidHandler
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action)
     {
-        if (!resource.isEmpty() && FluidAttributes.BUCKET_VOLUME <= resource.getAmount())
+        if (!resource.isEmpty() && FluidAttributes.BUCKET_VOLUME <= resource.getRealAmount())
         {
             FluidState fluidState = world.getFluidState(blockPos);
             if (!fluidState.isEmpty() && resource.getFluid() == fluidState.getType())
@@ -113,11 +124,16 @@ public class BucketPickupHandlerWrapper implements IFluidHandler
         return FluidStack.EMPTY;
     }
 
+    @Override
+    public FluidStack drain(int mb, FluidAction action) {
+        return null;
+    }
+
     @Nonnull
     @Override
-    public FluidStack drain(int maxDrain, FluidAction action)
+    public FluidStack drain(long droplets, FluidAction action)
     {
-        if (FluidAttributes.BUCKET_VOLUME <= maxDrain)
+        if (FluidAttributes.BUCKET_VOLUME <= droplets)
         {
             FluidState fluidState = world.getFluidState(blockPos);
             if (!fluidState.isEmpty())

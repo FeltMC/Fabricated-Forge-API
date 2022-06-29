@@ -5,6 +5,7 @@
 
 package net.minecraftforge.fluids.capability.wrappers;
 
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.BucketItem;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -65,11 +65,11 @@ public class FluidBucketWrapper implements IFluidHandlerItem, ICapabilityProvide
         return FluidStack.EMPTY;
         /*if (item instanceof BucketItem)
         {
-            return new FluidStack(((BucketItem)item).getFluid(), FluidAttributes.BUCKET_VOLUME);
+            return new FluidStack(((BucketItem)item).getFluid(), FluidConstants.BUCKET);
         }
         else if (item instanceof MilkBucketItem && ForgeMod.MILK.isPresent())
         {
-            return new FluidStack(FabricLoader.MILK.get(), FluidAttributes.BUCKET_VOLUME);
+            return new FluidStack(FabricLoader.MILK.get(), FluidConstants.BUCKET);
         }
         else
         {
@@ -99,9 +99,29 @@ public class FluidBucketWrapper implements IFluidHandlerItem, ICapabilityProvide
     }
 
     @Override
+    public long getTankCapacityInDroplets(int tank) {
+        return FluidConstants.BUCKET;
+    }
+
+    @Override
+    public long fillDroplets(FluidStack resource, FluidAction action) {
+        if (container.getCount() != 1 || resource.getRealAmount() < FluidConstants.BUCKET || container.getItem() instanceof MilkBucketItem || !getFluid().isEmpty() || !canFillFluidType(resource))
+        {
+            return 0;
+        }
+
+        if (action.execute())
+        {
+            setFluid(resource);
+        }
+
+        return FluidConstants.BUCKET;
+    }
+
+    @Override
     public int getTankCapacity(int tank) {
 
-        return FluidAttributes.BUCKET_VOLUME;
+        return (int) (getTankCapacityInDroplets(tank) / 81);
     }
 
     @Override
@@ -113,24 +133,14 @@ public class FluidBucketWrapper implements IFluidHandlerItem, ICapabilityProvide
     @Override
     public int fill(FluidStack resource, FluidAction action)
     {
-        if (container.getCount() != 1 || resource.getAmount() < FluidAttributes.BUCKET_VOLUME || container.getItem() instanceof MilkBucketItem || !getFluid().isEmpty() || !canFillFluidType(resource))
-        {
-            return 0;
-        }
-
-        if (action.execute())
-        {
-            setFluid(resource);
-        }
-
-        return FluidAttributes.BUCKET_VOLUME;
+        return (int) (fillDroplets(resource, action) / 81);
     }
 
     @Nonnull
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action)
     {
-        if (container.getCount() != 1 || resource.getAmount() < FluidAttributes.BUCKET_VOLUME)
+        if (container.getCount() != 1 || resource.getRealAmount() < FluidConstants.BUCKET)
         {
             return FluidStack.EMPTY;
         }
@@ -148,11 +158,16 @@ public class FluidBucketWrapper implements IFluidHandlerItem, ICapabilityProvide
         return FluidStack.EMPTY;
     }
 
+    @Override
+    public FluidStack drain(int mb, FluidAction action) {
+        return null;
+    }
+
     @Nonnull
     @Override
-    public FluidStack drain(int maxDrain, FluidAction action)
+    public FluidStack drain(long droplets, FluidAction action)
     {
-        if (container.getCount() != 1 || maxDrain < FluidAttributes.BUCKET_VOLUME)
+        if (container.getCount() != 1 || droplets < FluidConstants.BUCKET)
         {
             return FluidStack.EMPTY;
         }

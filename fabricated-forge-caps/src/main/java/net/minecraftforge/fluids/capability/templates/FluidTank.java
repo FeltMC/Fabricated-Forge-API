@@ -36,9 +36,25 @@ public class FluidTank implements IFluidHandler, IFluidTank {
         this.validator = validator;
     }
 
+    public FluidTank(int capacity)
+    {
+        this(capacity * 81L, e -> true);
+    }
+
+    public FluidTank(int capacity, Predicate<FluidStack> validator)
+    {
+        this(capacity * 81L, validator);
+    }
+
     public FluidTank setCapacity(long capacity)
     {
         this.capacity = capacity;
+        return this;
+    }
+
+    public FluidTank setCapacity(int capacity)
+    {
+        this.capacity = capacity * 81L;
         return this;
     }
 

@@ -1,6 +1,10 @@
 archivesBaseName = "fabricated-forge-caps"
 version = getSubprojectVersion(project)
 
+loom {
+    accessWidenerPath = file("src/main/resources/fabricated-forge-caps.accesswidener")
+}
+
 repositories {
     maven { url = "https://mvn.devos.one/snapshots/" }
 }

@@ -5,6 +5,7 @@
 
 package net.minecraftforge.common.capabilities;
 
+import io.github.fabricators_of_create.porting_lib.extensions.BlockEntityExtensions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;

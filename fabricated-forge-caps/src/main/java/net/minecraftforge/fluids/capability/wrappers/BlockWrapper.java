@@ -5,12 +5,12 @@
 
 package net.minecraftforge.fluids.capability.wrappers;
 
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.templates.VoidFluidHandler;
@@ -34,10 +34,9 @@ public class BlockWrapper extends VoidFluidHandler
     }
 
     @Override
-    public int fill(FluidStack resource, FluidAction action)
-    {
+    public long fillDroplets(FluidStack resource, FluidAction action) {
         // NOTE: "Filling" means placement in this context!
-        if (resource.getAmount() < FluidAttributes.BUCKET_VOLUME)
+        if (resource.getRealAmount() < FluidConstants.BUCKET)
         {
             return 0;
         }
@@ -46,7 +45,13 @@ public class BlockWrapper extends VoidFluidHandler
             FluidUtil.destroyBlockOnFluidPlacement(world, blockPos);
             world.setBlock(blockPos, state, Block.UPDATE_ALL_IMMEDIATE);
         }
-        return FluidAttributes.BUCKET_VOLUME;
+        return FluidConstants.BUCKET;
+    }
+
+    @Override
+    public int fill(FluidStack resource, FluidAction action)
+    {
+        return (int) (fillDroplets(resource, action) / 81);
     }
 
     public static class LiquidContainerBlockWrapper extends VoidFluidHandler
@@ -63,22 +68,27 @@ public class BlockWrapper extends VoidFluidHandler
         }
 
         @Override
-        public int fill(FluidStack resource, FluidAction action)
-        {
+        public long fillDroplets(FluidStack resource, FluidAction action) {
             // NOTE: "Filling" means placement in this context!
-            if (resource.getAmount() >= FluidAttributes.BUCKET_VOLUME)
+            if (resource.getAmount() >= FluidConstants.BUCKET)
             {
                 BlockState state = world.getBlockState(blockPos);
                 if (liquidContainer.canPlaceLiquid(world, blockPos, state, resource.getFluid()))
                 {
                     //If we are executing try to actually fill the container, if it failed return that we failed
-                    if (action.simulate() || liquidContainer.placeLiquid(world, blockPos, state, resource.getFluid().getAttributes().getStateForPlacement(world, blockPos, resource)))
+                    if (action.simulate() || liquidContainer.placeLiquid(world, blockPos, state, resource.getFluid().getAttributes().getStateForPlacement(world, blockPos, resource.toPortingLibStack())))
                     {
-                        return FluidAttributes.BUCKET_VOLUME;
+                        return FluidConstants.BUCKET;
                     }
                 }
             }
             return 0;
+        }
+
+        @Override
+        public int fill(FluidStack resource, FluidAction action)
+        {
+            return (int) (fillDroplets(resource, action) / 81);
         }
     }
 }

@@ -1,4 +1,4 @@
-package net.fabricatedforgeapi.transfer.item.item;
+package net.fabricatedforgeapi.transfer.item;
 
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;

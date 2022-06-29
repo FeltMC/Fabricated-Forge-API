@@ -1,10 +1,10 @@
 package net.fabricatedforgeapi.transfer;
 
-import net.fabricatedforgeapi.transfer.fluid.fluid.FluidHandlerStorage;
-import net.fabricatedforgeapi.transfer.fluid.fluid.FluidStorageHandler;
-import net.fabricatedforgeapi.transfer.fluid.fluid.FluidStorageHandlerItem;
-import net.fabricatedforgeapi.transfer.item.item.ItemHandlerStorage;
-import net.fabricatedforgeapi.transfer.item.item.ItemStorageHandler;
+import net.fabricatedforgeapi.transfer.fluid.FluidHandlerStorage;
+import net.fabricatedforgeapi.transfer.fluid.FluidStorageHandler;
+import net.fabricatedforgeapi.transfer.fluid.FluidStorageHandlerItem;
+import net.fabricatedforgeapi.transfer.item.ItemHandlerStorage;
+import net.fabricatedforgeapi.transfer.item.ItemStorageHandler;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;

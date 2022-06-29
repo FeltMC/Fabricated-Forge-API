@@ -5,15 +5,16 @@
 
 package net.minecraftforge.fluids.capability.wrappers;
 
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
 
+//TODO
 public class FluidBlockWrapper implements IFluidHandler
 {
     protected final IFluidBlock fluidBlock;
@@ -41,18 +42,28 @@ public class FluidBlockWrapper implements IFluidHandler
     }
 
     @Override
-    public int getTankCapacity(int tank)
-    {
+    public long getTankCapacityInDroplets(int tank) {
         FluidStack stored = getFluidInTank(tank);
         if (!stored.isEmpty())
         {
             float filledPercentage = fluidBlock.getFilledPercentage(world, blockPos);
             if (filledPercentage > 0)
             {
-                return (int) (stored.getAmount() / filledPercentage);
+                return (long) (stored.getRealAmount() / filledPercentage);
             }
         }
-        return FluidAttributes.BUCKET_VOLUME;
+        return FluidConstants.BUCKET;
+    }
+
+    @Override
+    public long fillDroplets(FluidStack stack, FluidAction action) {
+        return 0;
+    }
+
+    @Override
+    public int getTankCapacity(int tank)
+    {
+        return (int) (getTankCapacityInDroplets(tank) / 81);
     }
 
     @Override
@@ -84,6 +95,11 @@ public class FluidBlockWrapper implements IFluidHandler
             }
         }
         return FluidStack.EMPTY;
+    }
+
+    @Override
+    public FluidStack drain(long droplets, FluidAction action) {
+        return null;
     }
 
     @Nonnull

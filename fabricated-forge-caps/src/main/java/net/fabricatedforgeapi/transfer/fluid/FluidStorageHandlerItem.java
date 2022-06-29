@@ -1,4 +1,4 @@
-package net.fabricatedforgeapi.transfer.fluid.fluid;
+package net.fabricatedforgeapi.transfer.fluid;
 
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;

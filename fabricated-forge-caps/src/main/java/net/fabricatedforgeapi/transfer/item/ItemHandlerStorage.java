@@ -1,4 +1,4 @@
-package net.fabricatedforgeapi.transfer.item.item;
+package net.fabricatedforgeapi.transfer.item;
 
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.EmptyHandler;

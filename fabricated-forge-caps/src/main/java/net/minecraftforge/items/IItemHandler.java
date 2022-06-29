@@ -5,7 +5,7 @@
 
 package net.minecraftforge.items;
 
-import net.fabricatedforgeapi.transfer.item.item.IItemHandlerStorage;
+import net.fabricatedforgeapi.transfer.item.IItemHandlerStorage;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;

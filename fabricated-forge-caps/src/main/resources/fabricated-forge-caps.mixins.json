@@ -5,9 +5,10 @@
   "refmap": "fabricated-forge-caps.refmap.json",
   "mixins": [
     "BlockEntityMixin",
+    "BucketItemMixin",
+    "EntityMixin",
     "ItemMixin",
-    "ItemStackMixin",
-    "EntityMixin"
+    "ItemStackMixin"
   ],
   "minVersion": "0.8"
 }

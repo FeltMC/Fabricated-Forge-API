@@ -13,6 +13,7 @@
   "license": "LGPL-2.1-only",
   "icon": "assets/tesseractapi/icon.png",
   "environment": "*",
+  "accessWidener": "fabricated-forge-caps.accesswidener",
   "mixins": [
     "fabricated-forge-caps.mixins.json"
   ],
@@ -36,6 +37,9 @@
       "net/minecraft/class_1297": [
         "net/minecraftforge/common/capabilities/IEntityCapProviderImpl",
         "net/fabricatedforgeapi/caps/ICapabilityEntity"
+      ],
+      "net/minecraft/class_1755": [
+        "net/fabricatedforgeapi/transfer/fluid/BucketExtension"
       ]
     }
   }

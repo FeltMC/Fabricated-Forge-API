@@ -5,6 +5,7 @@
 
 package net.minecraftforge.fluids.capability;
 
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class TileFluidHandler extends BlockEntity
 {
-    protected FluidTank tank = new FluidTank(FluidAttributes.BUCKET_VOLUME);
+    protected FluidTank tank = new FluidTank(FluidConstants.BUCKET);
     
     private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> tank);
 

@@ -5,6 +5,7 @@
 
 package net.minecraftforge.fluids;
 
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
@@ -95,7 +96,7 @@ public class DispenseFluidContainer extends DefaultDispenseItemBehavior
             return super.execute(source, stack);
         }
 
-        FluidStack fluidStack = fluidHandler.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE);
+        FluidStack fluidStack = fluidHandler.drain(FluidConstants.BUCKET, IFluidHandler.FluidAction.EXECUTE);
         Direction dispenserFacing = source.getBlockState().getValue(DispenserBlock.FACING);
         BlockPos blockpos = source.getPos().relative(dispenserFacing);
         FluidActionResult result = FluidUtil.tryPlaceFluid(null, source.getLevel(), InteractionHand.MAIN_HAND, blockpos, stack, fluidStack);
