@@ -21,10 +21,11 @@ public interface IFluidHandlerStorage extends Storage<FluidVariant> {
 
     @Override
     default long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-        long remainder = getHandler().fillDroplets(new FluidStack(resource, maxAmount), SIMULATE);
+        FluidStack stack =  new FluidStack(resource, maxAmount);
+        long remainder = getHandler().fillDroplets(stack, SIMULATE);
         transaction.addCloseCallback((t, result) -> {
             if (result.wasCommitted()) {
-                getHandler().fillDroplets(new FluidStack(resource, maxAmount), EXECUTE);
+                getHandler().fillDroplets(stack, EXECUTE);
             }
         });
         return remainder;
@@ -32,10 +33,11 @@ public interface IFluidHandlerStorage extends Storage<FluidVariant> {
 
     @Override
     default long extract(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-        FluidStack extracted = getHandler().drain(new FluidStack(resource, maxAmount), SIMULATE);
+        FluidStack stack = new FluidStack(resource, maxAmount);
+        FluidStack extracted = getHandler().drain(stack, SIMULATE);
         transaction.addCloseCallback((t, result) -> {
             if (result.wasCommitted()) {
-                getHandler().drain(new FluidStack(resource, maxAmount), EXECUTE);
+                getHandler().drain(stack, EXECUTE);
             }
         });
         return extracted.getRealAmount();
