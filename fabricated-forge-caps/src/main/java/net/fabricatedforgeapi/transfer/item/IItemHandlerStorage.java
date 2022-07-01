@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @SuppressWarnings("UnstableApiUsage")
 public interface IItemHandlerStorage extends Storage<ItemVariant> {
@@ -19,26 +20,28 @@ public interface IItemHandlerStorage extends Storage<ItemVariant> {
 
     @Override
     default long insert(ItemVariant resource, long maxAmount, TransactionContext transaction) {
-        ItemStack toInsert = resource.toStack((int) maxAmount);
-        ItemStack remainder = ItemHandlerHelper.insertItemStacked(getHandler(), toInsert, true);
+        AtomicLong atomicLong = new AtomicLong(0);
         transaction.addCloseCallback((t, result) -> {
             if (result.wasCommitted()) {
-                ItemHandlerHelper.insertItemStacked(getHandler(), toInsert, false);
+                ItemStack toInsert = resource.toStack((int) maxAmount);
+                ItemStack remainder = ItemHandlerHelper.insertItemStacked(getHandler(), toInsert, false);
+                atomicLong.set(maxAmount - remainder.getCount());
             }
         });
-        return maxAmount - remainder.getCount();
+        return atomicLong.get();
     }
 
     @Override
     default long extract(ItemVariant resource, long maxAmount, TransactionContext transaction) {
-        ItemStack toExtract = resource.toStack((int) maxAmount);
-        ItemStack extracted = ItemHandlerHelper.extract(getHandler(), toExtract, true);
+        AtomicLong atomicLong = new AtomicLong(0);
         transaction.addCloseCallback((t, result) -> {
             if (result.wasCommitted()) {
-                ItemHandlerHelper.extract(getHandler(), toExtract, false);
+                ItemStack toExtract = resource.toStack((int) maxAmount);
+                ItemStack extracted = ItemHandlerHelper.extract(getHandler(), toExtract, false);
+                atomicLong.set(extracted.getCount());
             }
         });
-        return extracted.getCount();
+        return atomicLong.get();
     }
 
     @Override

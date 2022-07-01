@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE;
 import static net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE;
@@ -21,26 +22,25 @@ public interface IFluidHandlerStorage extends Storage<FluidVariant> {
 
     @Override
     default long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-        FluidStack stack =  new FluidStack(resource, maxAmount);
-        long remainder = getHandler().fillDroplets(stack, SIMULATE);
+        AtomicLong atomicLong = new AtomicLong(0);
         transaction.addCloseCallback((t, result) -> {
             if (result.wasCommitted()) {
-                getHandler().fillDroplets(stack, EXECUTE);
+                atomicLong.set(getHandler().fillDroplets(new FluidStack(resource, maxAmount), EXECUTE));
             }
         });
-        return remainder;
+        return atomicLong.get();
     }
 
     @Override
     default long extract(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-        FluidStack stack = new FluidStack(resource, maxAmount);
-        FluidStack extracted = getHandler().drain(stack, SIMULATE);
+        AtomicLong atomicLong = new AtomicLong(0);
         transaction.addCloseCallback((t, result) -> {
             if (result.wasCommitted()) {
-                getHandler().drain(stack, EXECUTE);
+                FluidStack extracted = getHandler().drain(new FluidStack(resource, maxAmount), EXECUTE);
+                atomicLong.set(extracted.getRealAmount());
             }
         });
-        return extracted.getRealAmount();
+        return atomicLong.get();
     }
 
     @Override
