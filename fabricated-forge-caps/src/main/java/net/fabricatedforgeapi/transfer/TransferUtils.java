@@ -100,15 +100,6 @@ public class TransferUtils {
         if (fluidStorages.size() == 1) return simplifyFluid(fluidStorages.get(0));
         return simplifyFluid(new CombinedStorage<>(fluidStorages));
     }
-
-    // Fluid-containing items
-
-    public static LazyOptional<IFluidHandlerItem> getFluidHandlerItem(ItemStack stack) {
-        if (stack == null || stack.isEmpty()) return LazyOptional.empty();
-        ContainerItemContext ctx = ContainerItemContext.withInitial(stack);
-        Storage<FluidVariant> fluidStorage = FluidStorage.ITEM.find(stack, ctx);
-        return fluidStorage == null ? LazyOptional.empty() : LazyOptional.of(() -> new FluidStorageHandlerItem(ctx, fluidStorage));
-    }
     public static LazyOptional<IItemHandler> simplifyItem(Storage<ItemVariant> storage) {
         if (storage == null) return LazyOptional.empty();
         if (storage instanceof ItemHandlerStorage handler) return LazyOptional.of(() -> handler.getHandler());
