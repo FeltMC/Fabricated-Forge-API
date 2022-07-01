@@ -1,7 +1,12 @@
 archivesBaseName = "fabricated-forge-modeldata"
 version = getSubprojectVersion(project)
 
+repositories {
+    maven { url = "https://mvn.devos.one/snapshots/" }
+}
 
 dependencies{
     include("net.fabricmc.fabric-api:fabric-renderer-api-v1:${project.fabric_renderer_api_version}")
+    include("io.github.fabricators_of_create:Porting-Lib:1.1.310-beta+1.18.2-dev.${rootProject.port_lib_hash}"){ transitive(false) }
+    modImplementation("io.github.fabricators_of_create:Porting-Lib:1.1.310-beta+1.18.2-dev.${rootProject.port_lib_hash}"){ transitive(false) }
 }

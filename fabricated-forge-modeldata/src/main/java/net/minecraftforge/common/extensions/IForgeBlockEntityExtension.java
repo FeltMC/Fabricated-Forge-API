@@ -1,13 +1,15 @@
 package net.minecraftforge.common.extensions;
 
+import io.github.fabricators_of_create.porting_lib.extensions.BlockEntityExtensions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.client.model.data.IModelData;
 
-public interface IForgeBlockEntityExtension {
+public interface IForgeBlockEntityExtension extends BlockEntityExtensions {
     private BlockEntity self() { return (BlockEntity) this; }
+    @Override
     default void onLoad(){
         requestModelDataUpdate();
     }
