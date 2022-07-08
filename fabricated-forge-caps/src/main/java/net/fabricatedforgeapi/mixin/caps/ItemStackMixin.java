@@ -106,4 +106,9 @@ public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapa
         this.setTag(itemStack.getTag());
         if (itemStack.getCapNBT() != null) capProvider.deserializeInternal(itemStack.getCapNBT());
     }
+
+    @Override
+    public CapabilityProvider<ItemStack> getCapabilityProvider() {
+        return capProvider;
+    }
 }

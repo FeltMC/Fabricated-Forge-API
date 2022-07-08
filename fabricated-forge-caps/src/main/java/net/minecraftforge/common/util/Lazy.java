@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * Proxy object for a value that is calculated on first access
  * @param <T> The type of the value
  */
-public interface Lazy<T> extends Supplier<T>
+public interface Lazy<T> extends io.github.fabricators_of_create.porting_lib.util.Lazy<T>
 {
     /**
      * Constructs a lazy-initialized object
