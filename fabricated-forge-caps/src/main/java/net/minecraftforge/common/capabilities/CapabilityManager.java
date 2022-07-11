@@ -31,7 +31,7 @@ public enum CapabilityManager
     }
 
     @SuppressWarnings("unchecked")
-    <T> Capability<T> get(String realName, boolean registering)
+    public <T> Capability<T> get(String realName, boolean registering)
     {
         Capability<T> cap;
 
