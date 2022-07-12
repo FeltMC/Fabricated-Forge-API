@@ -5,7 +5,8 @@
 
 package net.minecraftforge.common.util;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Consumer;
 
 /**
@@ -16,4 +17,7 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface NonNullConsumer<T> extends io.github.fabricators_of_create.porting_lib.util.NonNullConsumer<T>
 {
+    @NotNull
+    @Override
+    void accept(@NotNull T var1);
 }

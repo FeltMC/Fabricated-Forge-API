@@ -5,6 +5,8 @@
 
 package net.minecraftforge.common.util;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.annotation.Nonnull;
 import java.util.function.Function;
 
@@ -16,4 +18,7 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface NonNullFunction<T, R> extends io.github.fabricators_of_create.porting_lib.util.NonNullFunction<T, R>
 {
+    @NotNull
+    @Override
+    R apply(@NotNull T var1);
 }

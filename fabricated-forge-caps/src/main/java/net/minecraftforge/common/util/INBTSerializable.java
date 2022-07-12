@@ -12,4 +12,9 @@ import net.minecraft.nbt.Tag;
  * code base that can be serialized to and from a NBT tag.
  */
 public interface INBTSerializable<T extends Tag> extends io.github.fabricators_of_create.porting_lib.util.INBTSerializable<T> {
+    @Override
+    T serializeNBT();
+
+    @Override
+    void deserializeNBT(T nbt);
 }
