@@ -9,20 +9,18 @@ import java.util.function.Predicate;
 
 import com.google.common.base.Predicates;
 
-public class ModelProperty<T> implements Predicate<T> {
-    
-    private final Predicate<T> pred;
+public class ModelProperty<T> extends io.github.fabricators_of_create.porting_lib.model.ModelProperty<T> implements Predicate<T> {
     
     public ModelProperty() {
         this(Predicates.alwaysTrue());
     }
     
     public ModelProperty(Predicate<T> pred) {
-        this.pred = pred;
+        super(pred);
     }
 
     @Override
     public boolean test(T t) {
-        return pred.test(t);
+        return super.test(t);
     }
 }

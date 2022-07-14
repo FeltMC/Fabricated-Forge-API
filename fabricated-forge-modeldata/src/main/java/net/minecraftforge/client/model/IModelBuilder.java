@@ -13,7 +13,7 @@ import net.minecraft.client.resources.model.SimpleBakedModel;
 import net.minecraft.core.Direction;
 import net.minecraftforge.mixin.client.SimpleBakedModelBuilderAccessor;
 
-public interface IModelBuilder<T extends IModelBuilder<T>>
+public interface IModelBuilder<T extends IModelBuilder<T>> extends io.github.fabricators_of_create.porting_lib.model.IModelBuilder<T>
 {
     static IModelBuilder<?> of(IModelConfiguration owner, ItemOverrides overrides, TextureAtlasSprite particle)
     {
@@ -34,14 +34,14 @@ public interface IModelBuilder<T extends IModelBuilder<T>>
         }
 
         @Override
-        public Simple addFaceQuad(Direction facing, BakedQuad quad)
+        public IModelBuilder.Simple addFaceQuad(Direction facing, BakedQuad quad)
         {
             builder.addCulledFace(facing, quad);
             return this;
         }
 
         @Override
-        public Simple addGeneralQuad(BakedQuad quad)
+        public IModelBuilder.Simple addGeneralQuad(BakedQuad quad)
         {
             builder.addUnculledFace(quad);
             return this;

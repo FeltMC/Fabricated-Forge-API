@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
  * Interface that provides generic access to the data within BlockModel,
  * while allowing non-blockmodel usage of models
  */
-public interface IModelConfiguration {
+public interface IModelConfiguration extends io.github.fabricators_of_create.porting_lib.model.IModelConfiguration {
 
     /**
      * If available, gets the owning model (usually BlockModel) of this configuration
@@ -90,5 +90,11 @@ public interface IModelConfiguration {
     default boolean getPartVisibility(IModelGeometryPart part) {
         return getPartVisibility(part, true);
     }
+
+    default boolean getPartVisibility(io.github.fabricators_of_create.porting_lib.model.IModelGeometryPart part, boolean fallback) {
+        return part instanceof IModelGeometryPart geometryPart && getPartVisibility(geometryPart, fallback);
+    }
+
+
 
 }

@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.function.Function;
 
-public interface IModelGeometryPart
+public interface IModelGeometryPart extends io.github.fabricators_of_create.porting_lib.model.IModelGeometryPart
 {
     String name();
 

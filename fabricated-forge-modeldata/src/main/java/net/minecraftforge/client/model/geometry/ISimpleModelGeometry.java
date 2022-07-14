@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.function.Function;
 
-public interface ISimpleModelGeometry<T extends ISimpleModelGeometry<T>> extends IModelGeometry<T>
+public interface ISimpleModelGeometry<T extends ISimpleModelGeometry<T>> extends IModelGeometry<T>, io.github.fabricators_of_create.porting_lib.model.ISimpleModelGeometry<T>
 {
     @Override
     default BakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation)

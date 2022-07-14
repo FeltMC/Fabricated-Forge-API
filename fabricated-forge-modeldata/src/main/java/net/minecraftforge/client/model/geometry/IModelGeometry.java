@@ -26,7 +26,7 @@ import java.util.function.Function;
  * General interface for any model that can be baked, superset of vanilla {@link UnbakedModel}.
  * Models can be baked to different vertex formats and with different state.
  */
-public interface IModelGeometry<T extends IModelGeometry<T>>
+public interface IModelGeometry<T extends IModelGeometry<T>> extends io.github.fabricators_of_create.porting_lib.model.IModelGeometry<T>
 {
     default Collection<? extends IModelGeometryPart> getParts() {
         return Collections.emptyList();

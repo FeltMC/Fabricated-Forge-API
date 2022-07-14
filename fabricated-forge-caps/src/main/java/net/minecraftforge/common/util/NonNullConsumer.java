@@ -17,7 +17,6 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface NonNullConsumer<T> extends io.github.fabricators_of_create.porting_lib.util.NonNullConsumer<T>
 {
-    @NotNull
     @Override
     void accept(@NotNull T var1);
 }
