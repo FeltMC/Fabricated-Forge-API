@@ -18,6 +18,7 @@ import net.minecraftforge.client.model.IModelBuilder;
 import net.minecraftforge.client.model.IModelConfiguration;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -39,4 +40,20 @@ public interface ISimpleModelGeometry<T extends ISimpleModelGeometry<T>> extends
 
     @Override
     Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors);
+
+    @Override
+    default Collection<Material> getTextures(io.github.fabricators_of_create.porting_lib.model.IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors){
+        if (owner instanceof IModelConfiguration configuration){
+            return getTextures(configuration, modelGetter, missingTextureErrors);
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    default BakedModel bake(io.github.fabricators_of_create.porting_lib.model.IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation){
+        if (owner instanceof IModelConfiguration configuration){
+            return bake(configuration, bakery, spriteGetter, modelTransform, overrides, modelLocation);
+        }
+        return null;
+    }
 }

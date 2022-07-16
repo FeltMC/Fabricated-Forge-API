@@ -39,4 +39,20 @@ public interface IModelGeometry<T extends IModelGeometry<T>> extends io.github.f
     BakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation);
 
     Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors);
+
+    @Override
+    default BakedModel bake(io.github.fabricators_of_create.porting_lib.model.IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation){
+        if (owner instanceof IModelConfiguration configuration){
+            return bake(configuration, bakery, spriteGetter, modelTransform, overrides, modelLocation);
+        }
+        return null;
+    }
+
+    @Override
+    default Collection<Material> getTextures(io.github.fabricators_of_create.porting_lib.model.IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors){
+        if (owner instanceof IModelConfiguration configuration){
+            return getTextures(configuration, modelGetter, missingTextureErrors);
+        }
+        return Collections.emptyList();
+    }
 }

@@ -30,4 +30,19 @@ public interface IModelGeometryPart extends io.github.fabricators_of_create.port
         // No texture dependencies
         return Collections.emptyList();
     }
+
+    default Collection<Material> getTextures(io.github.fabricators_of_create.porting_lib.model.IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
+        if (owner instanceof IModelConfiguration configuration){
+            return getTextures(configuration, modelGetter, missingTextureErrors);
+        }
+        // No texture dependencies
+        return Collections.emptyList();
+    }
+
+    @Override
+    default void addQuads(io.github.fabricators_of_create.porting_lib.model.IModelConfiguration owner, io.github.fabricators_of_create.porting_lib.model.IModelBuilder<?> modelBuilder, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ResourceLocation modelLocation){
+        if (owner instanceof IModelConfiguration configuration && modelBuilder instanceof IModelBuilder<?> builder){
+            addQuads(configuration, builder, bakery, spriteGetter, modelTransform, modelLocation);
+        }
+    }
 }

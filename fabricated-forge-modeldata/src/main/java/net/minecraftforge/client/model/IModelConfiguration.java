@@ -95,6 +95,10 @@ public interface IModelConfiguration extends io.github.fabricators_of_create.por
         return part instanceof IModelGeometryPart geometryPart && getPartVisibility(geometryPart, fallback);
     }
 
+    default boolean getPartVisibility(io.github.fabricators_of_create.porting_lib.model.IModelGeometryPart part) {
+        return part instanceof IModelGeometryPart geometryPart && getPartVisibility(geometryPart);
+    }
+
 
 
 }
