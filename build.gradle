@@ -54,6 +54,19 @@ subprojects {
 
 		setupRepositories(repositories)
 	}
+
+	processResources {
+		//dependsOn copyAccessWidener
+
+		def toReplace = [
+				"version"             : project.version
+		]
+
+		inputs.properties toReplace
+		filesMatching("fabric.mod.json") {
+			expand toReplace
+		}
+	}
 }
 
 void setupRepositories(RepositoryHandler repositories) {
