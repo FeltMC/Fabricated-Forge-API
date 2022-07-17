@@ -56,4 +56,11 @@ public interface ISimpleModelGeometry<T extends ISimpleModelGeometry<T>> extends
         }
         return null;
     }
+
+    @Override
+    default void addQuads(io.github.fabricators_of_create.porting_lib.model.IModelConfiguration owner, io.github.fabricators_of_create.porting_lib.model.IModelBuilder<?> modelBuilder, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ResourceLocation modelLocation){
+        if (owner instanceof IModelConfiguration configuration && modelBuilder instanceof IModelBuilder<?> builder){
+            addQuads(configuration, builder, bakery, spriteGetter, modelTransform, modelLocation);
+        }
+    }
 }
