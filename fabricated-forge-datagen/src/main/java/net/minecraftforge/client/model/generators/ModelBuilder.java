@@ -14,7 +14,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.fabricatedforgeapi.mixin.datagen.client.BlockElementAccessor;
 import net.fabricatedforgeapi.mixin.datagen.client.GuiLightAccessor;
 import net.fabricatedforgeapi.mixin.datagen.client.ItemTransformDeserializerAccessor;
 
@@ -249,7 +248,7 @@ public class ModelBuilder<T extends ModelBuilder<T>> extends ModelFile {
 
                     JsonObject faceObj = new JsonObject();
                     faceObj.addProperty("texture", serializeLocOrKey(face.texture));
-                    if (!Arrays.equals(face.uv.uvs, ((BlockElementAccessor)(Object)part).uvsByFace(dir))) {
+                    if (!Arrays.equals(face.uv.uvs, part.uvsByFace(dir))) {
                         faceObj.add("uv", new Gson().toJsonTree(face.uv.uvs));
                     }
                     if (face.cullForDirection != null) {

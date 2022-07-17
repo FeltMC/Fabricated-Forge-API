@@ -9,7 +9,6 @@
     "TagBuilderMixin"
   ],
   "client": [
-    "client.BlockElementAccessor",
     "client.ClientPackSourceAccessor",
     "client.GuiLightAccessor",
     "client.ItemTransformDeserializerAccessor"
