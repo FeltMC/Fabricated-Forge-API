@@ -41,24 +41,6 @@ public abstract class MixinMatrix4f implements IForgeMatrix4f {
 
     @Shadow protected float m32;
 
-    @Override
-    public void multiplyBackward(Matrix4f other) {
-        Matrix4f copy = other.copy();
-        copy.multiply((Matrix4f)(Object) this);
-        this.load(copy);
-    }
-
-    @Override
-    public void setTranslation(float x, float y, float z) {
-        this.m00 = 1.0F;
-        this.m11 = 1.0F;
-        this.m22 = 1.0F;
-        this.m33 = 1.0F;
-        this.m03 = x;
-        this.m13 = y;
-        this.m23 = z;
-    }
-
     public Matrix4f setMValues(float[] values){
         this.m00 = values[0];
         this.m01 = values[1];
