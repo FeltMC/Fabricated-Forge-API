@@ -14,9 +14,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.mixin.client.BlockElementAccessor;
-import net.minecraftforge.mixin.client.GuiLightAccessor;
-import net.minecraftforge.mixin.client.ItemTransformDeserializerAccessor;
+import net.fabricatedforgeapi.mixin.datagen.client.BlockElementAccessor;
+import net.fabricatedforgeapi.mixin.datagen.client.GuiLightAccessor;
+import net.fabricatedforgeapi.mixin.datagen.client.ItemTransformDeserializerAccessor;
 
 import javax.annotation.Nullable;
 import java.util.*;

@@ -11,7 +11,7 @@ import net.minecraft.server.packs.repository.ServerPacksSource;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraftforge.mixin.client.ClientPackSourceAccessor;
+import net.fabricatedforgeapi.mixin.datagen.client.ClientPackSourceAccessor;
 
 import javax.annotation.Nullable;
 import java.io.File;

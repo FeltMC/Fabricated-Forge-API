@@ -1,4 +1,4 @@
-package net.minecraftforge.mixin.client;
+package net.fabricatedforgeapi.mixin.datagen.client;
 
 import net.minecraft.client.resources.ClientPackSource;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;

@@ -1,4 +1,4 @@
-package net.minecraftforge.mixin.client;
+package net.fabricatedforgeapi.mixin.datagen.client;
 
 import net.minecraft.client.renderer.block.model.BlockElement;
 import net.minecraft.core.Direction;

@@ -1,4 +1,4 @@
-package net.minecraftforge.mixin;
+package net.fabricatedforgeapi.mixin.datagen;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

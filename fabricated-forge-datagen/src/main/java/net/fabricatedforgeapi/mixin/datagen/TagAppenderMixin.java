@@ -1,4 +1,4 @@
-package net.minecraftforge.mixin;
+package net.fabricatedforgeapi.mixin.datagen;
 
 import net.minecraft.core.Registry;
 import net.minecraft.data.tags.TagsProvider;
