@@ -2,12 +2,12 @@
   "required": true,
   "package": "net.fabricatedforgeapi.mixin.datagen",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "fabricated-forge-modeldata.refmap.json",
+  "refmap": "fabricated-forge-datagen.refmap.json",
+  "minVersion": "0.8",
   "mixins": [
     "TagAppenderMixin",
     "TagBuilderMixin"
   ],
-  "minVersion": "0.8",
   "client": [
     "client.BlockElementAccessor",
     "client.ClientPackSourceAccessor",
