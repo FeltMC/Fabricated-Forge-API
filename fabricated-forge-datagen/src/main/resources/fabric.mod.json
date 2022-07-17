@@ -26,6 +26,11 @@
       "net/minecraft/class_3494\u0024class_3495": [
         "net/minecraftforge/common/extensions/IForgeRawTagBuilder"
       ]
+    },
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
     }
   }
 }

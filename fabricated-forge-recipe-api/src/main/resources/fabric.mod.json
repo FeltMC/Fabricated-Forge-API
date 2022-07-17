@@ -26,6 +26,11 @@
       "net/minecraft/class_1856": [
         "net/minecraftforge/common/crafting/IngredientExtension"
       ]
+    },
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
     }
   }
 }

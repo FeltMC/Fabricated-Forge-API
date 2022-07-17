@@ -41,6 +41,11 @@
       "net/minecraft/class_1755": [
         "net/fabricatedforgeapi/transfer/fluid/BucketExtension"
       ]
+    },
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
     }
   }
 }

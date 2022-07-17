@@ -32,6 +32,11 @@
       "net/minecraft/class_2586": [
         "net/minecraftforge/common/extensions/IForgeBlockEntityExtension"
       ]
+    },
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
     }
   }
 }
