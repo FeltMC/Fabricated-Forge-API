@@ -2,6 +2,7 @@ package net.minecraftforge.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.fabrcatedforgeapi.modeldata.ModelBlockRendererExtension;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
@@ -25,7 +26,7 @@ import java.util.Random;
 
 @Debug(export = true)
 @Mixin(ModelBlockRenderer.class)
-public abstract class MixinModelBlockRenderer {
+public abstract class MixinModelBlockRenderer implements ModelBlockRendererExtension {
     @Shadow public abstract boolean tesselateBlock(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay);
 
     @Shadow public abstract boolean tesselateWithAO(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay);
