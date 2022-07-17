@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.SimpleBakedModel;
 import net.minecraft.core.Direction;
-import net.minecraftforge.mixin.client.SimpleBakedModelBuilderAccessor;
+import net.fabricatedforgeapi.mixin.modeldata.client.SimpleBakedModelBuilderAccessor;
 
 public interface IModelBuilder<T extends IModelBuilder<T>> extends io.github.fabricators_of_create.porting_lib.model.IModelBuilder<T>
 {

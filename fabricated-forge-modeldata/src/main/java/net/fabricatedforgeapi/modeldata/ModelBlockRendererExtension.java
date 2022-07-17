@@ -1,4 +1,4 @@
-package net.fabrcatedforgeapi.modeldata;
+package net.fabricatedforgeapi.modeldata;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.IModelData;
-import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.Random;
 

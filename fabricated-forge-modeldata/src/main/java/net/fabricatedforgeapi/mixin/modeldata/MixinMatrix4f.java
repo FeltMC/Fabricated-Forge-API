@@ -1,4 +1,4 @@
-package net.minecraftforge.mixin.client;
+package net.fabricatedforgeapi.mixin.modeldata;
 
 import com.mojang.math.Matrix4f;
 import net.minecraftforge.client.extensions.IForgeMatrix4f;

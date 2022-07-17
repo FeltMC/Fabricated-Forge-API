@@ -1,4 +1,4 @@
-package net.minecraftforge.mixin.client;
+package net.fabricatedforgeapi.mixin.modeldata.client;
 
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;

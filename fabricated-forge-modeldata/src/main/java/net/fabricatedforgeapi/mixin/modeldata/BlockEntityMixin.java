@@ -1,4 +1,4 @@
-package net.minecraftforge.mixin;
+package net.fabricatedforgeapi.mixin.modeldata;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.extensions.IForgeBlockEntityExtension;

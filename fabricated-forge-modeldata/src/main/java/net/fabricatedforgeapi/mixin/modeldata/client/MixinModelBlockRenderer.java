@@ -1,8 +1,8 @@
-package net.minecraftforge.mixin.client;
+package net.fabricatedforgeapi.mixin.modeldata.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.fabrcatedforgeapi.modeldata.ModelBlockRendererExtension;
+import net.fabricatedforgeapi.modeldata.ModelBlockRendererExtension;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;

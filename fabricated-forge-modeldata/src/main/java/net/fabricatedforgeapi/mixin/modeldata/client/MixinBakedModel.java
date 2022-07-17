@@ -1,6 +1,5 @@
-package net.minecraftforge.mixin.client;
+package net.fabricatedforgeapi.mixin.modeldata.client;
 
-import net.minecraft.client.renderer.block.model.ItemTransform;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraftforge.client.extensions.IForgeBakedModel;
