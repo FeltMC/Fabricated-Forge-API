@@ -86,8 +86,12 @@ public class BlockEntityMixin implements IBlockEntityCapProviderImpl, ICapabilit
     @Override
     public void invalidateCaps() {
         capProvider.invalidateCaps();
-        fluidHandler.invalidate();
-        itemHandler.invalidate();
+        if (fluidHandler != null){
+            fluidHandler.invalidate();
+        }
+        if (itemHandler != null){
+            itemHandler.invalidate();
+        }
     }
 
     @Override
