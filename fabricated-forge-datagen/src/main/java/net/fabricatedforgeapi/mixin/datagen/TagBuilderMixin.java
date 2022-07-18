@@ -3,6 +3,7 @@ package net.fabricatedforgeapi.mixin.datagen;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.fabricmc.fabric.impl.datagen.FabricTagBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.GsonHelper;
@@ -13,7 +14,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -21,10 +21,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Mixin(Tag.Builder.class)
-public class TagBuilderMixin implements IForgeRawTagBuilder {
+public abstract class TagBuilderMixin implements IForgeRawTagBuilder, FabricTagBuilder {
     @Shadow @Final private List<Tag.BuilderEntry> entries;
-    @Unique
-    private boolean replace = false;
     @Unique
     private final List<Tag.BuilderEntry> removeEntries = new java.util.ArrayList<>(); // FORGE: internal field for tracking "remove" entries
 
@@ -41,17 +39,8 @@ public class TagBuilderMixin implements IForgeRawTagBuilder {
 
     @Override
     public Tag.Builder replace(boolean value) {
-        this.replace = value;
+        this.fabric_setReplace(value);
         return (Tag.Builder)(Object)this;
-    }
-
-    @Redirect(method = "serializeToJson", at = @At(value = "INVOKE", target = "Lcom/google/gson/JsonObject;addProperty(Ljava/lang/String;Ljava/lang/Boolean;)V"))
-    private void redirectAddProperty(JsonObject instance, String property, Boolean value){
-        if (property.equals("replace")) {
-            instance.addProperty(property, replace);
-        } else {
-            instance.addProperty(property, value);
-        }
     }
 
     @Inject(method = "serializeToJson", at = @At(value = "RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
