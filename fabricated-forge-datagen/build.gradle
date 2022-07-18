@@ -6,5 +6,5 @@ loom {
 }
 
 dependencies {
-    include("net.fabricmc.fabric-api:fabric-data-generation-api-v1:${project.fabric-data-generation-api-version}")
+    include("net.fabricmc.fabric-api:fabric-data-generation-api-v1:${project.fabric_data_generation_api_version}")
 }
