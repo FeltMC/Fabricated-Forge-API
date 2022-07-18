@@ -15,8 +15,7 @@
     "fabricated-forge-modeldata.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.0",
-    "fabric": "*"
+    "fabricloader": ">=0.14.0"
   },
   "custom": {
     "loom:injected_interfaces": {
