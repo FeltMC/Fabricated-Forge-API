@@ -11,22 +11,4 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(Transformation.class)
 public class MixinTransformation implements IForgeTransformation {
-    @Shadow @Final private Matrix4f matrix;
-    @Unique
-    private Matrix3f normalTransform = null;
-
-    @Override
-    public Matrix3f getNormalMatrix() {
-        this.checkNormalTransform();
-        return this.normalTransform;
-    }
-
-    private void checkNormalTransform() {
-        if (this.normalTransform == null) {
-            this.normalTransform = new Matrix3f(this.matrix);
-            this.normalTransform.invert();
-            this.normalTransform.transpose();
-        }
-
-    }
 }

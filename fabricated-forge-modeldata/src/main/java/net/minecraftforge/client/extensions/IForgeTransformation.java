@@ -11,9 +11,10 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Transformation;
 import com.mojang.math.Vector3f;
 import com.mojang.math.Vector4f;
+import io.github.fabricators_of_create.porting_lib.extensions.TransformationExtensions;
 import net.minecraft.core.Direction;
 
-public interface IForgeTransformation
+public interface IForgeTransformation extends TransformationExtensions
 {
     private Transformation self()
     {
@@ -89,10 +90,5 @@ public interface IForgeTransformation
         tmp.setTranslation(-origin.x(), -origin.y(), -origin.z());
         ret.multiply(tmp);
         return new Transformation(ret);
-    }
-
-    //purely injected methods
-    default Matrix3f getNormalMatrix(){
-        return null;
     }
 }

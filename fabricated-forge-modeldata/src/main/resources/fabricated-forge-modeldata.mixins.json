@@ -2,6 +2,7 @@
   "required": true,
   "package": "net.fabricatedforgeapi.mixin.modeldata",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "net.fabricatedforgeapi.mixin.modeldata.ModeldataMixinPlugin",
   "mixins": [
     "BlockEntityMixin",
     "MixinMatrix4f"
@@ -11,6 +12,7 @@
     "client.MixinBakedModel",
     "client.MixinModelBlockRenderer",
     "client.MixinTransformation",
-    "client.SimpleBakedModelBuilderAccessor"
+    "client.SimpleBakedModelBuilderAccessor",
+    "sodium.MixinModelBlockRenderer"
   ]
 }

@@ -3,10 +3,14 @@ version = getSubprojectVersion(project)
 
 repositories {
     maven { url = "https://mvn.devos.one/snapshots/" }
+    maven {
+        url "https://cursemaven.com"
+    }
 }
 
 dependencies{
     include("net.fabricmc.fabric-api:fabric-renderer-api-v1:${project.fabric_renderer_api_version}")
     include("com.github.FeltMC:Porting-Lib:${rootProject.port_lib_hash}"){ transitive(false) }
-    modImplementation("com.github.FeltMC:Porting-Lib:${rootProject.port_lib_hash}"){ transitive(false) }
+    modImplementation("com.github.FeltMC:Porting-Lib:${rootProject.port_lib_hash}")
+    modImplementation("curse.maven:sodium-394468:3669187")
 }
