@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Random;
 
 @Debug(export = true)
-@Mixin(ModelBlockRenderer.class)
+@Mixin(value = ModelBlockRenderer.class, priority = 1100)
 public abstract class MixinModelBlockRenderer implements ModelBlockRendererExtension {
     @Shadow public abstract boolean tesselateBlock(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay);
 
