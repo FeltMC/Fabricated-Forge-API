@@ -16,62 +16,54 @@ import net.minecraft.core.Direction;
 
 public interface IForgeTransformation extends TransformationExtensions
 {
-    private Transformation self()
-    {
-        return (Transformation)this;
-    }
 
+    @Override
     default boolean isIdentity()
     {
-        return self().equals(Transformation.identity());
+        return TransformationExtensions.super.isIdentity();
     }
 
+    @Override
     default void push(PoseStack stack)
     {
-        stack.pushPose();
-
-        Vector3f trans = self().getTranslation();
-        stack.translate(trans.x(), trans.y(), trans.z());
-
-        stack.mulPose(self().getLeftRotation());
-
-        Vector3f scale = self().getScale();
-        stack.scale(scale.x(), scale.y(), scale.z());
-
-        stack.mulPose(self().getRightRotation());
+        TransformationExtensions.super.push(stack);
 
     }
 
+    @Override
     default void transformPosition(Vector4f position)
     {
-        position.transform(self().getMatrix());
+        TransformationExtensions.super.transformPosition(position);
     }
 
+    @Override
     default void transformNormal(Vector3f normal)
     {
-        normal.transform(getNormalMatrix());
-        normal.normalize();
+        TransformationExtensions.super.transformNormal(normal);
     }
 
+    @Override
     default Direction rotateTransform(Direction facing)
     {
-        return Direction.rotate(self().getMatrix(), facing);
+        return TransformationExtensions.super.rotateTransform(facing);
     }
 
     /**
      * convert transformation from assuming center-block system to opposing-corner-block system
      */
+    @Override
     default Transformation blockCenterToCorner()
     {
-        return applyOrigin(new Vector3f(.5f, .5f, .5f));
+        return TransformationExtensions.super.blockCenterToCorner();
     }
 
     /**
      * convert transformation from assuming opposing-corner-block system to center-block system
      */
+    @Override
     default Transformation blockCornerToCenter()
     {
-        return applyOrigin(new Vector3f(-.5f, -.5f, -.5f));
+        return TransformationExtensions.super.blockCornerToCenter();
     }
 
     /**
@@ -79,16 +71,8 @@ public interface IForgeTransformation extends TransformationExtensions
      * Can be used for switching between coordinate systems.
      * Parameter is relative to the current origin.
      */
+    @Override
     default Transformation applyOrigin(Vector3f origin) {
-        Transformation transform = self();
-        if (transform.isIdentity()) return Transformation.identity();
-
-        Matrix4f ret = transform.getMatrix();
-        Matrix4f tmp = Matrix4f.createTranslateMatrix(origin.x(), origin.y(), origin.z());
-        ret.multiplyBackward(tmp);
-        tmp.setIdentity();
-        tmp.setTranslation(-origin.x(), -origin.y(), -origin.z());
-        ret.multiply(tmp);
-        return new Transformation(ret);
+        return TransformationExtensions.super.applyOrigin(origin);
     }
 }
