@@ -28,9 +28,10 @@ import net.minecraft.core.Direction;
  */
 public interface IDynamicBakedModel extends BakedModel, FabricBakedModel
 {
+    //return true for now till I figure out whether to use fabric api or not for this system
     @Override
     default boolean isVanillaAdapter(){
-        return false;
+        return true;
     }
 
     @Override
