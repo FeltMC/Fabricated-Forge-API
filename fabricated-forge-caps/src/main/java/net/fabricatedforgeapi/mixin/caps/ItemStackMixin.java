@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(ItemStack.class)
+@Mixin(value = ItemStack.class, priority = 900)
 public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapabilityItemStack {
     @Shadow @Final @Deprecated private Item item;
 
