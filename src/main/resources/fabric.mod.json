@@ -2,7 +2,10 @@
   "schemaVersion": 1,
   "id": "fabricated-forge-api",
   "provides": [
-    "forge"
+    {
+      "id": "forge",
+      "version": "${forge_version}"
+    }
   ],
   "version": "${version}",
   "name": "Fabricated Forge Api",

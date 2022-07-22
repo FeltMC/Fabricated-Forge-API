@@ -1,8 +1,14 @@
 plugins {
     id "maven-publish"
     id "fabric-loom" version "0.12-SNAPSHOT" apply false
+    id 'net.minecraftforge.gradleutils' version '2.+'
 }
 
+ext{
+    MC_VERSION = "${rootProject.minecraft_version}"
+    VERSION = gradleutils.getFilteredMCTagOffsetBranchVersion(true, '[0-9]', MC_VERSION)
+    FORGE_VERSION = VERSION.substring(MC_VERSION.length() + 1)
+}
 
 
 allprojects {
@@ -55,5 +61,18 @@ dependencies {
 project(':forge') {
     dependencies {
         implementation project(":forge-dep")
+    }
+}
+
+processResources {
+
+    def toReplace = [
+            "version"             : project.version,
+            "forge_version"       : FORGE_VERSION
+    ]
+
+    inputs.properties toReplace
+    filesMatching("fabric.mod.json") {
+        expand toReplace
     }
 }
