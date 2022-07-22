@@ -13,10 +13,6 @@ public abstract class BlockModelProvider extends ModelProvider<BlockModelBuilder
         super(generator, modid, BLOCK_FOLDER, BlockModelBuilder::new, existingFileHelper);
     }
 
-    public BlockModelProvider(DataGenerator generator, String modid, Function<ResourceLocation, BlockModelBuilder> factory, ExistingFileHelper existingFileHelper) {
-        super(generator, modid, BLOCK_FOLDER, factory, existingFileHelper);
-    }
-
     @Nonnull
     @Override
     public String getName() {
