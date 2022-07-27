@@ -48,6 +48,16 @@ public class FluidHandlerItemStack implements IFluidHandlerItem, ICapabilityProv
         this.capacity = capacity;
     }
 
+    /**
+     * @param container  The container itemStack, data is stored on it directly as NBT.
+     * @param capacity   The maximum capacity of this fluid tank.
+     */
+    public FluidHandlerItemStack(@Nonnull ItemStack container, int capacity)
+    {
+        this.container = container;
+        this.capacity = capacity * 81L;
+    }
+
     @Nonnull
     @Override
     public ItemStack getContainer()

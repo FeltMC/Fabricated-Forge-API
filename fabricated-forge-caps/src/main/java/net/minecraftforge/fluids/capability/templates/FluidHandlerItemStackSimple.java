@@ -45,6 +45,12 @@ public class FluidHandlerItemStackSimple implements IFluidHandlerItem, ICapabili
         this.capacity = capacity;
     }
 
+    public FluidHandlerItemStackSimple(@Nonnull ItemStack container, int capacity)
+    {
+        this.container = container;
+        this.capacity = capacity * 81L;
+    }
+
     @Nonnull
     @Override
     public ItemStack getContainer()
