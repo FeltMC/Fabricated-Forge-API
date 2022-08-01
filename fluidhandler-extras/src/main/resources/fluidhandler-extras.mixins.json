@@ -1,13 +1,12 @@
 {
   "required": true,
-  "package": "tesseract.mixin.forge",
+  "package": "io.github.feltmc.fluidhandler_extras.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "IFluidHandlerMixin",
     "IFluidTankMixin",
     "FluidStackMixin",
-    "IFluidTankMixin",
-    "TesseractGTCapabilityMixin"
+    "IFluidTankMixin"
   ],
   "minVersion": "0.8"
 }

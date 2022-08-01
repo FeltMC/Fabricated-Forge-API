@@ -1,6 +1,14 @@
 archivesBaseName = "fluidhandler-extras"
 version = getSubprojectVersion(project)
 
+loom {
+    forge{
+        mixinConfigs = [
+                "fluidhandler-extras.mixins.json"
+        ]
+    }
+}
+
 dependencies{
     forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${project.forge_version}"
 }
