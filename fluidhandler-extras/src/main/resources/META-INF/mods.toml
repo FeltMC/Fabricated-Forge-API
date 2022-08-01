@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[39,)"
+issueTrackerURL="https://github.com/FeltMC/Fabricated-Forge-API/issues"
+license="LGPL-v2.1"
+
+[[mods]]
+modId="fluidhandler_extras"
+version="${version}"
+displayName="Fluid Handler long Support"
+#updateJSONURL="http://myurl.me/"
+displayURL="https://github.com/FeltMC/Fabricated-Forge-API/tree/temp-abstraction/fluidhandler-extras"
+#logoFile="icon.png"
+authors="Trinsdar"
+description='''added long support to forge fluid api, used for fabricated-forge-caps'''
+[[dependencies.fluidhandler_extras]]
+    modId="forge"
+    mandatory=true
+    versionRange="[40,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.fluidhandler_extras]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18,]"
+    ordering="NONE"
+    side="BOTH"

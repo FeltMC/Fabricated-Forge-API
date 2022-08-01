@@ -1,0 +1,14 @@
+archivesBaseName = "fluidhandler-extras"
+version = getSubprojectVersion(project)
+
+dependencies{
+    forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${project.forge_version}"
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
+}

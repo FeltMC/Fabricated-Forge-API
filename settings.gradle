@@ -4,6 +4,8 @@ pluginManagement {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
+        maven { url "https://maven.architectury.dev/" }
+        maven { url "https://maven.minecraftforge.net/" }
         mavenCentral()
         gradlePluginPortal()
     }
@@ -15,3 +17,4 @@ include("fabricated-forge-caps")
 include("fabricated-forge-datagen")
 include("fabricated-forge-recipe-api")
 include("fabricated-forge-modeldata")
+include("fluidhandler-extras")

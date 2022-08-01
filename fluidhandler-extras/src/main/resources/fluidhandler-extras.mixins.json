@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "tesseract.mixin.forge",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "IFluidHandlerMixin",
+    "IFluidTankMixin",
+    "FluidStackMixin",
+    "IFluidTankMixin",
+    "TesseractGTCapabilityMixin"
+  ],
+  "minVersion": "0.8"
+}
