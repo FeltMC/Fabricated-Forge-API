@@ -30,10 +30,10 @@ subprojects {
 		}
 		//TODO remap to yarn?
 		//mappings "net.fabricmc:yarn:${rootProject.minecraft_version}${project.yarn_version}:v2"
-		if (project.name != "fluidhandler-extras"){
+		//if (project.name != "fluidhandler-extras"){
 			modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
 			modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_version}"
-		}
+		//}
 		//testmodImplementation sourceSets.main.output
 	}
 
