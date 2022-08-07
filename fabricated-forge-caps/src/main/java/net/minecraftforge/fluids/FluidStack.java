@@ -44,8 +44,7 @@ public class FluidStack {
     public static final FluidStack EMPTY = new FluidStack(FluidVariant.blank(), 0) {
 
         @Override
-        public FluidStack setAmount(long amount) {
-            return this;
+        public void setAmount(long amount) {
         }
 
         @Override
@@ -103,14 +102,13 @@ public class FluidStack {
         if (copy.hasTag()) tag = copy.getTag().copy();
     }
 
-    public FluidStack setAmount(long amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
         this.portingLibStack.setAmount(amount);
-        return this;
     }
 
-    public FluidStack setAmount(int amount) {
-        return setAmount(amount * 81L);
+    public void setAmount(int amount) {
+        setAmount(amount * 81L);
     }
 
     public void grow(int amount){

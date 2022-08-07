@@ -118,7 +118,9 @@ public class FluidStorageHandler implements IFluidHandler {
                 if (shouldUpdate())
                     updateContents();
             }
-            return stack.copy().setAmount(extracted);
+            FluidStack copy = stack.copy();
+            copy.setAmount(extracted);
+            return copy;
         }
     }
 
