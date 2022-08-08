@@ -43,6 +43,10 @@ public class CraftingHelper {
         conditions.put(key, serializer);
         return serializer;
     }
+
+    public static <T extends ICondition> IConditionSerializer<T> getSerializer(ResourceLocation id){
+        return (IConditionSerializer<T>) conditions.get(id);
+    }
     public static <T extends Ingredient> IIngredientSerializer<T> register(ResourceLocation key, IIngredientSerializer<T> serializer)
     {
         if (ingredients.containsKey(key))

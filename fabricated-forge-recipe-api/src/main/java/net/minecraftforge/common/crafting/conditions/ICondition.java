@@ -1,17 +1,43 @@
 package net.minecraftforge.common.crafting.conditions;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
+import net.minecraftforge.common.crafting.CraftingHelper;
 
 import java.util.Collections;
 import java.util.Map;
 
-public interface ICondition {
+public interface ICondition extends ConditionJsonProvider {
     ResourceLocation getID();
+
+    @Override
+    default ResourceLocation getConditionId(){
+        return getID();
+    }
+
+    @Override
+    default JsonObject toJson() {
+        IConditionSerializer<ICondition> serializer = CraftingHelper.getSerializer(this.getID());
+        if (serializer == null)
+            throw new JsonSyntaxException("Unknown condition type: " + this.getID().toString());
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(ResourceConditions.CONDITION_ID_KEY, getConditionId().toString());
+        jsonObject.addProperty("type", getID().toString());
+        serializer.write(jsonObject, this);
+        return jsonObject;
+    }
+
+    @Override
+    default void writeParameters(JsonObject object){
+    }
 
     default boolean test(IContext context)
     {
