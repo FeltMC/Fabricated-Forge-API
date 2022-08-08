@@ -7,6 +7,11 @@
   "authors": [
     "Trinsdar"
   ],
+  "entrypoints": {
+    "main": [
+      "net.minecraftforge.common.crafting.FabricatedForgeRecipeApi"
+    ]
+  },
   "contact": {
     "sources": "https://github.com/GregTech-Intergalactical/TesseractAPI"
   },
