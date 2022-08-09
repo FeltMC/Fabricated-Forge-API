@@ -8,13 +8,13 @@
     "Trinsdar"
   ],
   "contact": {
-    "sources": "https://github.com/GregTech-Intergalactical/TesseractAPI"
+    "sources": "https://github.com/FeltMC/Fabricated-Forge-API/tree/temp-abstraction"
   },
   "accessWidener": "fabricated-forge-datagen.accesswidener",
   "mixins": [
     "fabricated-forge-datagen.mixins.json"
   ],
-  "license": "LGPL-3.0-only",
+  "license": "LGPL-2.1-only",
   "icon": "assets/tesseractapi/icon.png",
   "environment": "*",
   "depends": {

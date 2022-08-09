@@ -8,7 +8,7 @@
     "Trinsdar"
   ],
   "contact": {
-    "sources": "https://github.com/FeltMC/Fabricated-Forge-API"
+    "sources": "https://github.com/FeltMC/Fabricated-Forge-API/tree/temp-abstraction"
   },
   "license": "LGPL-2.1-only",
   "mixins": [
