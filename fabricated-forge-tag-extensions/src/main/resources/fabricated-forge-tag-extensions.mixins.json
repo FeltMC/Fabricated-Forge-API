@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "package": "net.fabricatedforgeapi.mixin.tagextensions",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": [
+    "TagAppenderMixin",
+    "TagBuilderMixin"
+  ]
+}

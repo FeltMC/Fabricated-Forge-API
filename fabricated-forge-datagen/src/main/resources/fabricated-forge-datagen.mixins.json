@@ -3,10 +3,6 @@
   "package": "net.fabricatedforgeapi.mixin.datagen",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "mixins": [
-    "TagAppenderMixin",
-    "TagBuilderMixin"
-  ],
   "client": [
     "client.ClientPackSourceAccessor",
     "client.GuiLightAccessor",

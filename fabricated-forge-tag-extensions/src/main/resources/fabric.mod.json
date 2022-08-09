@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricated-forge-tag-extensions",
+  "version": "${version}",
+  "name": "Fabricated Forge Tag Extensions",
+  "description": "Ports forge's Tag.Builder and TagAppender extensions to fabric, including using the same path.",
+  "authors": [
+    "Trinsdar"
+  ],
+  "contact": {
+    "sources": "https://github.com/FeltMC/Fabricated-Forge-API/tree/temp-abstraction"
+  },
+  "accessWidener": "fabricated-forge-tag-extensions.accesswidener",
+  "mixins": [
+    "fabricated-forge-tag-extensions.mixins.json"
+  ],
+  "license": "LGPL-2.1-only",
+  "icon": "assets/tesseractapi/icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.4.0"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_2474\u0024class_5124": [
+        "net/minecraftforge/common/extensions/IForgeTagAppender"
+      ],
+      "net/minecraft/class_3494\u0024class_3495": [
+        "net/minecraftforge/common/extensions/IForgeRawTagBuilder"
+      ]
+    },
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
+    }
+  }
+}

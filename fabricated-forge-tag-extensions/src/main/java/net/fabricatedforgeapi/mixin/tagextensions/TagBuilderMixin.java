@@ -1,4 +1,4 @@
-package net.fabricatedforgeapi.mixin.datagen;
+package net.fabricatedforgeapi.mixin.tagextensions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

@@ -1,8 +1,4 @@
 accessWidener v1 named
 
 accessible class net/minecraft/client/renderer/block/model/ItemTransform$Deserializer
-accessible class net/minecraft/data/tags/TagsProvider$TagAppender
-accessible class net/minecraft/tags/Tag$TagEntry
-accessible class net/minecraft/tags/Tag$ElementEntry
-accessible class net/minecraft/tags/Tag$OptionalElementEntry
 accessible method net/minecraft/client/renderer/block/model/BlockElement uvsByFace (Lnet/minecraft/core/Direction;)[F

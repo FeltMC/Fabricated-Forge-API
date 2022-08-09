@@ -15,6 +15,7 @@ rootProject.name = "fabricated-forge-api"
 
 include("fabricated-forge-caps")
 include("fabricated-forge-datagen")
+include("fabricated-forge-tag-extensions")
 include("fabricated-forge-recipe-api")
 include("fabricated-forge-modeldata")
 include("fluidhandler-extras")

@@ -1,0 +1,10 @@
+archivesBaseName = "fabricated-forge-tag-extensionss"
+version = getSubprojectVersion(project)
+
+loom {
+    accessWidenerPath = file("src/main/resources/fabricated-forge-tag-extensions.accesswidener")
+}
+
+dependencies {
+    include("net.fabricmc.fabric-api:fabric-data-generation-api-v1:${project.fabric_data_generation_api_version}")
+}
