@@ -9,6 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
+import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -52,7 +53,7 @@ public class ConditionalRecipe {
         @Override public void toNetwork(FriendlyByteBuf buffer, T recipe) {}
     }
 
-    public static class Builder
+    public static class Builder extends io.github.fabricators_of_create.porting_lib.data.ConditionalRecipe.Builder
     {
         private List<ICondition[]> conditions = new ArrayList<>();
         private List<FinishedRecipe> recipes = new ArrayList<>();
@@ -63,23 +64,19 @@ public class ConditionalRecipe {
 
         public Builder addCondition(ICondition condition)
         {
-            currentConditions.add(condition);
+            super.addCondition(condition);
             return this;
         }
 
         public Builder addRecipe(Consumer<Consumer<FinishedRecipe>> callable)
         {
-            callable.accept(this::addRecipe);
+            super.addRecipe(callable);
             return this;
         }
 
         public Builder addRecipe(FinishedRecipe recipe)
         {
-            if (currentConditions.isEmpty())
-                throw new IllegalStateException("Can not add a recipe with no conditions.");
-            conditions.add(currentConditions.toArray(new ICondition[currentConditions.size()]));
-            recipes.add(recipe);
-            currentConditions.clear();
+            super.addRecipe(recipe);
             return this;
         }
 
@@ -126,7 +123,8 @@ public class ConditionalRecipe {
 
         public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id)
         {
-            if (!currentConditions.isEmpty())
+            super.build(consumer, id);
+            /*if (!currentConditions.isEmpty())
                 throw new IllegalStateException("Invalid ConditionalRecipe builder, Orphaned conditions");
             if (recipes.isEmpty())
                 throw new IllegalStateException("Invalid ConditionalRecipe builder, No recipes");
@@ -136,19 +134,19 @@ public class ConditionalRecipe {
                 advId = new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath());
             }
 
-            consumer.accept(new Finished(id, conditions, recipes, advId, adv));
+            consumer.accept(new Finished(id, conditions, recipes, advId, adv));*/
         }
     }
 
     private static class Finished implements FinishedRecipe
     {
         private final ResourceLocation id;
-        private final List<ICondition[]> conditions;
+        private final List<ConditionJsonProvider[]> conditions;
         private final List<FinishedRecipe> recipes;
         private final ResourceLocation advId;
         private final ConditionalAdvancement.Builder adv;
 
-        private Finished(ResourceLocation id, List<ICondition[]> conditions, List<FinishedRecipe> recipes, @Nullable ResourceLocation advId, @Nullable ConditionalAdvancement.Builder adv)
+        private Finished(ResourceLocation id, List<ConditionJsonProvider[]> conditions, List<FinishedRecipe> recipes, @Nullable ResourceLocation advId, @Nullable ConditionalAdvancement.Builder adv)
         {
             this.id = id;
             this.conditions = conditions;
@@ -166,8 +164,8 @@ public class ConditionalRecipe {
                 JsonObject holder = new JsonObject();
 
                 JsonArray conds = new JsonArray();
-                for (ICondition c : conditions.get(x))
-                    conds.add(CraftingHelper.serialize(c));
+                for (ConditionJsonProvider c : conditions.get(x))
+                    conds.add(c.toJson());
                 holder.add("conditions", conds);
                 holder.add("recipe", recipes.get(x).serializeRecipe());
 
