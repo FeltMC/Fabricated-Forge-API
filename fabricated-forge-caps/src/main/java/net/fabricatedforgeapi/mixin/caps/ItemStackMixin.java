@@ -1,5 +1,6 @@
 package net.fabricatedforgeapi.mixin.caps;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.fabricatedforgeapi.caps.ICapabilityItemStack;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -13,6 +14,7 @@ import net.minecraftforge.common.capabilities.IItemStackCapProviderImpl;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+@Debug(export = true)
 @Mixin(value = ItemStack.class, priority = 900)
 public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapabilityItemStack {
     @Shadow @Final @Deprecated private Item item;
@@ -47,6 +50,16 @@ public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapa
         capNBT = compoundTag.contains("ForgeCaps") ? compoundTag.getCompound("ForgeCaps") : null;
         forgeInit();
     }
+
+    @ModifyReturnValue(method = "tagMatches", at = @At(value = "RETURN", ordinal = 3))
+    private static boolean injectTagMatches(boolean original, ItemStack stack, ItemStack other){
+        return original && stack.areCapsCompatible(other);
+    }
+
+    @ModifyReturnValue(method = "matches(Lnet/minecraft/world/item/ItemStack;)Z", at = @At(value = "RETURN", ordinal = 4))
+    private boolean matches(boolean original, ItemStack other){
+        return original && this.areCapsCompatible(other);
+    }
     
     private void forgeInit(){
         capProvider.initInternal(() -> item.initCapabilities((ItemStack) (Object)this, this.capNBT));
@@ -59,7 +72,7 @@ public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapa
         if (caps != null && !caps.isEmpty()) compound.put("ForgeCaps", caps);
     }
 
-    @Inject(method = "copy", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;setPopTime(I)V", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "copy", at = @At(value = "RETURN", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD)
     private void injectCopy(CallbackInfoReturnable<ItemStack> cir, ItemStack itemStack){
         CompoundTag capNBT = capProvider.serializeInternal();
         if (capNBT != null) {
