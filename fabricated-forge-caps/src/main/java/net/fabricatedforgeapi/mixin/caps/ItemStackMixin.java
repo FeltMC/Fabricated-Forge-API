@@ -61,12 +61,15 @@ public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapa
 
     @Inject(method = "copy", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;setPopTime(I)V", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
     private void injectCopy(CallbackInfoReturnable<ItemStack> cir, ItemStack itemStack){
-        itemStack.setCapNbt(capProvider.serializeInternal());
+        CompoundTag capNBT = capProvider.serializeInternal();
+        if (capNBT != null) {
+            itemStack.setCapNbt(capNBT);
+        }
     }
 
     public void setCapNBT(CompoundTag capNBT) {
         this.capNBT = capNBT;
-        capProvider.deserializeInternal(capNBT);
+        if (capNBT != null) capProvider.deserializeInternal(capNBT);
         //this.forgeInit();
     }
 
