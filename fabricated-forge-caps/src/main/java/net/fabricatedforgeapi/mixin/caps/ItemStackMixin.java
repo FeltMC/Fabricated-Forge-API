@@ -66,7 +66,8 @@ public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapa
 
     public void setCapNBT(CompoundTag capNBT) {
         this.capNBT = capNBT;
-        this.forgeInit();
+        capProvider.deserializeInternal(capNBT);
+        //this.forgeInit();
     }
 
     @Override
