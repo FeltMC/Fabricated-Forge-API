@@ -27,7 +27,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Debug(export = true)
 @Mixin(value = ItemStack.class, priority = 900)
 public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapabilityItemStack {
     @Shadow @Final @Deprecated private Item item;
