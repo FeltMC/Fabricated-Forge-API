@@ -53,7 +53,7 @@ public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapa
         forgeInit();
     }
 
-    @ModifyReturnValue(method = "tagMatches", at = @At(value = "RETURN", ordinal = 3))
+    @ModifyReturnValue(method = "tagMatches", at = @At(value = "RETURN", ordinal = 4))
     private static boolean injectTagMatches(boolean original, ItemStack stack, ItemStack other){
         return original && stack.areCapsCompatible(other);
     }
@@ -74,7 +74,8 @@ public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapa
         if (caps != null && !caps.isEmpty()) compound.put("ForgeCaps", caps);
     }
 
-    @Redirect(method = "copy", at = @At(value = "NEW", target = "Lnet/minecraft/world/item/ItemStack;<init>(Lnet/minecraft/world/level/ItemLike;I)V"))
+    @SuppressWarnings({"MixinAnnotationTarget", "InvalidMemberReference", "InvalidInjectorMethodSignature", "UnresolvedMixinReference"})
+    @Redirect(method = "copy", at = @At(value = "NEW", target = "(Lnet/minecraft/world/level/ItemLike;I)Lnet/minecraft/world/item/ItemStack;"))
     private ItemStack redirectCopy(ItemLike itemLike, int i){
         CompoundTag tag = new CompoundTag();
         ResourceLocation resourceLocation = Registry.ITEM.getKey(itemLike.asItem());
