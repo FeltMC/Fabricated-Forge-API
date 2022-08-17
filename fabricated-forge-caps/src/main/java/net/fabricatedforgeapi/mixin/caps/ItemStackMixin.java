@@ -3,7 +3,9 @@ package net.fabricatedforgeapi.mixin.caps;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.fabricatedforgeapi.caps.ICapabilityItemStack;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -21,9 +23,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Debug(export = true)
 @Mixin(value = ItemStack.class, priority = 900)
@@ -72,12 +74,17 @@ public abstract class ItemStackMixin implements IItemStackCapProviderImpl, ICapa
         if (caps != null && !caps.isEmpty()) compound.put("ForgeCaps", caps);
     }
 
-    @Inject(method = "copy", at = @At(value = "RETURN", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void injectCopy(CallbackInfoReturnable<ItemStack> cir, ItemStack itemStack){
+    @Redirect(method = "copy", at = @At(value = "NEW", target = "Lnet/minecraft/world/item/ItemStack;<init>(Lnet/minecraft/world/level/ItemLike;I)V"))
+    private ItemStack redirectCopy(ItemLike itemLike, int i){
+        CompoundTag tag = new CompoundTag();
+        ResourceLocation resourceLocation = Registry.ITEM.getKey(itemLike.asItem());
+        tag.putString("id", resourceLocation.toString());
+        tag.putByte("Count", (byte)i);
         CompoundTag capNBT = capProvider.serializeInternal();
         if (capNBT != null) {
-            itemStack.setCapNbt(capNBT);
+            tag.put("ForgeCaps", capNBT);
         }
+        return ItemStack.of(tag);
     }
 
     public void setCapNBT(CompoundTag capNBT) {
