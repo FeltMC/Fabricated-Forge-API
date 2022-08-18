@@ -11,11 +11,19 @@ import net.minecraftforge.client.model.data.IModelData;
 import java.util.Random;
 
 public interface ModelBlockRendererExtension {
-    boolean tesselateBlock(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay, IModelData data);
+    default boolean tesselateBlock(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay, IModelData data) {
+        throw new RuntimeException("this should be overridden via mixin. what?");
+    }
 
-    boolean tesselateWithAO(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay, IModelData data);
+    default boolean tesselateWithAO(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay, IModelData data) {
+        throw new RuntimeException("this should be overridden via mixin. what?");
+    }
 
-    boolean tesselateWithoutAO(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay, IModelData data);
+    default boolean tesselateWithoutAO(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay, IModelData data) {
+        throw new RuntimeException("this should be overridden via mixin. what?");
+    }
 
-    void renderModel(PoseStack.Pose pose, VertexConsumer consumer, @org.jetbrains.annotations.Nullable BlockState state, BakedModel model, float red, float green, float blue, int packedLight, int packedOverlay, IModelData data);
+    default void renderModel(PoseStack.Pose pose, VertexConsumer consumer, @org.jetbrains.annotations.Nullable BlockState state, BakedModel model, float red, float green, float blue, int packedLight, int packedOverlay, IModelData data) {
+        throw new RuntimeException("this should be overridden via mixin. what?");
+    }
 }

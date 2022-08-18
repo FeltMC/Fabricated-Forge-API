@@ -2,6 +2,7 @@
   "required": true,
   "package": "net.fabricatedforgeapi.mixin.modeldata",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "net.fabricatedforgeapi.mixin.modeldata.ModelDataMixinPlugin",
   "mixins": [
     "BlockEntityMixin",
     "MixinMatrix4f"
@@ -9,6 +10,8 @@
   "minVersion": "0.8",
   "client": [
     "client.MixinBakedModel",
+    "client.MixinBlockRenderDispatcher",
+    "client.MixinChunkRenderDispatcher$RenderChunk$ChunkCompileTask",
     "client.MixinModelBlockRenderer",
     "client.MixinTransformation",
     "client.SimpleBakedModelBuilderAccessor"

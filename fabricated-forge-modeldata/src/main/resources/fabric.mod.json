@@ -30,6 +30,12 @@
       ],
       "net/minecraft/class_2586": [
         "net/minecraftforge/common/extensions/IForgeBlockEntityExtension"
+      ],
+      "net/minecraft/class_778": [
+        "net/fabricatedforgeapi/modeldata/ModelBlockRendererExtension"
+      ],
+      "net/minecraft/class_776": [
+        "net/fabricatedforgeapi/modeldata/BlockRenderDispatcherExtension"
       ]
     },
     "modmenu": {
