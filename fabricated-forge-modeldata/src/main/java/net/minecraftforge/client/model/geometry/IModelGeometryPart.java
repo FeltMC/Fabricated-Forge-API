@@ -6,6 +6,8 @@
 package net.minecraftforge.client.model.geometry;
 
 import com.mojang.datafixers.util.Pair;
+import net.fabricatedforgeapi.modeldata.wrapper.PortingLibModelBuilder;
+import net.fabricatedforgeapi.modeldata.wrapper.PortingLibModelConfiguration;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -36,13 +38,17 @@ public interface IModelGeometryPart extends io.github.fabricators_of_create.port
             return getTextures(configuration, modelGetter, missingTextureErrors);
         }
         // No texture dependencies
-        return Collections.emptyList();
+        return getTextures(new PortingLibModelConfiguration(owner), modelGetter, missingTextureErrors);
     }
 
     @Override
     default void addQuads(io.github.fabricators_of_create.porting_lib.model.IModelConfiguration owner, io.github.fabricators_of_create.porting_lib.model.IModelBuilder<?> modelBuilder, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ResourceLocation modelLocation){
-        if (owner instanceof IModelConfiguration configuration && modelBuilder instanceof IModelBuilder<?> builder){
-            addQuads(configuration, builder, bakery, spriteGetter, modelTransform, modelLocation);
-        }
+        IModelConfiguration configuration;
+        IModelBuilder<?> builder;
+        if (owner instanceof IModelConfiguration c) configuration = c;
+        else configuration = new PortingLibModelConfiguration(owner);
+        if (modelBuilder instanceof IModelBuilder<?> b) builder = b;
+        else builder = new PortingLibModelBuilder(modelBuilder);
+        addQuads(configuration, builder, bakery, spriteGetter, modelTransform, modelLocation);
     }
 }

@@ -5,6 +5,7 @@
 
 package net.minecraftforge.client.model;
 
+import net.fabricatedforgeapi.modeldata.wrapper.PortingLibModelGeometryPart;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelState;
@@ -92,11 +93,10 @@ public interface IModelConfiguration extends io.github.fabricators_of_create.por
     }
 
     default boolean getPartVisibility(io.github.fabricators_of_create.porting_lib.model.IModelGeometryPart part, boolean fallback) {
-        return part instanceof IModelGeometryPart geometryPart && getPartVisibility(geometryPart, fallback);
-    }
-
-    default boolean getPartVisibility(io.github.fabricators_of_create.porting_lib.model.IModelGeometryPart part) {
-        return part instanceof IModelGeometryPart geometryPart && getPartVisibility(geometryPart);
+        if (part instanceof IModelGeometryPart geometryPart) {
+            return getPartVisibility(geometryPart, fallback);
+        }
+        return getPartVisibility(new PortingLibModelGeometryPart(part), fallback);
     }
 
 

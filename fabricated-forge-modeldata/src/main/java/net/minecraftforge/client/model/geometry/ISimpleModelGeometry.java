@@ -6,6 +6,8 @@
 package net.minecraftforge.client.model.geometry;
 
 import com.mojang.datafixers.util.Pair;
+import net.fabricatedforgeapi.modeldata.wrapper.PortingLibModelBuilder;
+import net.fabricatedforgeapi.modeldata.wrapper.PortingLibModelConfiguration;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
@@ -46,7 +48,7 @@ public interface ISimpleModelGeometry<T extends ISimpleModelGeometry<T>> extends
         if (owner instanceof IModelConfiguration configuration){
             return getTextures(configuration, modelGetter, missingTextureErrors);
         }
-        return Collections.emptyList();
+        return getTextures(new PortingLibModelConfiguration(owner), modelGetter, missingTextureErrors);
     }
 
     @Override
@@ -54,13 +56,17 @@ public interface ISimpleModelGeometry<T extends ISimpleModelGeometry<T>> extends
         if (owner instanceof IModelConfiguration configuration){
             return bake(configuration, bakery, spriteGetter, modelTransform, overrides, modelLocation);
         }
-        return null;
+        return bake(new PortingLibModelConfiguration(owner), bakery, spriteGetter, modelTransform, overrides, modelLocation);
     }
 
     @Override
     default void addQuads(io.github.fabricators_of_create.porting_lib.model.IModelConfiguration owner, io.github.fabricators_of_create.porting_lib.model.IModelBuilder<?> modelBuilder, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ResourceLocation modelLocation){
-        if (owner instanceof IModelConfiguration configuration && modelBuilder instanceof IModelBuilder<?> builder){
-            addQuads(configuration, builder, bakery, spriteGetter, modelTransform, modelLocation);
-        }
+        IModelConfiguration configuration;
+        IModelBuilder<?> builder;
+        if (owner instanceof IModelConfiguration c) configuration = c;
+        else configuration = new PortingLibModelConfiguration(owner);
+        if (modelBuilder instanceof IModelBuilder<?> b) builder = b;
+        else builder = new PortingLibModelBuilder(modelBuilder);
+        addQuads(configuration, builder, bakery, spriteGetter, modelTransform, modelLocation);
     }
 }
