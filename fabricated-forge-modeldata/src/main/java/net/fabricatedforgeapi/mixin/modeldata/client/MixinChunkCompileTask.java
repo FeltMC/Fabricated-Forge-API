@@ -1,5 +1,6 @@
 package net.fabricatedforgeapi.mixin.modeldata.client;
 
+import net.fabricatedforgeapi.modeldata.ChunkCompileTaskExtension;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher;
 import net.minecraft.core.BlockPos;
@@ -17,7 +18,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @Mixin(targets = "net.minecraft.client.renderer.chunk.ChunkRenderDispatcher.RenderChunk.ChunkCompileTask")
-public class MixinChunkRenderDispatcher$RenderChunk$ChunkCompileTask {
+public class MixinChunkCompileTask implements ChunkCompileTaskExtension {
     @Unique
     protected Map<BlockPos, IModelData> modelData;
 
