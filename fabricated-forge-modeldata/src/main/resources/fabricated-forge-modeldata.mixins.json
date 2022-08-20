@@ -12,7 +12,6 @@
     "client.MixinBakedModel",
     "client.MixinBlockRenderDispatcher",
     "client.MixinChunkCompileTask",
-    "client.MixinChunkRenderDispatcher$RenderChunk$ChunkCompileTask",
     "client.MixinModelBlockRenderer",
     "client.MixinRebuildTask",
     "client.MixinTransformation",
