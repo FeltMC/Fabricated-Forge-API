@@ -16,7 +16,7 @@ public class ModelDataMixinPlugin implements IMixinConfigPlugin {
     }
 
     public static void init(){
-        TargetSelector.register(RedirectHandlerSelector.class, "fabricated-forge-modeldata");
+        TargetSelector.register(RedirectHandlerSelector.class, "FabricatedForgeModeldata");
     }
 
     @Override
