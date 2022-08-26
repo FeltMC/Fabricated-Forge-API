@@ -1,8 +1,6 @@
 package net.fabricatedforgeapi.asm.modeldata;
 
-import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import net.fabricatedforgeapi.mixin.modeldata.ModelDataMixinPlugin;
-import org.spongepowered.asm.util.logging.MessageRouter;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -13,8 +11,12 @@ import javax.lang.model.element.TypeElement;
 import java.util.Set;
 
 
-@SupportedAnnotationTypes({})
+@SupportedAnnotationTypes("org.spongepowered.asm.mixin.injection.Redirect")
 public class FabricatedForgeModeldataAP extends AbstractProcessor {
+
+    public FabricatedForgeModeldataAP(){
+
+    }
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         return false;
