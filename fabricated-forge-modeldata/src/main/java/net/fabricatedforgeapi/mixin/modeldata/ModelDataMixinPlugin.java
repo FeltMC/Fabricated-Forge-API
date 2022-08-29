@@ -1,6 +1,7 @@
 package net.fabricatedforgeapi.mixin.modeldata;
 
-import net.fabricatedforgeapi.asm.modeldata.RedirectHandlerSelector;
+import io.github.feltmc.feltasm.asm.FeltASMBootstrap;
+import io.github.feltmc.feltasm.asm.RedirectHandlerSelector;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -12,11 +13,7 @@ import java.util.Set;
 public class ModelDataMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
-        init();
-    }
-
-    public static void init(){
-        TargetSelector.register(RedirectHandlerSelector.class, "FabricatedForgeModeldata");
+        FeltASMBootstrap.init();
     }
 
     @Override
