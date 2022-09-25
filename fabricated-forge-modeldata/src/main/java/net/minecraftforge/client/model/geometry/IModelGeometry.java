@@ -6,6 +6,7 @@
 package net.minecraftforge.client.model.geometry;
 
 import com.mojang.datafixers.util.Pair;
+import net.fabricatedforgeapi.modeldata.wrapper.PortingLibModelConfiguration;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
@@ -45,7 +46,8 @@ public interface IModelGeometry<T extends IModelGeometry<T>> extends io.github.f
         if (owner instanceof IModelConfiguration configuration){
             return bake(configuration, bakery, spriteGetter, modelTransform, overrides, modelLocation);
         }
-        return null;
+        owner = new PortingLibModelConfiguration(owner);
+        return bake(((IModelConfiguration) owner), bakery, spriteGetter, modelTransform, overrides, modelLocation);
     }
 
     @Override
@@ -53,6 +55,7 @@ public interface IModelGeometry<T extends IModelGeometry<T>> extends io.github.f
         if (owner instanceof IModelConfiguration configuration){
             return getTextures(configuration, modelGetter, missingTextureErrors);
         }
-        return Collections.emptyList();
+        owner = new PortingLibModelConfiguration(owner);
+        return getTextures(((IModelConfiguration) owner), modelGetter, missingTextureErrors);
     }
 }
