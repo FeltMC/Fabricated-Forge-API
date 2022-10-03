@@ -28,6 +28,7 @@ public abstract class MixinBlockRenderer implements BlockRendererExtension {
     @Override
     public boolean renderModel(BlockAndTintGetter world, BlockState state, BlockPos pos, BlockPos origin, BakedModel model, ChunkModelBuilder buffers, boolean cull, long seed, IModelData data) {
         this.modelData = data;
+        modelData = model.getModelData(world, pos, state, modelData);
         boolean render = renderModel(world, state, pos, origin, model, buffers, cull, seed);
         this.modelData = EmptyModelData.INSTANCE;
         return render;
