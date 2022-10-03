@@ -31,13 +31,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.HashMap;
 import java.util.Map;
 
-@Mixin(value = ChunkRenderRebuildTask.class, remap = false)
+@Mixin(value = ChunkRenderRebuildTask.class)
 public class MixinChunkRenderRebuildTask {
     @Shadow @Final private RenderSection render;
     @Unique
     private Map<BlockPos, IModelData> modelDataMap = new HashMap<>();
 
-    @Inject(method = "performBuild", at =@At("HEAD"))
+    @Inject(method = "performBuild", at =@At("HEAD"), remap = false)
     private void injectModelDataMap(ChunkBuildContext buildContext, CancellationSource cancellationSource, CallbackInfoReturnable<ChunkBuildResult> cir){
         this.modelDataMap = ModelDataManager.getModelData(Minecraft.getInstance().level, new ChunkPos(SectionPos.blockToSectionCoord(this.render.getOriginX()), SectionPos.blockToSectionCoord(this.render.getOriginZ())));
     }

@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import java.util.List;
 import java.util.Random;
 
-@Mixin(value = BlockRenderer.class, remap = false)
+@Mixin(value = BlockRenderer.class)
 public abstract class MixinBlockRenderer implements BlockRendererExtension {
     private IModelData modelData = EmptyModelData.INSTANCE;
 
