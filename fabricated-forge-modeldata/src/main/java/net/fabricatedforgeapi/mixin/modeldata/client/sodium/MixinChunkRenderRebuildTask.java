@@ -31,7 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.HashMap;
 import java.util.Map;
 
-@Mixin(ChunkRenderRebuildTask.class)
+@Mixin(value = ChunkRenderRebuildTask.class, remap = false)
 public class MixinChunkRenderRebuildTask {
     @Shadow @Final private RenderSection render;
     @Unique
