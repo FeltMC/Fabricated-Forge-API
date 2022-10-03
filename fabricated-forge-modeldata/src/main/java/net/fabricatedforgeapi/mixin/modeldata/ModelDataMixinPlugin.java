@@ -1,11 +1,10 @@
 package net.fabricatedforgeapi.mixin.modeldata;
 
 import io.github.feltmc.feltasm.asm.FeltASMBootstrap;
-import io.github.feltmc.feltasm.asm.RedirectHandlerSelector;
+import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
-import org.spongepowered.asm.mixin.injection.selectors.TargetSelector;
 
 import java.util.List;
 import java.util.Set;
@@ -23,7 +22,7 @@ public class ModelDataMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return true;
+        return !mixinClassName.contains("sodium") || FabricLoader.getInstance().isModLoaded("sodium");
     }
 
     @Override

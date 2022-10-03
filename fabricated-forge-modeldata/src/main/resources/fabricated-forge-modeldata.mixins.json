@@ -5,7 +5,9 @@
   "plugin": "net.fabricatedforgeapi.mixin.modeldata.ModelDataMixinPlugin",
   "mixins": [
     "BlockEntityMixin",
-    "MixinMatrix4f"
+    "MixinMatrix4f",
+    "client.sodium.MixinBlockRenderer",
+    "client.sodium.MixinChunkRenderRebuildTask"
   ],
   "minVersion": "0.8",
   "client": [
