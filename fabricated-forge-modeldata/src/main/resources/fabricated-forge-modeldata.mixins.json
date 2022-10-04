@@ -9,14 +9,15 @@
   ],
   "minVersion": "0.8",
   "client": [
-    "client.sodium.MixinBlockRenderer",
-    "client.sodium.MixinChunkRenderRebuildTask",
     "client.MixinBakedModel",
     "client.MixinBlockRenderDispatcher",
     "client.MixinChunkCompileTask",
     "client.MixinModelBlockRenderer",
     "client.MixinRebuildTask",
     "client.MixinTransformation",
-    "client.SimpleBakedModelBuilderAccessor"
+    "client.SimpleBakedModelBuilderAccessor",
+    "client.sodium.MixinBlockRenderer",
+    "client.sodium.MixinChunkRenderRebuildTask",
+    "client.sodium.indium.MixinChunkRenderRebuildTask"
   ]
 }

@@ -22,7 +22,10 @@ public class ModelDataMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return !mixinClassName.contains("sodium") || FabricLoader.getInstance().isModLoaded("sodium");
+        if (FabricLoader.getInstance().isModLoaded("indium") && mixinClassName.contains("ChunkRenderRebuildTask")){
+            return mixinClassName.contains("indium");
+        }
+        return !mixinClassName.contains("sodium") || FabricLoader.getInstance().isModLoaded("sodium") && !mixinClassName.contains("indium");
     }
 
     @Override
