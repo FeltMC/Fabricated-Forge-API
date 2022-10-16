@@ -1,4 +1,4 @@
-name: Release
+name: Submodule Publishing
 on:
   workflow_dispatch:
     inputs:
@@ -31,7 +31,7 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
       - name: Build
-        run: echo "./gradlew :$SUBMODULE:build :$SUBMODULE:publish --stacktrace"
+        run: echo "./gradlew :$SUBMODULE:build :$SUBMODULE:publish --stacktrace" | bash
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
