@@ -78,8 +78,8 @@ void setupRepositories(RepositoryHandler repositories) {
 		url "https://repo.repsy.io/mvn/distant/feltmc"
 		if (ENV.GITHUB_ACTION) {
 			credentials {
-				username ENV.MAVEN_PUBLISH_USERNAME
-				password ENV.MAVEN_PUBLISH_TOKEN
+				username ENV.MAVEN_USERNAME
+				password ENV.MAVEN_PASSWORD
 			}
 		}
 	}
