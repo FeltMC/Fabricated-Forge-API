@@ -76,7 +76,7 @@ void setupRepositories(RepositoryHandler repositories) {
 	def ENV = System.getenv()
 	repositories.maven {
 		url "https://repo.repsy.io/mvn/distant/feltmc"
-		if (ENV.MAVEN_PUBLISH_USERNAME) {
+		if (ENV.GITHUB_ACTION) {
 			credentials {
 				username ENV.MAVEN_PUBLISH_USERNAME
 				password ENV.MAVEN_PUBLISH_TOKEN
