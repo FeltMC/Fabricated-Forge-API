@@ -234,15 +234,14 @@ public class FluidStack {
         return new FluidStack(fluid, amount, tag);
     }
 
-    public FriendlyByteBuf writeToPacket(FriendlyByteBuf buffer) {
-        return writeToPacket(this, buffer);
+    public void writeToPacket(FriendlyByteBuf buffer) {
+        writeToPacket(this, buffer);
     }
 
-    public static FriendlyByteBuf writeToPacket(FluidStack stack, FriendlyByteBuf buffer) {
+    public static void writeToPacket(FluidStack stack, FriendlyByteBuf buffer) {
         stack.getType().toPacket(buffer);
         buffer.writeVarLong(stack.getAmount());
         buffer.writeNbt(stack.tag);
-        return buffer;
     }
 
     public FluidStack copy() {
