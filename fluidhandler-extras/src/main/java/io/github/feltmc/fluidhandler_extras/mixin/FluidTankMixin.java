@@ -3,9 +3,11 @@ package io.github.feltmc.fluidhandler_extras.mixin;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+@Debug(export = true)
 @Mixin(value = FluidTank.class, remap = false)
 public abstract class FluidTankMixin {
     public long getFluidAmountInDroplets(){
