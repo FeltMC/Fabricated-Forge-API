@@ -12,8 +12,8 @@ repositories {
 dependencies{
     include("net.fabricmc.fabric-api:fabric-transfer-api-v1:${project.fabric_transfer_api_version}")
     //modImplementation(include("com.github.FeltMC:ForgeFelt-EventBus:${rootProject.event_bus_hash}")) { transitive(false) }
-    include("io.github.fabricators_of_create:Porting-Lib:1.1.310-beta+1.18.2-dev.${rootProject.port_lib_hash}"){ transitive(false) }
-    modImplementation("io.github.fabricators_of_create:Porting-Lib:1.1.310-beta+1.18.2-dev.${rootProject.port_lib_hash}"){
+    include("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){ transitive(false) }
+    modImplementation("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){
         exclude(group: "net.fabricmc.fabric-api")
     }
 }
