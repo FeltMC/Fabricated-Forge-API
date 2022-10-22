@@ -1,4 +1,4 @@
-name: GT Rubber Nightly
+name: Fabricated Forge API Nightly
 on:
   push:
     branches:
