@@ -118,23 +118,23 @@ public class FluidUtil
      *                    Separate handling must be done to reduce the stack size, stow containers, etc, on success.
      *                    See {@link #tryFillContainerAndStow(ItemStack, IFluidHandler, IItemHandler, int, Player, boolean)}.
      * @param fluidSource The fluid handler to be drained.
-     * @param maxAmount   The largest amount of fluid that should be transferred.
+     * @param maxAmountInMB   The largest amount of fluid that should be transferred.
      * @param player      The player to make the filling noise. Pass null for no noise.
      * @param doFill      true if the container should actually be filled, false if it should be simulated.
      * @return a {@link FluidActionResult} holding the filled container if successful.
      */
     @Nonnull
-    public static FluidActionResult tryFillContainer(@Nonnull ItemStack container, IFluidHandler fluidSource, int maxAmount, @Nullable Player player, boolean doFill)
+    public static FluidActionResult tryFillContainer(@Nonnull ItemStack container, IFluidHandler fluidSource, int maxAmountInMB, @Nullable Player player, boolean doFill)
     {
         ItemStack containerCopy = ItemHandlerHelper.copyStackWithSize(container, 1); // do not modify the input
         return getFluidHandler(containerCopy)
                 .map(containerFluidHandler -> {
-                    FluidStack simulatedTransfer = tryFluidTransfer(containerFluidHandler, fluidSource, maxAmount, false);
+                    FluidStack simulatedTransfer = tryFluidTransfer(containerFluidHandler, fluidSource, maxAmountInMB * 81L, false);
                     if (!simulatedTransfer.isEmpty())
                     {
                         if (doFill)
                         {
-                            tryFluidTransfer(containerFluidHandler, fluidSource, maxAmount, true);
+                            tryFluidTransfer(containerFluidHandler, fluidSource, maxAmountInMB, true);
                             if (player != null)
                             {
                                 //SoundEvent soundevent = simulatedTransfer.getFluid().getAttributes().getFillSound(simulatedTransfer);
@@ -161,21 +161,21 @@ public class FluidUtil
      *                         Separate handling must be done to reduce the stack size, stow containers, etc, on success.
      *                         See {@link #tryEmptyContainerAndStow(ItemStack, IFluidHandler, IItemHandler, int, Player, boolean)}.
      * @param fluidDestination The fluid handler to be filled by the container.
-     * @param maxAmount        The largest amount of fluid that should be transferred.
+     * @param maxAmountInMB        The largest amount of fluid that should be transferred.
      * @param player           Player for making the bucket drained sound. Pass null for no noise.
      * @param doDrain          true if the container should actually be drained, false if it should be simulated.
      * @return a {@link FluidActionResult} holding the empty container if the fluid handler was filled.
      *         NOTE If the container is consumable, the empty container will be null on success.
      */
     @Nonnull
-    public static FluidActionResult tryEmptyContainer(@Nonnull ItemStack container, IFluidHandler fluidDestination, int maxAmount, @Nullable Player player, boolean doDrain)
+    public static FluidActionResult tryEmptyContainer(@Nonnull ItemStack container, IFluidHandler fluidDestination, int maxAmountInMB, @Nullable Player player, boolean doDrain)
     {
         ItemStack containerCopy = ItemHandlerHelper.copyStackWithSize(container, 1); // do not modify the input
         return getFluidHandler(containerCopy)
                 .map(containerFluidHandler -> {
 
                     // We are acting on a COPY of the stack, so performing changes is acceptable even if we are simulating.
-                    FluidStack transfer = tryFluidTransfer(fluidDestination, containerFluidHandler, maxAmount, true);
+                    FluidStack transfer = tryFluidTransfer(fluidDestination, containerFluidHandler, maxAmountInMB * 81L, true);
                     if (transfer.isEmpty())
                         return FluidActionResult.FAILURE;
 
@@ -202,14 +202,14 @@ public class FluidUtil
      *                    Will not be modified directly, if modifications are necessary a modified copy is returned in the result.
      * @param fluidSource The fluid source to fill from
      * @param inventory   An inventory where any additionally created item (filled container if multiple empty are present) are put
-     * @param maxAmount   Maximum amount of fluid to take from the tank.
+     * @param maxAmountInMB   Maximum amount of fluid to take from the tank.
      * @param player      The player that gets the items the inventory can't take.
      *                    Can be null, only used if the inventory cannot take the filled stack.
      * @param doFill      true if the container should actually be filled, false if it should be simulated.
      * @return a {@link FluidActionResult} holding the result and the resulting container. The resulting container is empty on failure.
      */
     @Nonnull
-    public static FluidActionResult tryFillContainerAndStow(@Nonnull ItemStack container, IFluidHandler fluidSource, IItemHandler inventory, int maxAmount, @Nullable Player player, boolean doFill)
+    public static FluidActionResult tryFillContainerAndStow(@Nonnull ItemStack container, IFluidHandler fluidSource, IItemHandler inventory, int maxAmountInMB, @Nullable Player player, boolean doFill)
     {
         if (container.isEmpty())
         {
@@ -218,7 +218,7 @@ public class FluidUtil
 
         if (player != null && player.getAbilities().instabuild)
         {
-            FluidActionResult filledReal = tryFillContainer(container, fluidSource, maxAmount, player, doFill);
+            FluidActionResult filledReal = tryFillContainer(container, fluidSource, maxAmountInMB, player, doFill);
             if (filledReal.isSuccess())
             {
                 return new FluidActionResult(container); // creative mode: item does not change
@@ -226,7 +226,7 @@ public class FluidUtil
         }
         else if (container.getCount() == 1) // don't need to stow anything, just fill the container stack
         {
-            FluidActionResult filledReal = tryFillContainer(container, fluidSource, maxAmount, player, doFill);
+            FluidActionResult filledReal = tryFillContainer(container, fluidSource, maxAmountInMB, player, doFill);
             if (filledReal.isSuccess())
             {
                 return filledReal;
@@ -234,14 +234,14 @@ public class FluidUtil
         }
         else
         {
-            FluidActionResult filledSimulated = tryFillContainer(container, fluidSource, maxAmount, player, false);
+            FluidActionResult filledSimulated = tryFillContainer(container, fluidSource, maxAmountInMB, player, false);
             if (filledSimulated.isSuccess())
             {
                 // check if we can give the itemStack to the inventory
                 ItemStack remainder = ItemHandlerHelper.insertItemStacked(inventory, filledSimulated.getResult(), true);
                 if (remainder.isEmpty() || player != null)
                 {
-                    FluidActionResult filledReal = tryFillContainer(container, fluidSource, maxAmount, player, doFill);
+                    FluidActionResult filledReal = tryFillContainer(container, fluidSource, maxAmountInMB, player, doFill);
                     remainder = ItemHandlerHelper.insertItemStacked(inventory, filledReal.getResult(), !doFill);
 
                     // give it to the player or drop it at their feet
@@ -271,13 +271,13 @@ public class FluidUtil
      *                         Will not be modified directly, if modifications are necessary a modified copy is returned in the result.
      * @param fluidDestination The fluid destination to fill from the fluid container.
      * @param inventory        An inventory where any additionally created item (filled container if multiple empty are present) are put
-     * @param maxAmount        Maximum amount of fluid to take from the tank.
+     * @param maxAmountInMB        Maximum amount of fluid to take from the tank.
      * @param player           The player that gets the items the inventory can't take. Can be null, only used if the inventory cannot take the filled stack.
      * @param doDrain          true if the container should actually be drained, false if it should be simulated.
      * @return a {@link FluidActionResult} holding the result and the resulting container. The resulting container is empty on failure.
      */
     @Nonnull
-    public static FluidActionResult tryEmptyContainerAndStow(@Nonnull ItemStack container, IFluidHandler fluidDestination, IItemHandler inventory, int maxAmount, @Nullable Player player, boolean doDrain)
+    public static FluidActionResult tryEmptyContainerAndStow(@Nonnull ItemStack container, IFluidHandler fluidDestination, IItemHandler inventory, int maxAmountInMB, @Nullable Player player, boolean doDrain)
     {
         if (container.isEmpty())
         {
@@ -286,7 +286,7 @@ public class FluidUtil
 
         if (player != null && player.getAbilities().instabuild)
         {
-            FluidActionResult emptiedReal = tryEmptyContainer(container, fluidDestination, maxAmount, player, doDrain);
+            FluidActionResult emptiedReal = tryEmptyContainer(container, fluidDestination, maxAmountInMB, player, doDrain);
             if (emptiedReal.isSuccess())
             {
                 return new FluidActionResult(container); // creative mode: item does not change
@@ -294,7 +294,7 @@ public class FluidUtil
         }
         else if (container.getCount() == 1) // don't need to stow anything, just fill and edit the container stack
         {
-            FluidActionResult emptiedReal = tryEmptyContainer(container, fluidDestination, maxAmount, player, doDrain);
+            FluidActionResult emptiedReal = tryEmptyContainer(container, fluidDestination, maxAmountInMB, player, doDrain);
             if (emptiedReal.isSuccess())
             {
                 return emptiedReal;
@@ -302,14 +302,14 @@ public class FluidUtil
         }
         else
         {
-            FluidActionResult emptiedSimulated = tryEmptyContainer(container, fluidDestination, maxAmount, player, false);
+            FluidActionResult emptiedSimulated = tryEmptyContainer(container, fluidDestination, maxAmountInMB, player, false);
             if (emptiedSimulated.isSuccess())
             {
                 // check if we can give the itemStack to the inventory
                 ItemStack remainder = ItemHandlerHelper.insertItemStacked(inventory, emptiedSimulated.getResult(), true);
                 if (remainder.isEmpty() || player != null)
                 {
-                    FluidActionResult emptiedReal = tryEmptyContainer(container, fluidDestination, maxAmount, player, doDrain);
+                    FluidActionResult emptiedReal = tryEmptyContainer(container, fluidDestination, maxAmountInMB, player, doDrain);
                     remainder = ItemHandlerHelper.insertItemStacked(inventory, emptiedReal.getResult(), !doDrain);
 
                     // give it to the player or drop it at their feet

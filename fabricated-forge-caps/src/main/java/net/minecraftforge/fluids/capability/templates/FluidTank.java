@@ -146,30 +146,30 @@ public class FluidTank implements IFluidHandler, IFluidTank {
         {
             if (fluid.isEmpty())
             {
-                return Math.min(capacity, resource.getAmount());
+                return Math.min(capacity, resource.getRealAmount());
             }
             if (!fluid.isFluidEqual(resource))
             {
                 return 0;
             }
-            return Math.min(capacity - fluid.getAmount(), resource.getAmount());
+            return Math.min(capacity - fluid.getRealAmount(), resource.getRealAmount());
         }
         if (fluid.isEmpty())
         {
-            fluid = new FluidStack(resource, Math.min(capacity, resource.getAmount()));
+            fluid = new FluidStack(resource, Math.min(capacity, resource.getRealAmount()));
             onContentsChanged();
-            return fluid.getAmount();
+            return fluid.getRealAmount();
         }
         if (!fluid.isFluidEqual(resource))
         {
             return 0;
         }
-        long filled = capacity - fluid.getAmount();
+        long filled = capacity - fluid.getRealAmount();
 
-        if (resource.getAmount() < filled)
+        if (resource.getRealAmount() < filled)
         {
-            fluid.grow(resource.getAmount());
-            filled = resource.getAmount();
+            fluid.grow(resource.getRealAmount());
+            filled = resource.getRealAmount();
         }
         else
         {
@@ -198,7 +198,7 @@ public class FluidTank implements IFluidHandler, IFluidTank {
         {
             return FluidStack.EMPTY;
         }
-        return drain(resource.getAmount(), action);
+        return drain(resource.getRealAmount(), action);
     }
 
     @Nonnull
@@ -206,9 +206,9 @@ public class FluidTank implements IFluidHandler, IFluidTank {
     public FluidStack drain(long maxDrain, FluidAction action)
     {
         long drained = maxDrain;
-        if (fluid.getAmount() < drained)
+        if (fluid.getRealAmount() < drained)
         {
-            drained = fluid.getAmount();
+            drained = fluid.getRealAmount();
         }
         FluidStack stack = new FluidStack(fluid, drained);
         if (action.execute() && drained > 0)
@@ -241,7 +241,7 @@ public class FluidTank implements IFluidHandler, IFluidTank {
 
     public long getSpace()
     {
-        return Math.max(0, capacity - fluid.getAmount());
+        return Math.max(0, capacity - fluid.getRealAmount());
     }
 
 }
