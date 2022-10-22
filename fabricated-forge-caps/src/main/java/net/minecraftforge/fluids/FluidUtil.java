@@ -137,8 +137,8 @@ public class FluidUtil
                             tryFluidTransfer(containerFluidHandler, fluidSource, maxAmountInMB, true);
                             if (player != null)
                             {
-                                //SoundEvent soundevent = simulatedTransfer.getFluid().getAttributes().getFillSound(simulatedTransfer);
-                                //player.level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
+                                SoundEvent soundevent = simulatedTransfer.getFluid().getAttributes().getFillSound(simulatedTransfer.toPortingLibStack());
+                                player.level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
                             }
                         }
                         else
@@ -181,8 +181,8 @@ public class FluidUtil
 
                     if (doDrain && player != null)
                     {
-                        //SoundEvent soundevent = transfer.getFluid().getAttributes().getEmptySound(transfer);
-                        //player.level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        SoundEvent soundevent = transfer.getFluid().getAttributes().getEmptySound(transfer.toPortingLibStack());
+                        player.level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
                     }
 
                     ItemStack resultContainer = containerFluidHandler.getContainer();
