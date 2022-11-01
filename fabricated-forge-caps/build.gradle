@@ -7,6 +7,7 @@ loom {
 
 repositories {
     maven { url = "https://mvn.devos.one/snapshots/" }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies{

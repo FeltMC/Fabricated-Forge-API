@@ -3,16 +3,19 @@ version = getSubprojectVersion(project)
 
 repositories {
     maven { url = "https://mvn.devos.one/snapshots/" }
+    maven { url = "https://repo.repsy.io/mvn/distant/feltmc/"}
     maven {
         url "https://cursemaven.com"
     }
+
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies{
     include("net.fabricmc.fabric-api:fabric-renderer-api-v1:${project.fabric_renderer_api_version}")
     include("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){ transitive(false) }
-    modImplementation(include("com.github.FeltMC:Felt-ASM:0.1"))
-    annotationProcessor("com.github.FeltMC:Felt-ASM:0.1")
+    modImplementation(include("io.github.feltmc:Felt-ASM:0.1"))
+    annotationProcessor("io.github.feltmc:Felt-ASM:0.1")
     modImplementation("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable")
     modImplementation("curse.maven:sodium-394468:3669187")
     implementation "org.joml:joml:1.10.4"

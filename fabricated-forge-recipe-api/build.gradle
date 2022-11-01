@@ -7,9 +7,10 @@ loom {
 
 repositories {
     maven { url = "https://mvn.devos.one/snapshots/" }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     include("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){ transitive(false) }
-    modImplementation("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){ transitive(false) }
+    modImplementation("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable")
 }
