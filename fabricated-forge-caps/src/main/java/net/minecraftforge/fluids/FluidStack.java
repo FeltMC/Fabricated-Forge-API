@@ -168,7 +168,7 @@ public class FluidStack {
 
     public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.put("Variant", getType().toNbt());
-        nbt.putLong("Amount", getAmount());
+        nbt.putLong("Amount", getRealAmount());
         if (tag != null)
             nbt.put("Tag", tag);
         return nbt;
@@ -240,12 +240,12 @@ public class FluidStack {
 
     public static void writeToPacket(FluidStack stack, FriendlyByteBuf buffer) {
         stack.getType().toPacket(buffer);
-        buffer.writeVarLong(stack.getAmount());
+        buffer.writeVarLong(stack.getRealAmount());
         buffer.writeNbt(stack.tag);
     }
 
     public FluidStack copy() {
-        return new FluidStack(FluidVariant.of(getFluid(), getType().copyNbt()), getAmount(), getTag());
+        return new FluidStack(FluidVariant.of(getFluid(), getType().copyNbt()), getRealAmount(), getTag());
     }
 
     private boolean isFluidStackTagEqual(FluidStack other) {
