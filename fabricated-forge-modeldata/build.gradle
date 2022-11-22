@@ -16,7 +16,11 @@ dependencies{
     include("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){ transitive(false) }
     modImplementation(include("io.github.feltmc:Felt-ASM:0.1"))
     annotationProcessor("io.github.feltmc:Felt-ASM:0.1")
-    modImplementation("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable")
+    implementation("com.github.LlamaLad7:MixinExtras:0.1.1")
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
+    modImplementation("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){
+        exclude(group: "com.github.LlamaLad7")
+    }
     modImplementation("curse.maven:sodium-394468:3669187")
     implementation "org.joml:joml:1.10.4"
 }
