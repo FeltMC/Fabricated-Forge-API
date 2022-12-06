@@ -7,6 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 public class FabricatedForgeRecipeApi implements ModInitializer {
     @Override
     public void onInitialize() {
-        Registry.register(Registry.RECIPE_SERIALIZER, new ResourceLocation("forge", "conditional"), ConditionalRecipe.SERIALZIER);
+        Registry.register(Registry.RECIPE_SERIALIZER, new ResourceLocation("c", "conditional"), ConditionalRecipe.SERIALZIER);
     }
 }
