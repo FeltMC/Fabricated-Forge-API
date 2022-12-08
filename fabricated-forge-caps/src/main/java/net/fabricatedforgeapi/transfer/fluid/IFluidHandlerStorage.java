@@ -22,25 +22,25 @@ public interface IFluidHandlerStorage extends Storage<FluidVariant> {
 
     @Override
     default long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-        AtomicLong atomicLong = new AtomicLong(0);
+        long fill = getHandler().fillDroplets(new FluidStack(resource, maxAmount), SIMULATE);
         transaction.addCloseCallback((t, result) -> {
             if (result.wasCommitted()) {
-                atomicLong.set(getHandler().fillDroplets(new FluidStack(resource, maxAmount), EXECUTE));
+                getHandler().fillDroplets(new FluidStack(resource, maxAmount), EXECUTE);
             }
         });
-        return atomicLong.get();
+        return fill;
     }
 
     @Override
     default long extract(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-        AtomicLong atomicLong = new AtomicLong(0);
+        FluidStack toExtract = new FluidStack(resource, maxAmount);
+        long extracted = getHandler().drain(toExtract, SIMULATE).getRealAmount();
         transaction.addCloseCallback((t, result) -> {
             if (result.wasCommitted()) {
-                FluidStack extracted = getHandler().drain(new FluidStack(resource, maxAmount), EXECUTE);
-                atomicLong.set(extracted.getRealAmount());
+                getHandler().drain(toExtract, EXECUTE);
             }
         });
-        return atomicLong.get();
+        return extracted;
     }
 
     @Override
