@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,7 +45,7 @@ public class MixinChunkRenderRebuildTask {
     }
 
     @SuppressWarnings({"MixinAnnotationTarget", "InvalidMemberReference", "UnresolvedMixinReference"})
-    @Redirect(method = "@FeltASM:RedirectHandler(onRenderBlock)", at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/render/pipeline/BlockRenderer;renderModel(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/client/resources/model/BakedModel;Lme/jellysquid/mods/sodium/client/render/chunk/compile/buffers/ChunkModelBuilder;ZJ)Z"))
+    @Redirect(method = "@FeltASM:MixinMethodHandler(redirect:onRenderBlock)", at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/render/pipeline/BlockRenderer;renderModel(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/client/resources/model/BakedModel;Lme/jellysquid/mods/sodium/client/render/chunk/compile/buffers/ChunkModelBuilder;ZJ)Z"))
     private boolean redirectRenderModel(BlockRenderer renderer, BlockAndTintGetter slice, BlockState state, BlockPos blockPos, BlockPos offset, BakedModel model, ChunkModelBuilder buffers, boolean cull, long seed){
         return ((BlockRendererExtension)renderer).renderModel(slice, state, blockPos, offset, model, buffers, cull, seed, modelDataMap.getOrDefault(blockPos, EmptyModelData.INSTANCE));
     }

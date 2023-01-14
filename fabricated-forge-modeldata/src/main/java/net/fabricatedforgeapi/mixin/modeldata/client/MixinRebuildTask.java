@@ -24,13 +24,13 @@ import java.util.Random;
 @Mixin(targets = "net.minecraft.client.renderer.chunk.ChunkRenderDispatcher$RenderChunk$RebuildTask", priority = 1100)
 public class MixinRebuildTask {
     @SuppressWarnings({"MixinAnnotationTarget", "InvalidMemberReference", "UnresolvedMixinReference"})
-    @Redirect(method = "@FeltASM:RedirectHandler(hookChunkBuildTesselate)", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;renderBatched(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/BlockAndTintGetter;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZLjava/util/Random;)Z"))
+    @Redirect(method = "@FeltASM:MixinMethodHandler(redirect:hookChunkBuildTesselate)", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;renderBatched(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/BlockAndTintGetter;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZLjava/util/Random;)Z"))
     private boolean injectCompile(BlockRenderDispatcher instance, BlockState state, BlockPos pos, BlockAndTintGetter level, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random){
         return instance.renderBatched(state, pos, level, poseStack, consumer, checkSides, random, ((ChunkCompileTaskExtension)this).getModelData(pos));
     }
 
     @SuppressWarnings({"MixinAnnotationTarget", "InvalidMemberReference"})
-    @Inject(method = "@FeltASM:RedirectHandler(hookChunkBuildTesselate)", at = @At(value = "RETURN", ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+    @Inject(method = "@FeltASM:MixinMethodHandler(redirect:hookChunkBuildTesselate)", at = @At(value = "RETURN", ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     private void injectCompile2(BlockRenderDispatcher renderManager, BlockState state, BlockPos pos, BlockAndTintGetter level, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, CallbackInfoReturnable<Boolean> cir, BakedModel model, Vec3 vec3d){
         if (model instanceof IDynamicBakedModel model1 && model1.isVanillaAdapter()){
             cir.setReturnValue(renderManager.renderBatched(state, pos, level, poseStack, consumer, checkSides, random, ((ChunkCompileTaskExtension)this).getModelData(pos)));

@@ -14,8 +14,8 @@ repositories {
 dependencies{
     include("net.fabricmc.fabric-api:fabric-renderer-api-v1:${project.fabric_renderer_api_version}")
     include("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){ transitive(false) }
-    modImplementation(include("io.github.feltmc:Felt-ASM:0.1"))
-    annotationProcessor("io.github.feltmc:Felt-ASM:0.1")
+    modImplementation(include("io.github.feltmc:Felt-ASM:0.2.1"))
+    annotationProcessor("io.github.feltmc:Felt-ASM:0.2.1")
     implementation("com.github.LlamaLad7:MixinExtras:0.1.1")
     annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
     modImplementation("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){
