@@ -44,13 +44,13 @@ public abstract class MixinModelBlockRenderer implements ModelBlockRendererExten
     protected static void renderQuadList(PoseStack.Pose pose, VertexConsumer consumer, float red, float green, float blue, List<BakedQuad> quads, int packedLight, int packedOverlay) {
     }
 
-    public boolean tesselateBlock(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay, IModelData data) {
-        boolean bl = Minecraft.useAmbientOcclusion() && state.getLightEmission() == 0 && model.useAmbientOcclusion();
+    public boolean tesselateBlock(BlockAndTintGetter level, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, Random random, long seed, int packedOverlay, IModelData modelData) {
+        modelData = model.getModelData(level, pos, state, modelData);boolean bl = Minecraft.useAmbientOcclusion() && state.getLightEmission() == 0 && model.useAmbientOcclusion();
         Vec3 vec3 = state.getOffset(level, pos);
         poseStack.translate(vec3.x, vec3.y, vec3.z);
 
         try {
-            return bl ? this.tesselateWithAO(level, model, state, pos, poseStack, consumer, checkSides, random, seed, packedOverlay, data) : this.tesselateWithoutAO(level, model, state, pos, poseStack, consumer, checkSides, random, seed, packedOverlay, data);
+            return bl ? this.tesselateWithAO(level, model, state, pos, poseStack, consumer, checkSides, random, seed, packedOverlay, modelData) : this.tesselateWithoutAO(level, model, state, pos, poseStack, consumer, checkSides, random, seed, packedOverlay, modelData);
         } catch (Throwable var17) {
             CrashReport crashReport = CrashReport.forThrowable(var17, "Tesselating block model");
             CrashReportCategory crashReportCategory = crashReport.addCategory("Block model being tesselated");
