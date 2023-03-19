@@ -1,6 +1,10 @@
 archivesBaseName = "fabricated-forge-modeldata"
 version = getSubprojectVersion(project)
 
+loom {
+    accessWidenerPath = file("src/main/resources/fabricated-forge-modeldata.accesswidener")
+}
+
 repositories {
     maven { url = "https://mvn.devos.one/snapshots/" }
     maven { url = "https://repo.repsy.io/mvn/distant/feltmc/"}

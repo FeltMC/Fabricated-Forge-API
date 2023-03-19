@@ -14,6 +14,7 @@
   "mixins": [
     "fabricated-forge-modeldata.mixins.json"
   ],
+  "accessWidener": "fabricated-forge-modeldata.accesswidener",
   "depends": {
     "fabricloader": ">=0.14.0"
   },
