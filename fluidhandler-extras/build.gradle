@@ -1,6 +1,3 @@
-archivesBaseName = "fluidhandler-extras"
-version = getSubprojectVersion(project)
-
 loom {
     forge{
         mixinConfigs = [
@@ -16,17 +13,9 @@ repositories {
 }
 
 dependencies{
-    forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${project.forge_version}"
+
     //for testing purposes
     //modImplementation("curse.maven:portable_tanks-503920:4024684")
     //modImplementation("curse.maven:supermjcorelib-454372:3863129")
     //modImplementation("curse.maven:supermjconfiglib-438332:3862966")
-}
-
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("META-INF/mods.toml") {
-        expand "version": project.version
-    }
 }

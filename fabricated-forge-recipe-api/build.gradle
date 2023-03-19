@@ -1,6 +1,3 @@
-archivesBaseName = "fabricated-forge-recipe-api"
-version = getSubprojectVersion(project)
-
 loom {
     accessWidenerPath = file("src/main/resources/fabricated-forge-recipe-api.accesswidener")
 }

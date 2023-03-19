@@ -1,9 +1,16 @@
 plugins {
 	id "maven-publish"
 	id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
+	id 'java'
 }
 
 version = "0.0.1"
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version //+ "+" + (ENV.GITHUB_RUN_NUMBER ? "" : "local-") + getBranch()
+group = project.maven_group
 
 def gitHash() {
 	String hash = System.getenv("GITHUB_SHA")
@@ -11,37 +18,51 @@ def gitHash() {
 	return ""
 }
 
-def getSubprojectVersion(project) {
-	// Get the version from the gradle.properties file
-	def version = project.properties["${project.name}-version"]
-
-	if (!version) {
-		throw new NullPointerException("Could not find version for " + project.name)
-	}
-	if (System.getenv("GITHUB_COMMIT_PUBLISH")){
-		version = gitHash()
-	}
-
-	return version
-}
-
 subprojects {
 	apply plugin: "maven-publish"
 	apply plugin: "dev.architectury.loom"
-	java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+	version = project.module_version
+	group = rootProject.maven_group
+	if (project.hasProperty("archive_base_name")){
+		archivesBaseName = project.archive_base_name
+	}
+
+	repositories {
+		// Add repositories to retrieve artifacts from in here.
+		// You should only use this when depending on other mods because
+		// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+		// See https://docs.gradle.org/current/userguide/declaring_repositories.html
+		// for more information about repositories.
+		maven {
+			url "https://maven.terraformersmc.com"
+			content {
+				includeGroup "com.terraformersmc"
+			}
+		}
+		maven {
+			name = "parchment"
+			url = uri("https://maven.parchmentmc.org")
+		}
+		maven { url 'https://jitpack.io' }
+	}
 
 	dependencies {
-		minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-		mappings loom.layered() {
-			officialMojangMappings()
-			parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_mappings}@zip")
+		minecraft "com.mojang:minecraft:${project.minecraft_version}"
+		if(project.mojmap.toBoolean()){
+			mappings loom.layered() {
+				officialMojangMappings()
+				parchment("org.parchmentmc.data:parchment-${project.minecraft_version}:${project.parchment_version}@zip")
+			}
+		} else {
+			mappings "net.fabricmc:yarn:${project.minecraft_version}+${project.yarn_mappings}:v2"
 		}
-		//TODO remap to yarn?
-		//mappings "net.fabricmc:yarn:${rootProject.minecraft_version}${project.yarn_version}:v2"
-		if (project.name != "fluidhandler-extras"){
-			modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
-			modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_version}"
+		if (!project.hasProperty("is_forge")){
+			modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+			// Fabric API. This is technically optional, but you probably want it anyway.
+			modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}+${project.minecraft_version}"
+		} else {
+			forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 		}
 		//testmodImplementation sourceSets.main.output
 	}
@@ -75,6 +96,9 @@ subprojects {
 
 		inputs.properties toReplace
 		filesMatching("fabric.mod.json") {
+			expand toReplace
+		}
+		filesMatching("META-INF/mods.toml") {
 			expand toReplace
 		}
 	}

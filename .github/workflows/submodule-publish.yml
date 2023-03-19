@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       submodule:
-        description: 'Submodule to publish (Please make sure to use values defined in the settings.gradle! Example: fabricated-forge-datagen)'
+        description: 'Submodule to publish (Please make sure to use values defined in the settings.gradle.kts! Example: fabricated-forge-datagen)'
         required: true
 jobs:
   release:

@@ -1,6 +1,3 @@
-archivesBaseName = "fabricated-forge-modeldata"
-version = getSubprojectVersion(project)
-
 loom {
     accessWidenerPath = file("src/main/resources/fabricated-forge-modeldata.accesswidener")
 }
