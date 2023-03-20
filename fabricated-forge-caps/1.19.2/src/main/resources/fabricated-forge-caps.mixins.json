@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.fabricatedforgeapi.mixin.caps",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BlockEntityMixin",
+    "BucketItemMixin",
+    "EntityMixin",
+    "ItemMixin",
+    "ItemStackMixin"
+  ],
+  "minVersion": "0.8"
+}

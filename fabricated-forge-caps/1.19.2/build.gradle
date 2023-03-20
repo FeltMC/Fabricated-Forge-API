@@ -1,0 +1,20 @@
+loom {
+    accessWidenerPath = file("src/main/resources/fabricated-forge-caps.accesswidener")
+}
+
+repositories {
+    maven { url = "https://mvn.devos.one/snapshots/" }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies{
+    include("net.fabricmc.fabric-api:fabric-transfer-api-v1:${project.fabric_transfer_api_version}")
+    implementation("com.github.LlamaLad7:MixinExtras:0.1.1")
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
+    //modImplementation(include("com.github.FeltMC:ForgeFelt-EventBus:${rootProject.event_bus_hash}")) { transitive(false) }
+    include("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){ transitive(false) }
+    modImplementation("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){
+        exclude(group: "net.fabricmc.fabric-api")
+        exclude(group: "com.github.LlamaLad7")
+    }
+}
