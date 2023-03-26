@@ -22,7 +22,10 @@ subprojects {
 	apply plugin: "maven-publish"
 	apply plugin: "dev.architectury.loom"
 
-	version = project.module_version
+	version = "${project.module_version}-${project.minecraft_version}"
+	if (System.getenv("GITHUB_COMMIT_PUBLISH")){
+		version = gitHash() + "-${project.minecraft_version}"
+	}
 	group = rootProject.maven_group
 	if (project.hasProperty("archive_base_name")){
 		archivesBaseName = project.archive_base_name
