@@ -662,6 +662,6 @@ public class FluidUtil
             }
         }
 
-        return fluid.getAttributes().getBucket(fluidStack.toPortingLibStack());
+        return new ItemStack(fluid.getBucket());
     }
 }

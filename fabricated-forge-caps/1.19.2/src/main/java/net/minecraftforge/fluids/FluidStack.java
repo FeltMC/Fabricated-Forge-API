@@ -7,8 +7,8 @@ package net.minecraftforge.fluids;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.fabricators_of_create.porting_lib.extensions.FluidExtensions;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -196,11 +196,11 @@ public class FluidStack {
     }
 
     public Component getDisplayName() {
-        return ((FluidExtensions)getFluid()).getAttributes().getDisplayName(this.toPortingLibStack());
+        return FluidVariantAttributes.getName(this.getType());
     }
 
     public String getTranslationKey() {
-        return ((FluidExtensions)getFluid()).getAttributes().getTranslationKey(this.toPortingLibStack());
+        return this.getFluid().defaultFluidState().createLegacyBlock().getBlock().getDescriptionId();
     }
 
     public void setTag(CompoundTag tag) {

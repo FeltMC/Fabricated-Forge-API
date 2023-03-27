@@ -5,14 +5,15 @@
 
 package net.minecraftforge.fluids.capability.wrappers;
 
-import io.github.fabricators_of_create.porting_lib.util.FluidAttributes;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.logging.log4j.LogManager;
@@ -51,7 +52,7 @@ public class BucketPickupHandlerWrapper implements IFluidHandler
             FluidState fluidState = world.getFluidState(blockPos);
             if (!fluidState.isEmpty())
             {
-                return new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME);
+                return new FluidStack(fluidState.getType(), FluidConstants.BUCKET);
             }
         }
         return FluidStack.EMPTY;
@@ -104,7 +105,7 @@ public class BucketPickupHandlerWrapper implements IFluidHandler
                         {
                             //Be loud if something went wrong
                             LOGGER.error("Fluid removed without successfully being picked up. Fluid {} at {} in {} matched requested type, but after performing pickup was {}.",
-                                  fluidState.getType().getRegistryName(), blockPos, world.dimension().location(), bucket.getFluid().getRegistryName());
+                                  Registry.FLUID.getKey(fluidState.getType()), blockPos, world.dimension().location(), Registry.FLUID.getKey(bucket.getFluid()));
                             return FluidStack.EMPTY;
                         }
                         return extracted;

@@ -76,7 +76,7 @@ public class BlockWrapper extends VoidFluidHandler
                 if (liquidContainer.canPlaceLiquid(world, blockPos, state, resource.getFluid()))
                 {
                     //If we are executing try to actually fill the container, if it failed return that we failed
-                    if (action.simulate() || liquidContainer.placeLiquid(world, blockPos, state, resource.getFluid().getAttributes().getStateForPlacement(world, blockPos, resource.toPortingLibStack())))
+                    if (action.simulate() || liquidContainer.placeLiquid(world, blockPos, state, resource.getFluid().defaultFluidState()))
                     {
                         return FluidConstants.BUCKET;
                     }

@@ -12,8 +12,18 @@ dependencies{
     implementation("com.github.LlamaLad7:MixinExtras:0.1.1")
     annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
     //modImplementation(include("com.github.FeltMC:ForgeFelt-EventBus:${rootProject.event_bus_hash}")) { transitive(false) }
-    include("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){ transitive(false) }
-    modImplementation("io.github.fabricators_of_create:Porting-Lib:${rootProject.port_lib_version}-beta+1.18.2-stable"){
+    include("io.github.fabricators_of_create.Porting-Lib:transfer:2.0.510+1.19.2"){ transitive(false) }
+    modImplementation("io.github.fabricators_of_create.Porting-Lib:transfer:2.0.510+1.19.2"){
+        exclude(group: "net.fabricmc.fabric-api")
+        exclude(group: "com.github.LlamaLad7")
+    }
+    include("io.github.fabricators_of_create.Porting-Lib:extensions:2.0.510+1.19.2"){ transitive(false) }
+    modImplementation("io.github.fabricators_of_create.Porting-Lib:extensions:2.0.510+1.19.2"){
+        exclude(group: "net.fabricmc.fabric-api")
+        exclude(group: "com.github.LlamaLad7")
+    }
+    include("io.github.fabricators_of_create.Porting-Lib:common:2.0.510+1.19.2"){ transitive(false) }
+    modImplementation("io.github.fabricators_of_create.Porting-Lib:common:2.0.510+1.19.2"){
         exclude(group: "net.fabricmc.fabric-api")
         exclude(group: "com.github.LlamaLad7")
     }

@@ -8,6 +8,7 @@ package net.minecraftforge.fluids;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -123,7 +124,7 @@ public class FluidAttributes
 
     protected FluidAttributes(Builder builder, Fluid fluid)
     {
-        this.translationKey = builder.translationKey != null ? builder.translationKey :  Util.makeDescriptionId("fluid", fluid.getRegistryName());
+        this.translationKey = builder.translationKey != null ? builder.translationKey :  Util.makeDescriptionId("fluid", (Registry.FLUID.getKey(fluid)));
         this.stillTexture = builder.stillTexture;
         this.flowingTexture = builder.flowingTexture;
         this.overlayTexture = builder.overlayTexture;
