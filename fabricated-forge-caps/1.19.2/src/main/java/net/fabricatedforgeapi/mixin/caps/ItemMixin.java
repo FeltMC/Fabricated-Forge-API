@@ -17,15 +17,4 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(Item.class)
 public class ItemMixin implements ICapabilityItem {
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-        if (!stack.isEmpty()){
-            ContainerItemContext ctx = ContainerItemContext.withInitial(stack);
-            Storage<FluidVariant> storage = FluidStorage.ITEM.find(stack, ctx);
-            if (storage != null){
-                return new FluidStorageHandlerItem.Provider(() -> new FluidStorageHandlerItem(ctx, storage));
-            }
-        }
-        return ICapabilityItem.super.initCapabilities(stack, nbt);
-    }
 }
