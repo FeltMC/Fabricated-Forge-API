@@ -9,6 +9,7 @@ import net.fabricatedforgeapi.transfer.fluid.FluidStorageHandlerItem;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -137,7 +138,7 @@ public class FluidUtil
                             tryFluidTransfer(containerFluidHandler, fluidSource, maxAmountInMB, true);
                             if (player != null)
                             {
-                                SoundEvent soundevent = simulatedTransfer.getFluid().getAttributes().getFillSound(simulatedTransfer.toPortingLibStack());
+                                SoundEvent soundevent = FluidVariantAttributes.getEmptySound(simulatedTransfer.getType());
                                 player.level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
                             }
                         }
@@ -181,7 +182,7 @@ public class FluidUtil
 
                     if (doDrain && player != null)
                     {
-                        SoundEvent soundevent = transfer.getFluid().getAttributes().getEmptySound(transfer.toPortingLibStack());
+                        SoundEvent soundevent = FluidVariantAttributes.getEmptySound(transfer.getType());
                         player.level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
                     }
 
@@ -420,7 +421,7 @@ public class FluidUtil
         if (stack.isEmpty()) return LazyOptional.empty();
         LazyOptional<IFluidHandlerItem> cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
         if (cap.isPresent()) return cap;
-        ContainerItemContext ctx = ContainerItemContext.withInitial(stack);
+        ContainerItemContext ctx = ContainerItemContext.withConstant(stack);
         Storage<FluidVariant> fluidStorage = FluidStorage.ITEM.find(stack, ctx);
         return fluidStorage == null ? LazyOptional.empty() : LazyOptional.of(() -> new FluidStorageHandlerItem(ctx, fluidStorage));
     }
@@ -548,7 +549,7 @@ public class FluidUtil
         }
 
         Fluid fluid = resource.getFluid();
-        if (fluid == Fluids.EMPTY || !fluid.getAttributes().canBePlacedInWorld(level, pos, resource.toPortingLibStack()))
+        if (fluid == Fluids.EMPTY /*|| !fluid.getAttributes().canBePlacedInWorld(level, pos, resource.toPortingLibStack())*/)
         {
             return false;
         }
@@ -571,7 +572,7 @@ public class FluidUtil
             return false; // Non-air, solid, unreplacable block. We can't put fluid here.
         }
 
-        if (level.dimensionType().ultraWarm() && fluid.getAttributes().doesVaporize(level, pos, resource.toPortingLibStack()))
+        /*if (level.dimensionType().ultraWarm() && fluid.getAttributes().doesVaporize(level, pos, resource.toPortingLibStack()))
         {
             FluidStack result = fluidSource.drain(resource, IFluidHandler.FluidAction.EXECUTE);
             if (!result.isEmpty())
@@ -580,7 +581,7 @@ public class FluidUtil
                 return true;
             }
         }
-        else
+        else*/
         {
             // This fluid handler places the fluid block when filled
             IFluidHandler handler;
@@ -595,7 +596,7 @@ public class FluidUtil
             FluidStack result = tryFluidTransfer(handler, fluidSource, resource, true);
             if (!result.isEmpty())
             {
-                SoundEvent soundevent = resource.getFluid().getAttributes().getEmptySound(resource.toPortingLibStack());
+                SoundEvent soundevent = FluidVariantAttributes.getEmptySound(resource.getType());
                 level.playSound(player, pos, soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return true;
             }
@@ -611,7 +612,7 @@ public class FluidUtil
      */
     private static IFluidHandler getFluidBlockHandler(Fluid fluid, Level level, BlockPos pos)
     {
-        BlockState state = fluid.getAttributes().getBlock(level, pos, fluid.defaultFluidState());
+        BlockState state = fluid.defaultFluidState().createLegacyBlock();
         return new BlockWrapper(state, level, pos);
     }
 
