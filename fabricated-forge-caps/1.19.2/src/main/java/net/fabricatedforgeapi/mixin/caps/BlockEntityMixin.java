@@ -29,10 +29,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class BlockEntityMixin implements IBlockEntityCapProviderImpl, ICapabilityBlockEntity {
     @Unique
     private final CapabilityProvider.AsField<BlockEntity> capProvider = new CapabilityProvider.AsField<>(BlockEntity.class, (BlockEntity)(Object)this);
-    @Unique
-    LazyOptional<IFluidHandler> fluidHandler = null;
-    @Unique
-    LazyOptional<IItemHandler> itemHandler = null;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void injectInit(BlockEntityType blockEntityType, BlockPos blockPos, BlockState blockState, CallbackInfo ci){
@@ -62,14 +58,6 @@ public class BlockEntityMixin implements IBlockEntityCapProviderImpl, ICapabilit
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            if (fluidHandler == null) fluidHandler = TransferUtils.getWrappedFluidHandler((BlockEntity) (Object)this, side);
-            return fluidHandler.cast();
-        }
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if (itemHandler == null) itemHandler = TransferUtils.getWrappedItemHandler((BlockEntity) (Object)this, side);
-            return itemHandler.cast();
-        }
         return capProvider.getCapability(cap, side);
     }
 
@@ -86,12 +74,6 @@ public class BlockEntityMixin implements IBlockEntityCapProviderImpl, ICapabilit
     @Override
     public void invalidateCaps() {
         capProvider.invalidateCaps();
-        if (fluidHandler != null){
-            fluidHandler.invalidate();
-        }
-        if (itemHandler != null){
-            itemHandler.invalidate();
-        }
     }
 
     @Override
