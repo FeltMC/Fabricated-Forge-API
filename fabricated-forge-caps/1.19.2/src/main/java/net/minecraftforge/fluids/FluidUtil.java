@@ -423,6 +423,7 @@ public class FluidUtil
         if (cap.isPresent()) return cap;
         ContainerItemContext ctx = ContainerItemContext.withConstant(stack);
         Storage<FluidVariant> fluidStorage = FluidStorage.ITEM.find(stack, ctx);
+        if (fluidStorage instanceof IFluidHandlerItem handlerItem) return LazyOptional.of(() -> handlerItem);
         return fluidStorage == null ? LazyOptional.empty() : LazyOptional.of(() -> new FluidStorageHandlerItem(ctx, fluidStorage));
     }
 
