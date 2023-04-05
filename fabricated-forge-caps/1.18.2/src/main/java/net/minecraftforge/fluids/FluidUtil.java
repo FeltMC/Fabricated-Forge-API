@@ -134,7 +134,7 @@ public class FluidUtil
                     {
                         if (doFill)
                         {
-                            tryFluidTransfer(containerFluidHandler, fluidSource, maxAmountInMB, true);
+                            tryFluidTransfer(containerFluidHandler, fluidSource, maxAmountInMB * 81L, true);
                             if (player != null)
                             {
                                 SoundEvent soundevent = simulatedTransfer.getFluid().getAttributes().getFillSound(simulatedTransfer.toPortingLibStack());
