@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricated-forge-item-api",
+  "version": "${version}",
+  "name": "Fabricated Forge Item Api",
+  "description": "Ports forge's item api to fabric, including using the same path.",
+  "authors": [
+    "Trinsdar"
+  ],
+  "contact": {
+    "sources": "https://github.com/FeltMC/Fabricated-Forge-API/tree/temp-abstraction"
+  },
+  "license": "LGPL-2.1-only",
+  "icon": "assets/tesseractapi/icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.4.0"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
+    }
+  }
+}
